@@ -27,7 +27,6 @@
             padding-bottom: 80px;
         }
 
-        /* Фоновые буквы */
         .swaga-bg {
             position: fixed;
             top: -50%;
@@ -79,7 +78,6 @@
             flex-direction: column;
         }
 
-        /* Приветствие */
         .greeting {
             font-size: 18px;
             font-weight: 600;
@@ -109,7 +107,7 @@
             vertical-align: bottom;
         }
 
-        /* Баланс с переключением валют */
+        /* Баланс с переключением */
         .balance-header {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -183,7 +181,6 @@
             margin-top: 5px;
         }
 
-        /* Кнопка P2P */
         .p2p-section {
             margin-top: 20px;
             padding: 15px;
@@ -235,7 +232,6 @@
             text-shadow: 0 0 20px #00FF00;
         }
 
-        /* SWAG секция */
         .swag-section {
             margin-top: 15px;
             padding: 10px;
@@ -301,7 +297,6 @@
             display: inline-block;
         }
 
-        /* P2P Page */
         .p2p-page {
             position: fixed;
             top: 0;
@@ -388,7 +383,6 @@
             transform: scale(0.95);
         }
 
-        /* Форма создания ордера */
         .order-form {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -538,7 +532,6 @@
             transform: scale(0.98);
         }
 
-        /* Список ордеров */
         .orders-header {
             display: flex;
             justify-content: space-between;
@@ -691,7 +684,6 @@
             color: white;
         }
 
-        /* Модальное окно для ввода суммы */
         .modal {
             position: fixed;
             top: 0;
@@ -817,7 +809,6 @@
             border-radius: 20px;
         }
 
-        /* Нижняя навигация */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -997,7 +988,6 @@
     </style>
 </head>
 <body>
-    <!-- Фоновые буквы -->
     <div class="swaga-bg">
         <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
         <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
@@ -1006,7 +996,6 @@
     </div>
 
     <div class="container">
-        <!-- Страница WORK -->
         <div id="workPage" class="page active-page">
             <div class="greeting">
                 <span class="wave">👋</span>
@@ -1014,7 +1003,6 @@
                 <span id="username">bro</span>
             </div>
 
-            <!-- Баланс с переключением -->
             <div class="balance-header" onclick="switchBalance()">
                 <div class="balance-label">
                     <span id="balanceLabel">USDT BALANCE</span>
@@ -1034,7 +1022,6 @@
                 <div class="usd-value" id="secondaryBalance"></div>
             </div>
 
-            <!-- Кнопка P2P -->
             <div class="p2p-section">
                 <button class="p2p-button" onclick="openP2PPage()">
                     <div class="p2p-button-text">
@@ -1057,7 +1044,6 @@
             </div>
         </div>
 
-        <!-- Страница STATS -->
         <div id="statsPage" class="page">
             <div class="stats-placeholder">
                 <span>📊</span>
@@ -1066,7 +1052,6 @@
             </div>
         </div>
 
-        <!-- Страница PROFILE -->
         <div id="profilePage" class="page">
             <div class="profile-placeholder">
                 <span>👤</span>
@@ -1076,7 +1061,6 @@
         </div>
     </div>
 
-    <!-- P2P Page -->
     <div id="p2pPage" class="p2p-page">
         <div class="p2p-header">
             <button class="back-btn" onclick="closeP2PPage()">←</button>
@@ -1087,7 +1071,6 @@
             <button onclick="toggleOrderForm()">+ NEW ORDER</button>
         </div>
 
-        <!-- Форма создания ордера -->
         <div id="orderForm" class="order-form">
             <div class="form-title">CREATE ORDER</div>
             
@@ -1124,7 +1107,6 @@
             <button class="create-order-btn" onclick="createOrder()">CREATE ORDER</button>
         </div>
 
-        <!-- Список ордеров -->
         <div class="orders-header">
             <h3>ACTIVE ORDERS</h3>
             <span id="ordersCount">0 orders</span>
@@ -1138,7 +1120,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для сделки -->
     <div id="tradeModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeTradeModal()">&times;</span>
@@ -1162,7 +1143,6 @@
         </div>
     </div>
 
-    <!-- Нижняя навигация -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchPage('work')">
             <span class="nav-icon">
@@ -1188,18 +1168,15 @@
     </div>
 
     <script>
-        // ======================================
-        // ==== НАСТРОЙКИ =======================
-        // ======================================
         const SERVER_URL = 'https://balance-server-production.up.railway.app';
-        const COMMISSION = 0.02; // 2%
+        const COMMISSION = 0.02;
         
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
 
         let userId = null;
         let currentOrderType = 'buy';
-        let currentBalanceMode = 'usdt'; // usdt или swag
+        let currentBalanceMode = 'usdt';
         let currentOrder = null;
         let balances = { usdt: 0, swag: 0 };
 
@@ -1218,20 +1195,13 @@
             usernameEl.textContent = 'bro';
         }
 
-        // ======================================
-        // ==== БАЛАНС ==========================
-        // ======================================
-        const balanceEl = document.getElementById('balance');
-        const balanceLabel = document.getElementById('balanceLabel');
-        const currencyLabel = document.getElementById('currencyLabel');
-        const secondaryBalance = document.getElementById('secondaryBalance');
-
         async function loadBalance() {
             try {
                 const res = await fetch(`${SERVER_URL}/balance/${userId}`);
                 const data = await res.json();
                 balances = data;
                 updateBalanceDisplay();
+                console.log('Баланс загружен:', balances);
             } catch (e) {
                 console.error('Ошибка загрузки баланса', e);
             }
@@ -1243,6 +1213,11 @@
         }
 
         function updateBalanceDisplay() {
+            const balanceEl = document.getElementById('balance');
+            const balanceLabel = document.getElementById('balanceLabel');
+            const currencyLabel = document.getElementById('currencyLabel');
+            const secondaryBalance = document.getElementById('secondaryBalance');
+
             if (currentBalanceMode === 'usdt') {
                 balanceLabel.textContent = 'USDT BALANCE';
                 currencyLabel.textContent = 'USDT';
@@ -1256,9 +1231,6 @@
             }
         }
 
-        // ======================================
-        // ==== P2P СТРАНИЦА ====================
-        // ======================================
         function openP2PPage() {
             document.getElementById('p2pPage').classList.add('show');
             loadOrders();
@@ -1268,9 +1240,6 @@
             document.getElementById('p2pPage').classList.remove('show');
         }
 
-        // ======================================
-        // ==== ФОРМА СОЗДАНИЯ ОРДЕРА ===========
-        // ======================================
         function toggleOrderForm() {
             const form = document.getElementById('orderForm');
             form.classList.toggle('show');
@@ -1341,9 +1310,6 @@
             }
         }
 
-        // ======================================
-        // ==== ЗАГРУЗКА ОРДЕРОВ ================
-        // ======================================
         async function loadOrders() {
             try {
                 const res = await fetch(`${SERVER_URL}/orders`);
@@ -1379,7 +1345,7 @@
                 if (order.max_limit > 0) limits.push(`Max: ${order.max_limit}`);
                 
                 html += `
-                    <div class="order-item ${order.type}" onclick="openTradeModal(${JSON.stringify(order).replace(/"/g, '&quot;')})">
+                    <div class="order-item ${order.type}" onclick='openTradeModal(${JSON.stringify(order)})'>
                         <div class="order-header">
                             <span class="order-type-badge ${order.type}">
                                 ${order.type.toUpperCase()} ${isMyOrder ? '(YOU)' : ''}
@@ -1397,7 +1363,7 @@
                             <div class="order-actions">
                                 ${isMyOrder ? 
                                     `<button class="action-btn cancel-btn" onclick="event.stopPropagation(); cancelOrder(${order.id})">CANCEL</button>` : 
-                                    `<button class="action-btn ${order.type === 'buy' ? 'sell-btn' : 'buy-btn'}" onclick="event.stopPropagation(); openTradeModal(${JSON.stringify(order).replace(/"/g, '&quot;')})">
+                                    `<button class="action-btn ${order.type === 'buy' ? 'sell-btn' : 'buy-btn'}" onclick="event.stopPropagation(); openTradeModal(${JSON.stringify(order)})">
                                         ${order.type === 'buy' ? 'SELL' : 'BUY'}
                                     </button>`
                                 }
@@ -1409,9 +1375,6 @@
             ordersList.innerHTML = html;
         }
 
-        // ======================================
-        // ==== ТРЕЙДИНГ ========================
-        // ======================================
         function openTradeModal(order) {
             if (typeof order === 'string') {
                 order = JSON.parse(order);
@@ -1491,9 +1454,6 @@
             }
         }
 
-        // ======================================
-        // ==== ОТМЕНА ОРДЕРА ===================
-        // ======================================
         async function cancelOrder(orderId) {
             if (!confirm('Отменить ордер?')) return;
 
@@ -1522,16 +1482,10 @@
             }
         }
 
-        // ======================================
-        // ==== SWAG ============================
-        // ======================================
         function openSWAG() {
             alert('🎨 SWAG MENU скоро появится');
         }
 
-        // ======================================
-        // ==== НАВИГАЦИЯ =======================
-        // ======================================
         function switchPage(page) {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
@@ -1545,9 +1499,6 @@
             event.currentTarget.classList.add('active');
         }
 
-        // ======================================
-        // ==== ЗАПУСК ==========================
-        // ======================================
         loadBalance();
         setInterval(loadOrders, 30000);
     </script>
