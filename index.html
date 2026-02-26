@@ -16,43 +16,52 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #0A1F0A;  /* Темно-зеленый фон */
+            background: #0A1F0A;
             min-height: 100vh;
             color: white;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Анимированный фон с буквами SWAGA */
+        /* Исправленный фон с буквами */
         .swaga-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
             z-index: 0;
             pointer-events: none;
             opacity: 0.15;
-            font-size: 120px;
+            font-size: 180px;
             font-weight: 900;
             white-space: nowrap;
-            line-height: 1.2;
-            transform: rotate(-15deg) scale(1.5);
+            transform: rotate(-15deg);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
         }
 
         .swaga-bg span {
             display: inline-block;
-            margin-right: 20px;
+            margin: 0 30px;
+            animation: glow 4s ease-in-out infinite;
         }
 
         .swaga-bg span:nth-child(odd) {
-            color: #000000;  /* Черный */
-            text-shadow: 0 0 20px rgba(0,255,0,0.3);
+            color: #000000;
+            text-shadow: 0 0 20px rgba(0,255,0,0.5);
         }
 
         .swaga-bg span:nth-child(even) {
-            color: #00FF00;  /* Свело-зеленый */
-            text-shadow: 0 0 30px #00FF00;
+            color: #00FF00;
+            text-shadow: 0 0 40px #00FF00;
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
         }
 
         .container {
@@ -66,14 +75,35 @@
             flex-direction: column;
         }
 
-        /* Хедер с балансом как в Tonkeeper */
+        /* Обновленное приветствие */
+        .greeting {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            padding-left: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .greeting span {
+            color: #00FF00;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .greeting .wave {
+            font-size: 28px;
+        }
+
         .balance-header {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(0, 255, 0, 0.2);
             border-radius: 30px;
             padding: 20px;
-            margin-top: 20px;
+            margin-top: 10px;
             margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0, 255, 0, 0.1);
         }
@@ -120,20 +150,6 @@
             margin-top: 5px;
         }
 
-        /* Приветствие */
-        .greeting {
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 10px;
-            padding-left: 5px;
-        }
-
-        .greeting span {
-            color: #00FF00;
-            font-weight: 700;
-        }
-
-        /* Кнопки пока минимальные */
         .temp-note {
             text-align: center;
             margin-top: 50px;
@@ -143,29 +159,31 @@
             border-top: 1px solid rgba(0, 255, 0, 0.2);
         }
 
-        /* Анимация для фона */
-        @keyframes glow {
-            0%, 100% { opacity: 0.15; }
-            50% { opacity: 0.2; }
-        }
-
-        .swaga-bg {
-            animation: glow 4s ease-in-out infinite;
+        /* Кнопки скоро будут */
+        .coming-soon {
+            margin-top: auto;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 12px;
+            letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
-    <!-- Фоновые буквы SWAGA -->
-    <div class="swaga-bg" id="swagaBg">
+    <!-- Фоновые буквы SWAGA (теперь видны полностью) -->
+    <div class="swaga-bg">
+        <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
         <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
         <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
         <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
     </div>
 
     <div class="container">
-        <!-- Приветствие -->
-        <div class="greeting" id="greeting">
-            Загрузка...
+        <!-- Приветствие "Whats up" -->
+        <div class="greeting">
+            <span class="wave">👋</span>
+            <span>whats up,</span>
+            <span id="username">bro</span>
         </div>
 
         <!-- Баланс как в Tonkeeper -->
@@ -187,8 +205,11 @@
 
         <!-- Временная заметка -->
         <div class="temp-note">
-            ⚡ Дизайн в разработке ⚡<br>
-            Следом добавим кнопки
+            🚀 кнопки скоро появятся
+        </div>
+        
+        <div class="coming-soon">
+            SWAGA · CRYPTO
         </div>
     </div>
 
@@ -199,35 +220,62 @@
         let userId = null;
         const user = Telegram.WebApp.initDataUnsafe?.user;
 
-        // Приветствие
-        const greetingEl = document.getElementById('greeting');
+        // Обновленное приветствие
+        const usernameEl = document.getElementById('username');
         if (user) {
             userId = user.id;
-            greetingEl.innerHTML = `👋 Привет, <span>${user.first_name || 'Игрок'}</span>`;
+            usernameEl.textContent = user.first_name || 'bro';
         } else {
             userId = 'guest_' + Date.now();
-            greetingEl.innerHTML = `👋 Добро пожаловать в <span>SWAGA</span>`;
+            usernameEl.textContent = 'bro';
         }
 
-        // Временный баланс (потом подключим сервер)
+        // ======================================
+        // ==== ТУТ ВСЯ ТВОЯ ЛОГИКА ОСТАЛАСЬ ====
+        // ======================================
+        const SERVER_URL = 'https://balance-server-production.up.railway.app';
+        
         const balanceEl = document.getElementById('balance');
         const usdEl = document.getElementById('usdBalance');
 
-        function updateBalance(val) {
-            balanceEl.textContent = val;
-            usdEl.textContent = `$${val} USD`;
+        async function loadBalance() {
+            try {
+                const res = await fetch(`${SERVER_URL}/balance/${userId}`);
+                const data = await res.json();
+                balanceEl.textContent = data.balance;
+                usdEl.textContent = `$${data.balance} USD`;
+            } catch (e) {
+                console.error('Ошибка загрузки баланса', e);
+            }
         }
 
-        // Тестовый баланс 1337 (как в Tonkeeper стиль)
-        updateBalance(1337);
+        async function addMoney() {
+            try {
+                const res = await fetch(`${SERVER_URL}/balance/${userId}/add/100`, {
+                    method: 'POST'
+                });
+                const data = await res.json();
+                balanceEl.textContent = data.balance;
+                usdEl.textContent = `$${data.balance} USD`;
+            } catch (e) {
+                console.error('Ошибка добавления', e);
+            }
+        }
 
-        // Эффект появления
-        setTimeout(() => {
-            document.querySelector('.balance-header').style.opacity = '1';
-        }, 100);
+        function refreshBalance() {
+            loadBalance();
+        }
+
+        // Загружаем баланс
+        loadBalance();
+
+        // Делаем функции глобальными для кнопок
+        window.addMoney = addMoney;
+        window.refreshBalance = refreshBalance;
     </script>
 </body>
 </html>
+
 
 
 
