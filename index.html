@@ -24,7 +24,7 @@
             color: white;
             position: relative;
             overflow-x: hidden;
-            padding-bottom: 80px; /* Отступ для нижнего меню */
+            padding-bottom: 80px;
         }
 
         /* Фоновые буквы */
@@ -79,7 +79,6 @@
             flex-direction: column;
         }
 
-        /* Контент (будет переключаться) */
         .content {
             flex: 1;
         }
@@ -336,6 +335,7 @@
             transition: all 0.3s ease;
             padding: 5px 15px;
             border-radius: 15px;
+            position: relative;
         }
 
         .nav-item.active {
@@ -345,8 +345,106 @@
         }
 
         .nav-icon {
-            font-size: 24px;
+            font-size: 32px;
             filter: drop-shadow(0 0 5px currentColor);
+            position: relative;
+        }
+
+        /* Радиоактивная молния */
+        .lightning-icon {
+            position: relative;
+            display: inline-block;
+            font-size: 32px;
+            animation: radioactive 3s infinite;
+            filter: drop-shadow(0 0 10px #00FF00) drop-shadow(0 0 20px #00FF00);
+        }
+
+        .lightning-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(0,255,0,0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: slime 4s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes radioactive {
+            0%, 100% { filter: drop-shadow(0 0 5px #00FF00) drop-shadow(0 0 10px #00FF00); }
+            50% { filter: drop-shadow(0 0 20px #00FF00) drop-shadow(0 0 40px #00FF00); }
+        }
+
+        @keyframes slime {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translate(-50%, 20%) scale(1.2);
+                opacity: 0.3;
+            }
+        }
+
+        /* Статистика — два баллончика */
+        .stats-icon {
+            position: relative;
+            display: flex;
+            gap: 2px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spray-can-green {
+            font-size: 24px;
+            transform: rotate(-15deg) scaleX(-1);
+            color: #00FF00;
+            filter: drop-shadow(0 0 8px #00FF00);
+            animation: wobble-left 3s infinite;
+        }
+
+        .spray-can-red {
+            font-size: 24px;
+            transform: rotate(15deg);
+            color: #FF3333;
+            filter: drop-shadow(0 0 8px #FF3333);
+            animation: wobble-right 3s infinite;
+        }
+
+        @keyframes wobble-left {
+            0%, 100% { transform: rotate(-15deg) scaleX(-1); }
+            50% { transform: rotate(-20deg) scaleX(-1); }
+        }
+
+        @keyframes wobble-right {
+            0%, 100% { transform: rotate(15deg); }
+            50% { transform: rotate(20deg); }
+        }
+
+        /* Профиль — чел с тату */
+        .profile-icon {
+            position: relative;
+            display: inline-block;
+            font-size: 32px;
+            filter: drop-shadow(0 0 5px rgba(0,255,0,0.5));
+        }
+
+        .profile-icon::after {
+            content: '$WAG';
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Rubik Glitch', cursive;
+            font-size: 8px;
+            color: #00FF00;
+            text-shadow: 0 0 5px #00FF00;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            opacity: 0.7;
         }
 
         .nav-label {
@@ -365,7 +463,6 @@
             transform: translateY(0);
         }
 
-        /* Страницы (показываются/скрываются) */
         .page {
             display: none;
         }
@@ -374,7 +471,6 @@
             display: block;
         }
 
-        /* Плейсхолдеры для других страниц */
         .stats-placeholder, .profile-placeholder {
             text-align: center;
             padding: 40px 20px;
@@ -404,16 +500,14 @@
     </div>
 
     <div class="container">
-        <!-- Страница WORK (основная) -->
+        <!-- Страница WORK -->
         <div id="workPage" class="page active-page">
-            <!-- Приветствие -->
             <div class="greeting">
                 <span class="wave">👋</span>
                 <span>whats up,</span>
                 <span id="username">bro</span>
             </div>
 
-            <!-- Баланс -->
             <div class="balance-header">
                 <div class="balance-label">Твой баланс</div>
                 <div class="balance-amount">
@@ -430,7 +524,6 @@
                 <div class="usd-value" id="usdBalance">$0 USD</div>
             </div>
 
-            <!-- P2P секция -->
             <div class="p2p-section">
                 <div class="p2p-description">
                     <span class="dollar-icon">💱</span> Здесь вы можете обменять свою <span>SWAGA</span> на доллары или наоборот
@@ -444,7 +537,6 @@
                 </button>
             </div>
 
-            <!-- SWAG секция -->
             <div class="swag-section">
                 <button class="swag-button" onclick="openSWAG()">
                     <div class="swag-button-text">
@@ -476,18 +568,27 @@
         </div>
     </div>
 
-    <!-- Нижняя навигация -->
+    <!-- Нижняя навигация с новыми иконками -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchPage('work')">
-            <span class="nav-icon">⚡</span>
+            <span class="nav-icon">
+                <span class="lightning-icon">⚡</span>
+            </span>
             <span class="nav-label">WORK</span>
         </div>
         <div class="nav-item" onclick="switchPage('stats')">
-            <span class="nav-icon">📊</span>
+            <span class="nav-icon">
+                <span class="stats-icon">
+                    <span class="spray-can-green">🖍️</span>
+                    <span class="spray-can-red">🖍️</span>
+                </span>
+            </span>
             <span class="nav-label">STATS</span>
         </div>
         <div class="nav-item" onclick="switchPage('profile')">
-            <span class="nav-icon">👤</span>
+            <span class="nav-icon">
+                <span class="profile-icon">👨‍🎨</span>
+            </span>
             <span class="nav-label">PROFILE</span>
         </div>
     </div>
@@ -553,17 +654,13 @@
             alert('🎨 SWAG MENU скоро появится');
         }
 
-        // Переключение страниц
         function switchPage(page) {
-            // Скрываем все страницы
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
             document.getElementById('profilePage').classList.remove('active-page');
             
-            // Показываем нужную
             document.getElementById(page + 'Page').classList.add('active-page');
             
-            // Обновляем активный пункт меню
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
@@ -572,7 +669,6 @@
 
         loadBalance();
 
-        // Делаем функции глобальными
         window.addMoney = addMoney;
         window.refreshBalance = refreshBalance;
         window.openP2P = openP2P;
