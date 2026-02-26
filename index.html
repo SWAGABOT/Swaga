@@ -79,10 +79,6 @@
             flex-direction: column;
         }
 
-        .content {
-            flex: 1;
-        }
-
         /* Приветствие */
         .greeting {
             font-size: 18px;
@@ -167,7 +163,179 @@
             margin-top: 5px;
         }
 
-        /* Кнопка NEW ORDER */
+        /* Кнопка P2P (бунтарская) */
+        .p2p-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 0, 0.15);
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        .p2p-button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            padding: 5px 0;
+        }
+
+        .p2p-button-text {
+            font-family: 'Orbitron', 'Rajdhani', 'Inter', sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 0, 0.5));
+            transition: all 0.3s ease;
+        }
+
+        .p2p-button:hover .p2p-button-text {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 25px #00FF00);
+        }
+
+        .p2p-button:active .p2p-button-text {
+            transform: scale(0.95);
+        }
+
+        .p2p-p {
+            color: #000000;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+        }
+
+        .p2p-two {
+            color: #00FF00;
+            text-shadow: 0 0 20px #00FF00;
+        }
+
+        /* SWAG секция */
+        .swag-section {
+            margin-top: 15px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .swag-button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .swag-button-text {
+            font-family: 'Rubik Wet Paint', 'Rubik Glitch', cursive;
+            font-size: 56px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.6));
+            transition: all 0.3s ease;
+            transform: rotate(-1deg);
+        }
+
+        .swag-button:hover .swag-button-text {
+            transform: scale(1.08) rotate(0deg);
+            filter: drop-shadow(0 0 30px #00FF00);
+        }
+
+        .swag-button:active .swag-button-text {
+            transform: scale(0.95) rotate(1deg);
+        }
+
+        .swag-s {
+            color: #00FF00;
+            text-shadow: 3px 3px 0 #000000, 0 0 20px #00FF00;
+            transform: rotate(-2deg);
+            display: inline-block;
+        }
+
+        .swag-w {
+            color: #000000;
+            text-shadow: 0 0 15px #00FF00, 2px 2px 0 #00FF00;
+            transform: rotate(1deg);
+            display: inline-block;
+        }
+
+        .swag-a {
+            color: #00FF00;
+            text-shadow: -3px 3px 0 #000000, 0 0 20px #00FF00;
+            transform: rotate(3deg);
+            display: inline-block;
+        }
+
+        .swag-g {
+            color: #000000;
+            text-shadow: 0 0 15px #00FF00, -2px -2px 0 #00FF00;
+            transform: rotate(-3deg);
+            display: inline-block;
+        }
+
+        /* P2P Page (отдельный экран) */
+        .p2p-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0A1F0A;
+            z-index: 200;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: 100px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .p2p-page.show {
+            transform: translateX(0);
+        }
+
+        .p2p-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-top: 20px;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            color: #00FF00;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 255, 0, 0.1);
+            border-color: #00FF00;
+        }
+
+        .p2p-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            font-size: 24px;
+            letter-spacing: 2px;
+        }
+
         .new-order-btn {
             display: flex;
             justify-content: flex-end;
@@ -300,10 +468,6 @@
             outline: none;
             border-color: #00FF00;
             box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-        }
-
-        .input-group input::placeholder {
-            color: rgba(255, 255, 255, 0.2);
         }
 
         .total-info {
@@ -457,72 +621,6 @@
             font-size: 14px;
             border: 1px dashed rgba(0, 255, 0, 0.2);
             border-radius: 20px;
-        }
-
-        /* SWAG секция */
-        .swag-section {
-            margin-top: 15px;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .swag-button {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .swag-button-text {
-            font-family: 'Rubik Wet Paint', 'Rubik Glitch', cursive;
-            font-size: 56px;
-            font-weight: 900;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.6));
-            transition: all 0.3s ease;
-            transform: rotate(-1deg);
-        }
-
-        .swag-button:hover .swag-button-text {
-            transform: scale(1.08) rotate(0deg);
-            filter: drop-shadow(0 0 30px #00FF00);
-        }
-
-        .swag-button:active .swag-button-text {
-            transform: scale(0.95) rotate(1deg);
-        }
-
-        .swag-s {
-            color: #00FF00;
-            text-shadow: 3px 3px 0 #000000, 0 0 20px #00FF00;
-            transform: rotate(-2deg);
-            display: inline-block;
-        }
-
-        .swag-w {
-            color: #000000;
-            text-shadow: 0 0 15px #00FF00, 2px 2px 0 #00FF00;
-            transform: rotate(1deg);
-            display: inline-block;
-        }
-
-        .swag-a {
-            color: #00FF00;
-            text-shadow: -3px 3px 0 #000000, 0 0 20px #00FF00;
-            transform: rotate(3deg);
-            display: inline-block;
-        }
-
-        .swag-g {
-            color: #000000;
-            text-shadow: 0 0 15px #00FF00, -2px -2px 0 #00FF00;
-            transform: rotate(-3deg);
-            display: inline-block;
         }
 
         /* Нижняя навигация */
@@ -738,49 +836,15 @@
                 <div class="usd-value" id="usdBalance">$0 USD</div>
             </div>
 
-            <!-- P2P секция -->
-            <div class="new-order-btn">
-                <button onclick="toggleOrderForm()">+ NEW ORDER</button>
-            </div>
-
-            <!-- Форма создания ордера -->
-            <div id="orderForm" class="order-form">
-                <div class="form-title">CREATE ORDER</div>
-                
-                <div class="order-type">
-                    <button class="type-btn buy active" onclick="setOrderType('buy')">BUY</button>
-                    <button class="type-btn sell" onclick="setOrderType('sell')">SELL</button>
-                </div>
-
-                <div class="input-group">
-                    <label>AMOUNT (SWAG)</label>
-                    <input type="number" id="orderAmount" placeholder="100" oninput="calculateTotal()">
-                </div>
-
-                <div class="input-group">
-                    <label>PRICE (USDT per SWAG)</label>
-                    <input type="number" id="orderPrice" placeholder="0.01" step="0.001" oninput="calculateTotal()">
-                </div>
-
-                <div class="total-info">
-                    <span class="total-label">TOTAL:</span>
-                    <span class="total-value" id="totalValue">0 USDT</span>
-                </div>
-
-                <button class="create-order-btn" onclick="createOrder()">CREATE ORDER</button>
-            </div>
-
-            <!-- Список ордеров -->
-            <div class="orders-header">
-                <h3>ACTIVE ORDERS</h3>
-                <span id="ordersCount">0 orders</span>
-            </div>
-
-            <div id="ordersList" class="orders-list">
-                <div class="empty-orders">
-                    No active orders<br>
-                    <small style="font-size: 12px;">Create your first order</small>
-                </div>
+            <!-- Кнопка P2P -->
+            <div class="p2p-section">
+                <button class="p2p-button" onclick="openP2PPage()">
+                    <div class="p2p-button-text">
+                        <span class="p2p-p">P</span>
+                        <span class="p2p-two">2</span>
+                        <span class="p2p-p">P</span>
+                    </div>
+                </button>
             </div>
 
             <div class="swag-section">
@@ -810,6 +874,58 @@
                 <span>👤</span>
                 PROFILE<br>
                 <small style="font-size: 14px; color: rgba(255,255,255,0.3);">coming soon</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- P2P Page (отдельный экран) -->
+    <div id="p2pPage" class="p2p-page">
+        <div class="p2p-header">
+            <button class="back-btn" onclick="closeP2PPage()">←</button>
+            <h2>P2P TRADING</h2>
+        </div>
+
+        <div class="new-order-btn">
+            <button onclick="toggleOrderForm()">+ NEW ORDER</button>
+        </div>
+
+        <!-- Форма создания ордера -->
+        <div id="orderForm" class="order-form">
+            <div class="form-title">CREATE ORDER</div>
+            
+            <div class="order-type">
+                <button class="type-btn buy active" onclick="setOrderType('buy')">BUY</button>
+                <button class="type-btn sell" onclick="setOrderType('sell')">SELL</button>
+            </div>
+
+            <div class="input-group">
+                <label>AMOUNT (SWAG)</label>
+                <input type="number" id="orderAmount" placeholder="100" oninput="calculateTotal()">
+            </div>
+
+            <div class="input-group">
+                <label>PRICE (USDT per SWAG)</label>
+                <input type="number" id="orderPrice" placeholder="0.01" step="0.001" oninput="calculateTotal()">
+            </div>
+
+            <div class="total-info">
+                <span class="total-label">TOTAL:</span>
+                <span class="total-value" id="totalValue">0 USDT</span>
+            </div>
+
+            <button class="create-order-btn" onclick="createOrder()">CREATE ORDER</button>
+        </div>
+
+        <!-- Список ордеров -->
+        <div class="orders-header">
+            <h3>ACTIVE ORDERS</h3>
+            <span id="ordersCount">0 orders</span>
+        </div>
+
+        <div id="ordersList" class="orders-list">
+            <div class="empty-orders">
+                No active orders<br>
+                <small style="font-size: 12px;">Create your first order</small>
             </div>
         </div>
     </div>
@@ -876,6 +992,14 @@
             } catch (e) {
                 console.error('Ошибка загрузки баланса', e);
             }
+        }
+
+        function openP2PPage() {
+            document.getElementById('p2pPage').classList.add('show');
+        }
+
+        function closeP2PPage() {
+            document.getElementById('p2pPage').classList.remove('show');
         }
 
         function toggleOrderForm() {
@@ -1003,15 +1127,15 @@
 
         loadBalance();
 
-        window.addMoney = addMoney;
-        window.refreshBalance = refreshBalance;
-        window.openSWAG = openSWAG;
-        window.switchPage = switchPage;
+        window.openP2PPage = openP2PPage;
+        window.closeP2PPage = closeP2PPage;
         window.toggleOrderForm = toggleOrderForm;
         window.setOrderType = setOrderType;
         window.calculateTotal = calculateTotal;
         window.createOrder = createOrder;
         window.viewOrder = viewOrder;
+        window.openSWAG = openSWAG;
+        window.switchPage = switchPage;
     </script>
 </body>
 </html>
