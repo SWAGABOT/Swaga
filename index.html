@@ -109,7 +109,7 @@
             vertical-align: bottom;
         }
 
-        /* Баланс */
+        /* Баланс с переключением валют */
         .balance-header {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -119,6 +119,17 @@
             margin-top: 5px;
             margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0, 255, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .balance-header:hover {
+            border-color: #00FF00;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+        }
+
+        .balance-header:active {
+            transform: scale(0.98);
         }
 
         .balance-label {
@@ -128,6 +139,15 @@
             letter-spacing: 1px;
             margin-bottom: 8px;
             opacity: 0.8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .switch-hint {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: 'Orbitron', sans-serif;
         }
 
         .balance-amount {
@@ -552,12 +572,8 @@
             border: 1px solid rgba(0, 255, 0, 0.15);
             border-radius: 20px;
             padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
         }
 
         .order-item:hover {
@@ -574,14 +590,17 @@
             border-left: 4px solid #FF3333;
         }
 
-        .order-info {
-            flex: 1;
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
         .order-type-badge {
             font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
-            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 700;
         }
 
         .order-type-badge.buy {
@@ -592,42 +611,199 @@
             color: #FF3333;
         }
 
-        .order-details {
-            display: flex;
-            gap: 15px;
-            align-items: baseline;
+        .order-limits {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        .order-amount {
-            font-size: 16px;
-            font-weight: 600;
-            color: white;
+        .order-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
         .order-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00FF00;
+        }
+
+        .order-amount {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .order-total {
             font-family: 'Orbitron', sans-serif;
             color: #00FF00;
-            font-weight: 700;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .buy-btn {
+            background: #00FF00;
+            color: #0A1F0A;
+        }
+
+        .buy-btn:hover {
+            background: #00CC00;
+            transform: scale(1.05);
+        }
+
+        .sell-btn {
+            background: #FF3333;
+            color: white;
+        }
+
+        .sell-btn:hover {
+            background: #CC0000;
+            transform: scale(1.05);
         }
 
         .cancel-btn {
-            background: rgba(255, 51, 51, 0.2);
+            background: transparent;
             border: 1px solid #FF3333;
             color: #FF3333;
-            padding: 5px 10px;
-            border-radius: 10px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-left: 10px;
         }
 
         .cancel-btn:hover {
+            background: #FF3333;
+            color: white;
+        }
+
+        /* Модальное окно для ввода суммы */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 300;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #0A1F0A;
+            border: 2px solid #00FF00;
+            border-radius: 30px;
+            padding: 30px;
+            width: 90%;
+            max-width: 350px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #00FF00;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-info {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00FF00;
+            border-radius: 15px;
+            color: white;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .modal-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .modal-total span:last-child {
+            color: #00FF00;
+            font-weight: 700;
+        }
+
+        .modal-fee {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.confirm {
+            background: #00FF00;
+            color: #0A1F0A;
+        }
+
+        .modal-btn.cancel {
+            background: transparent;
+            border: 1px solid #FF3333;
+            color: #FF3333;
+        }
+
+        .modal-btn.confirm:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #00FF00;
+        }
+
+        .modal-btn.cancel:hover {
             background: #FF3333;
             color: white;
         }
@@ -838,20 +1014,24 @@
                 <span id="username">bro</span>
             </div>
 
-            <div class="balance-header">
-                <div class="balance-label">Твой баланс</div>
+            <!-- Баланс с переключением -->
+            <div class="balance-header" onclick="switchBalance()">
+                <div class="balance-label">
+                    <span id="balanceLabel">USDT BALANCE</span>
+                    <span class="switch-hint">⬆️ tap to switch</span>
+                </div>
                 <div class="balance-amount">
                     <span class="number" id="balance">0</span>
-                    <span class="currency">
+                    <span class="currency" id="currency">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#00FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M2 17L12 22L22 17" stroke="#00FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M2 12L12 17L22 12" stroke="#00FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        USDT
+                        <span id="currencyLabel">USDT</span>
                     </span>
                 </div>
-                <div class="usd-value" id="usdBalance">$0 USD</div>
+                <div class="usd-value" id="secondaryBalance"></div>
             </div>
 
             <!-- Кнопка P2P -->
@@ -926,6 +1106,16 @@
                 <input type="number" id="orderPrice" placeholder="0.01" step="0.001" oninput="calculateTotal()">
             </div>
 
+            <div class="input-group">
+                <label>MIN LIMIT (optional)</label>
+                <input type="number" id="orderMin" placeholder="10">
+            </div>
+
+            <div class="input-group">
+                <label>MAX LIMIT (optional)</label>
+                <input type="number" id="orderMax" placeholder="1000">
+            </div>
+
             <div class="total-info">
                 <span class="total-label">TOTAL:</span>
                 <span class="total-value" id="totalValue">0 USDT</span>
@@ -944,6 +1134,30 @@
             <div class="empty-orders">
                 No active orders<br>
                 <small style="font-size: 12px;">Create your first order</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для сделки -->
+    <div id="tradeModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeTradeModal()">&times;</span>
+            <h3 id="modalTitle">EXECUTE ORDER</h3>
+            
+            <div id="modalOrderInfo" class="modal-info"></div>
+            
+            <input type="number" id="tradeAmount" class="modal-input" placeholder="Amount (SWAG)" oninput="calculateTradeTotal()">
+            
+            <div class="modal-total">
+                <span>Total:</span>
+                <span id="modalTotal">0 USDT</span>
+            </div>
+            
+            <div class="modal-fee" id="modalFee">Fee (2%): 0 USDT</div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closeTradeModal()">CANCEL</button>
+                <button class="modal-btn confirm" onclick="executeTrade()">CONFIRM</button>
             </div>
         </div>
     </div>
@@ -978,12 +1192,16 @@
         // ==== НАСТРОЙКИ =======================
         // ======================================
         const SERVER_URL = 'https://balance-server-production.up.railway.app';
+        const COMMISSION = 0.02; // 2%
         
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
 
         let userId = null;
         let currentOrderType = 'buy';
+        let currentBalanceMode = 'usdt'; // usdt или swag
+        let currentOrder = null;
+        let balances = { usdt: 0, swag: 0 };
 
         const user = Telegram.WebApp.initDataUnsafe?.user;
         const usernameEl = document.getElementById('username');
@@ -1004,16 +1222,37 @@
         // ==== БАЛАНС ==========================
         // ======================================
         const balanceEl = document.getElementById('balance');
-        const usdEl = document.getElementById('usdBalance');
+        const balanceLabel = document.getElementById('balanceLabel');
+        const currencyLabel = document.getElementById('currencyLabel');
+        const secondaryBalance = document.getElementById('secondaryBalance');
 
         async function loadBalance() {
             try {
                 const res = await fetch(`${SERVER_URL}/balance/${userId}`);
                 const data = await res.json();
-                balanceEl.textContent = data.balance;
-                usdEl.textContent = `$${data.balance} USD`;
+                balances = data;
+                updateBalanceDisplay();
             } catch (e) {
                 console.error('Ошибка загрузки баланса', e);
+            }
+        }
+
+        function switchBalance() {
+            currentBalanceMode = currentBalanceMode === 'usdt' ? 'swag' : 'usdt';
+            updateBalanceDisplay();
+        }
+
+        function updateBalanceDisplay() {
+            if (currentBalanceMode === 'usdt') {
+                balanceLabel.textContent = 'USDT BALANCE';
+                currencyLabel.textContent = 'USDT';
+                balanceEl.textContent = balances.usdt.toFixed(2);
+                secondaryBalance.textContent = `≈ ${balances.swag.toFixed(2)} SWAG`;
+            } else {
+                balanceLabel.textContent = 'SWAG BALANCE';
+                currencyLabel.textContent = 'SWAG';
+                balanceEl.textContent = balances.swag.toFixed(2);
+                secondaryBalance.textContent = `≈ $${(balances.swag * 0.01).toFixed(2)} USD`;
             }
         }
 
@@ -1060,9 +1299,11 @@
         async function createOrder() {
             const amount = parseFloat(document.getElementById('orderAmount').value);
             const price = parseFloat(document.getElementById('orderPrice').value);
+            const minLimit = parseFloat(document.getElementById('orderMin').value) || 0;
+            const maxLimit = parseFloat(document.getElementById('orderMax').value) || 0;
 
             if (!amount || !price) {
-                alert('Заполните все поля');
+                alert('Заполните обязательные поля');
                 return;
             }
 
@@ -1076,16 +1317,19 @@
                         user_id: userId,
                         type: currentOrderType,
                         amount: amount,
-                        price: price
+                        price: price,
+                        min_limit: minLimit,
+                        max_limit: maxLimit
                     })
                 });
 
                 const data = await res.json();
                 
                 if (data.id) {
-                    // Очищаем форму и скрываем
                     document.getElementById('orderAmount').value = '';
                     document.getElementById('orderPrice').value = '';
+                    document.getElementById('orderMin').value = '';
+                    document.getElementById('orderMax').value = '';
                     document.getElementById('orderForm').classList.remove('show');
                     
                     loadOrders();
@@ -1130,29 +1374,121 @@
             let html = '';
             orders.forEach(order => {
                 const isMyOrder = order.user_id === userId;
+                const limits = [];
+                if (order.min_limit > 0) limits.push(`Min: ${order.min_limit}`);
+                if (order.max_limit > 0) limits.push(`Max: ${order.max_limit}`);
+                
                 html += `
-                    <div class="order-item ${order.type}">
-                        <div class="order-info">
-                            <div class="order-type-badge ${order.type}">
+                    <div class="order-item ${order.type}" onclick="openTradeModal(${JSON.stringify(order).replace(/"/g, '&quot;')})">
+                        <div class="order-header">
+                            <span class="order-type-badge ${order.type}">
                                 ${order.type.toUpperCase()} ${isMyOrder ? '(YOU)' : ''}
-                            </div>
-                            <div class="order-details">
-                                <span class="order-amount">${order.amount} SWAG</span>
-                                <span class="order-price">@ ${order.price} USDT</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center;">
-                            <div class="order-total">
-                                ${order.total.toFixed(2)} USDT
-                            </div>
-                            ${isMyOrder ? 
-                                `<button class="cancel-btn" onclick="cancelOrder(${order.id})">CANCEL</button>` : 
+                            </span>
+                            ${limits.length > 0 ? 
+                                `<span class="order-limits">${limits.join(' • ')}</span>` : 
                                 ''}
+                        </div>
+                        <div class="order-details">
+                            <span class="order-price">${order.price} USDT</span>
+                            <span class="order-amount">${order.amount} SWAG</span>
+                        </div>
+                        <div class="order-footer">
+                            <span class="order-total">Total: ${order.total.toFixed(2)} USDT</span>
+                            <div class="order-actions">
+                                ${isMyOrder ? 
+                                    `<button class="action-btn cancel-btn" onclick="event.stopPropagation(); cancelOrder(${order.id})">CANCEL</button>` : 
+                                    `<button class="action-btn ${order.type === 'buy' ? 'sell-btn' : 'buy-btn'}" onclick="event.stopPropagation(); openTradeModal(${JSON.stringify(order).replace(/"/g, '&quot;')})">
+                                        ${order.type === 'buy' ? 'SELL' : 'BUY'}
+                                    </button>`
+                                }
+                            </div>
                         </div>
                     </div>
                 `;
             });
             ordersList.innerHTML = html;
+        }
+
+        // ======================================
+        // ==== ТРЕЙДИНГ ========================
+        // ======================================
+        function openTradeModal(order) {
+            if (typeof order === 'string') {
+                order = JSON.parse(order);
+            }
+            currentOrder = order;
+            
+            const modal = document.getElementById('tradeModal');
+            const title = document.getElementById('modalTitle');
+            const info = document.getElementById('modalOrderInfo');
+            
+            title.textContent = `${order.type.toUpperCase()} ${order.type === 'buy' ? 'SELL' : 'BUY'} SWAG`;
+            info.innerHTML = `
+                <div>Price: ${order.price} USDT</div>
+                <div>Available: ${order.amount} SWAG</div>
+                ${order.min_limit > 0 ? `<div>Min: ${order.min_limit} SWAG</div>` : ''}
+                ${order.max_limit > 0 ? `<div>Max: ${order.max_limit} SWAG</div>` : ''}
+            `;
+            
+            document.getElementById('tradeAmount').value = '';
+            document.getElementById('modalTotal').textContent = '0 USDT';
+            document.getElementById('modalFee').textContent = 'Fee (2%): 0 USDT';
+            
+            modal.classList.add('show');
+        }
+
+        function closeTradeModal() {
+            document.getElementById('tradeModal').classList.remove('show');
+            currentOrder = null;
+        }
+
+        function calculateTradeTotal() {
+            const amount = parseFloat(document.getElementById('tradeAmount').value) || 0;
+            if (!currentOrder) return;
+            
+            const total = amount * currentOrder.price;
+            const fee = total * COMMISSION;
+            
+            document.getElementById('modalTotal').textContent = total.toFixed(2) + ' USDT';
+            document.getElementById('modalFee').textContent = `Fee (2%): ${fee.toFixed(2)} USDT`;
+        }
+
+        async function executeTrade() {
+            if (!currentOrder) return;
+            
+            const amount = parseFloat(document.getElementById('tradeAmount').value);
+            
+            if (!amount) {
+                alert('Введите сумму');
+                return;
+            }
+            
+            try {
+                const res = await fetch(`${SERVER_URL}/orders/execute/${currentOrder.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        amount: amount
+                    })
+                });
+
+                const data = await res.json();
+                
+                if (data.success) {
+                    closeTradeModal();
+                    loadOrders();
+                    loadBalance();
+                    alert(`✅ Сделка выполнена!\nПолучено: ${amount} SWAG\nКомиссия: ${data.fee.toFixed(2)} USDT`);
+                } else if (data.error) {
+                    alert('❌ ' + data.error);
+                }
+            } catch (e) {
+                console.error('Ошибка выполнения сделки:', e);
+                alert('❌ Ошибка выполнения сделки');
+            }
         }
 
         // ======================================
@@ -1213,8 +1549,6 @@
         // ==== ЗАПУСК ==========================
         // ======================================
         loadBalance();
-
-        // Обновляем ордера каждые 30 секунд
         setInterval(loadOrders, 30000);
     </script>
 </body>
