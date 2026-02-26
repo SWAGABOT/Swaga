@@ -167,78 +167,299 @@
             margin-top: 5px;
         }
 
-        /* Секция P2P */
-        .p2p-section {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(0, 255, 0, 0.15);
-            border-radius: 25px;
-            text-align: center;
-        }
-
-        .p2p-description {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-
-        .p2p-description span {
-            color: #00FF00;
-            font-weight: 600;
-        }
-
-        .p2p-description .dollar-icon {
-            font-size: 16px;
-            margin-right: 4px;
-            display: inline-block;
-        }
-
-        /* Бунтарская кнопка P2P */
-        .p2p-button {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            padding: 5px 0;
-        }
-
-        .p2p-button-text {
-            font-family: 'Orbitron', 'Rajdhani', 'Inter', sans-serif;
-            font-size: 42px;
-            font-weight: 800;
-            letter-spacing: 4px;
-            text-transform: uppercase;
+        /* Кнопка NEW ORDER */
+        .new-order-btn {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            filter: drop-shadow(0 0 15px rgba(0, 255, 0, 0.5));
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .new-order-btn button {
+            background: rgba(0, 255, 0, 0.15);
+            border: 2px solid #00FF00;
+            border-radius: 30px;
+            padding: 10px 20px;
+            color: #00FF00;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
         }
 
-        .p2p-button:hover .p2p-button-text {
+        .new-order-btn button:hover {
+            background: #00FF00;
+            color: #0A1F0A;
             transform: scale(1.05);
-            filter: drop-shadow(0 0 25px #00FF00);
+            box-shadow: 0 0 30px #00FF00;
         }
 
-        .p2p-button:active .p2p-button-text {
+        .new-order-btn button:active {
             transform: scale(0.95);
         }
 
-        .p2p-p {
-            color: #000000;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+        /* Форма создания ордера */
+        .order-form {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 25px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: none;
+            animation: slideDown 0.3s ease;
         }
 
-        .p2p-two {
+        .order-form.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-title {
+            font-family: 'Orbitron', sans-serif;
             color: #00FF00;
-            text-shadow: 0 0 20px #00FF00;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+            letter-spacing: 2px;
         }
 
-        /* Секция SWAG (граффити) */
+        .order-type {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            background: transparent;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .type-btn.active {
+            background: rgba(0, 255, 0, 0.2);
+            border-color: #00FF00;
+            color: #00FF00;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .type-btn.buy.active {
+            background: rgba(0, 255, 0, 0.2);
+        }
+
+        .type-btn.sell.active {
+            background: rgba(255, 51, 51, 0.2);
+            border-color: #FF3333;
+            color: #FF3333;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.3);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 15px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #00FF00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .total-info {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(0, 255, 0, 0.1);
+        }
+
+        .total-label {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        .total-value {
+            color: #00FF00;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .create-order-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(145deg, #00FF00, #00CC00);
+            border: none;
+            border-radius: 50px;
+            color: #0A1F0A;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .create-order-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px #00FF00;
+        }
+
+        .create-order-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Список ордеров */
+        .orders-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0 15px;
+            padding: 0 5px;
+        }
+
+        .orders-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .orders-header span {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 12px;
+        }
+
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .order-item {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 0, 0.15);
+            border-radius: 20px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .order-item:hover {
+            transform: translateX(5px);
+            border-color: #00FF00;
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+        }
+
+        .order-item.buy {
+            border-left: 4px solid #00FF00;
+        }
+
+        .order-item.sell {
+            border-left: 4px solid #FF3333;
+        }
+
+        .order-info {
+            flex: 1;
+        }
+
+        .order-type-badge {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .order-type-badge.buy {
+            color: #00FF00;
+        }
+
+        .order-type-badge.sell {
+            color: #FF3333;
+        }
+
+        .order-details {
+            display: flex;
+            gap: 15px;
+            align-items: baseline;
+        }
+
+        .order-amount {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .order-price {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .order-total {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            font-weight: 700;
+        }
+
+        .empty-orders {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+            border: 1px dashed rgba(0, 255, 0, 0.2);
+            border-radius: 20px;
+        }
+
+        /* SWAG секция */
         .swag-section {
             margin-top: 15px;
             padding: 10px;
@@ -278,32 +499,28 @@
 
         .swag-s {
             color: #00FF00;
-            text-shadow: 3px 3px 0 #000000, 
-                         0 0 20px #00FF00;
+            text-shadow: 3px 3px 0 #000000, 0 0 20px #00FF00;
             transform: rotate(-2deg);
             display: inline-block;
         }
 
         .swag-w {
             color: #000000;
-            text-shadow: 0 0 15px #00FF00,
-                        2px 2px 0 #00FF00;
+            text-shadow: 0 0 15px #00FF00, 2px 2px 0 #00FF00;
             transform: rotate(1deg);
             display: inline-block;
         }
 
         .swag-a {
             color: #00FF00;
-            text-shadow: -3px 3px 0 #000000,
-                         0 0 20px #00FF00;
+            text-shadow: -3px 3px 0 #000000, 0 0 20px #00FF00;
             transform: rotate(3deg);
             display: inline-block;
         }
 
         .swag-g {
             color: #000000;
-            text-shadow: 0 0 15px #00FF00,
-                        -2px -2px 0 #00FF00;
+            text-shadow: 0 0 15px #00FF00, -2px -2px 0 #00FF00;
             transform: rotate(-3deg);
             display: inline-block;
         }
@@ -350,7 +567,6 @@
             position: relative;
         }
 
-        /* Радиоактивная молния */
         .lightning-icon {
             position: relative;
             display: inline-block;
@@ -389,7 +605,6 @@
             }
         }
 
-        /* Статистика — два баллончика */
         .stats-icon {
             position: relative;
             display: flex;
@@ -424,7 +639,6 @@
             50% { transform: rotate(20deg); }
         }
 
-        /* Профиль — чел с тату */
         .profile-icon {
             position: relative;
             display: inline-block;
@@ -524,17 +738,49 @@
                 <div class="usd-value" id="usdBalance">$0 USD</div>
             </div>
 
-            <div class="p2p-section">
-                <div class="p2p-description">
-                    <span class="dollar-icon">💱</span> Здесь вы можете обменять свою <span>SWAGA</span> на доллары или наоборот
+            <!-- P2P секция -->
+            <div class="new-order-btn">
+                <button onclick="toggleOrderForm()">+ NEW ORDER</button>
+            </div>
+
+            <!-- Форма создания ордера -->
+            <div id="orderForm" class="order-form">
+                <div class="form-title">CREATE ORDER</div>
+                
+                <div class="order-type">
+                    <button class="type-btn buy active" onclick="setOrderType('buy')">BUY</button>
+                    <button class="type-btn sell" onclick="setOrderType('sell')">SELL</button>
                 </div>
-                <button class="p2p-button" onclick="openP2P()">
-                    <div class="p2p-button-text">
-                        <span class="p2p-p">P</span>
-                        <span class="p2p-two">2</span>
-                        <span class="p2p-p">P</span>
-                    </div>
-                </button>
+
+                <div class="input-group">
+                    <label>AMOUNT (SWAG)</label>
+                    <input type="number" id="orderAmount" placeholder="100" oninput="calculateTotal()">
+                </div>
+
+                <div class="input-group">
+                    <label>PRICE (USDT per SWAG)</label>
+                    <input type="number" id="orderPrice" placeholder="0.01" step="0.001" oninput="calculateTotal()">
+                </div>
+
+                <div class="total-info">
+                    <span class="total-label">TOTAL:</span>
+                    <span class="total-value" id="totalValue">0 USDT</span>
+                </div>
+
+                <button class="create-order-btn" onclick="createOrder()">CREATE ORDER</button>
+            </div>
+
+            <!-- Список ордеров -->
+            <div class="orders-header">
+                <h3>ACTIVE ORDERS</h3>
+                <span id="ordersCount">0 orders</span>
+            </div>
+
+            <div id="ordersList" class="orders-list">
+                <div class="empty-orders">
+                    No active orders<br>
+                    <small style="font-size: 12px;">Create your first order</small>
+                </div>
             </div>
 
             <div class="swag-section">
@@ -568,7 +814,7 @@
         </div>
     </div>
 
-    <!-- Нижняя навигация с новыми иконками -->
+    <!-- Нижняя навигация -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchPage('work')">
             <span class="nav-icon">
@@ -598,9 +844,12 @@
         Telegram.WebApp.expand();
 
         let userId = null;
-        const user = Telegram.WebApp.initDataUnsafe?.user;
+        let currentOrderType = 'buy';
+        let orders = [];
 
+        const user = Telegram.WebApp.initDataUnsafe?.user;
         const usernameEl = document.getElementById('username');
+
         if (user) {
             userId = user.id;
             let name = user.first_name || 'bro';
@@ -629,25 +878,110 @@
             }
         }
 
-        async function addMoney() {
-            try {
-                const res = await fetch(`${SERVER_URL}/balance/${userId}/add/100`, {
-                    method: 'POST'
-                });
-                const data = await res.json();
-                balanceEl.textContent = data.balance;
-                usdEl.textContent = `$${data.balance} USD`;
-            } catch (e) {
-                console.error('Ошибка добавления', e);
+        function toggleOrderForm() {
+            const form = document.getElementById('orderForm');
+            form.classList.toggle('show');
+        }
+
+        function setOrderType(type) {
+            currentOrderType = type;
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (type === 'buy') {
+                document.querySelector('.type-btn.buy').classList.add('active');
+            } else {
+                document.querySelector('.type-btn.sell').classList.add('active');
             }
+            calculateTotal();
         }
 
-        function refreshBalance() {
-            loadBalance();
+        function calculateTotal() {
+            const amount = parseFloat(document.getElementById('orderAmount').value) || 0;
+            const price = parseFloat(document.getElementById('orderPrice').value) || 0;
+            const total = amount * price;
+            document.getElementById('totalValue').textContent = total.toFixed(2) + ' USDT';
         }
 
-        function openP2P() {
-            alert('🚀 P2P скоро появится');
+        function createOrder() {
+            const amount = parseFloat(document.getElementById('orderAmount').value);
+            const price = parseFloat(document.getElementById('orderPrice').value);
+
+            if (!amount || !price) {
+                alert('Заполните все поля');
+                return;
+            }
+
+            const newOrder = {
+                id: Date.now(),
+                type: currentOrderType,
+                amount: amount,
+                price: price,
+                total: amount * price,
+                seller: userId,
+                time: new Date().toLocaleTimeString()
+            };
+
+            orders.push(newOrder);
+            updateOrdersList();
+            
+            // Очищаем форму и скрываем
+            document.getElementById('orderAmount').value = '';
+            document.getElementById('orderPrice').value = '';
+            document.getElementById('orderForm').classList.remove('show');
+            
+            alert('Ордер создан!');
+        }
+
+        function updateOrdersList() {
+            const ordersList = document.getElementById('ordersList');
+            const ordersCount = document.getElementById('ordersCount');
+
+            if (orders.length === 0) {
+                ordersList.innerHTML = `
+                    <div class="empty-orders">
+                        No active orders<br>
+                        <small style="font-size: 12px;">Create your first order</small>
+                    </div>
+                `;
+                ordersCount.textContent = '0 orders';
+                return;
+            }
+
+            ordersCount.textContent = orders.length + ' orders';
+
+            let html = '';
+            orders.forEach(order => {
+                html += `
+                    <div class="order-item ${order.type}" onclick="viewOrder(${order.id})">
+                        <div class="order-info">
+                            <div class="order-type-badge ${order.type}">
+                                ${order.type.toUpperCase()}
+                            </div>
+                            <div class="order-details">
+                                <span class="order-amount">${order.amount} SWAG</span>
+                                <span class="order-price">@ ${order.price} USDT</span>
+                            </div>
+                        </div>
+                        <div class="order-total">
+                            ${order.total.toFixed(2)} USDT
+                        </div>
+                    </div>
+                `;
+            });
+            ordersList.innerHTML = html;
+        }
+
+        function viewOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            alert(`
+                Order Details:
+                Type: ${order.type}
+                Amount: ${order.amount} SWAG
+                Price: ${order.price} USDT
+                Total: ${order.total} USDT
+                Time: ${order.time}
+            `);
         }
 
         function openSWAG() {
@@ -671,10 +1005,13 @@
 
         window.addMoney = addMoney;
         window.refreshBalance = refreshBalance;
-        window.openP2P = openP2P;
         window.openSWAG = openSWAG;
         window.switchPage = switchPage;
+        window.toggleOrderForm = toggleOrderForm;
+        window.setOrderType = setOrderType;
+        window.calculateTotal = calculateTotal;
+        window.createOrder = createOrder;
+        window.viewOrder = viewOrder;
     </script>
 </body>
 </html>
-
