@@ -9,6 +9,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
         
         * {
             margin: 0;
@@ -232,6 +234,76 @@
             text-shadow: 0 0 20px #00FF00;
         }
 
+        /* Секция SWAG (граффити) */
+        .swag-section {
+            margin-top: 15px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .swag-button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .swag-button-text {
+            font-family: 'Rubik Wet Paint', 'Rubik Glitch', cursive;
+            font-size: 56px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.6));
+            transition: all 0.3s ease;
+            transform: rotate(-1deg);
+        }
+
+        .swag-button:hover .swag-button-text {
+            transform: scale(1.08) rotate(0deg);
+            filter: drop-shadow(0 0 30px #00FF00);
+        }
+
+        .swag-button:active .swag-button-text {
+            transform: scale(0.95) rotate(1deg);
+        }
+
+        .swag-s {
+            color: #00FF00;
+            text-shadow: 3px 3px 0 #000000, 
+                         0 0 20px #00FF00;
+            transform: rotate(-2deg);
+            display: inline-block;
+        }
+
+        .swag-w {
+            color: #000000;
+            text-shadow: 0 0 15px #00FF00,
+                        2px 2px 0 #00FF00;
+            transform: rotate(1deg);
+            display: inline-block;
+        }
+
+        .swag-a {
+            color: #00FF00;
+            text-shadow: -3px 3px 0 #000000,
+                         0 0 20px #00FF00;
+            transform: rotate(3deg);
+            display: inline-block;
+        }
+
+        .swag-g {
+            color: #000000;
+            text-shadow: 0 0 15px #00FF00,
+                        -2px -2px 0 #00FF00;
+            transform: rotate(-3deg);
+            display: inline-block;
+        }
+
         /* Подвал */
         .footer {
             margin-top: auto;
@@ -277,7 +349,7 @@
             <div class="usd-value" id="usdBalance">$0 USD</div>
         </div>
 
-        <!-- P2P секция с долларом и бунтарской кнопкой -->
+        <!-- P2P секция -->
         <div class="p2p-section">
             <div class="p2p-description">
                 <span class="dollar-icon">💱</span> Здесь вы можете обменять свою <span>SWAGA</span> на доллары или наоборот
@@ -287,6 +359,18 @@
                     <span class="p2p-p">P</span>
                     <span class="p2p-two">2</span>
                     <span class="p2p-p">P</span>
+                </div>
+            </button>
+        </div>
+
+        <!-- SWAG секция (граффити) -->
+        <div class="swag-section">
+            <button class="swag-button" onclick="openSWAG()">
+                <div class="swag-button-text">
+                    <span class="swag-s">S</span>
+                    <span class="swag-w">W</span>
+                    <span class="swag-a">A</span>
+                    <span class="swag-g">G</span>
                 </div>
             </button>
         </div>
@@ -356,11 +440,19 @@
 
         // Функция для P2P кнопки
         function openP2P() {
-            // Здесь будет открываться P2P интерфейс
             if (typeof showNotification === 'function') {
                 showNotification('🚀 P2P скоро появится', 'info');
             } else {
                 alert('P2P скоро появится');
+            }
+        }
+
+        // Функция для SWAG кнопки
+        function openSWAG() {
+            if (typeof showNotification === 'function') {
+                showNotification('🎨 SWAG MENU скоро появится', 'info');
+            } else {
+                alert('SWAG MENU скоро появится');
             }
         }
 
@@ -371,6 +463,7 @@
         window.addMoney = addMoney;
         window.refreshBalance = refreshBalance;
         window.openP2P = openP2P;
+        window.openSWAG = openSWAG;
     </script>
 </body>
 </html>
