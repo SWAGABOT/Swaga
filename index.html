@@ -32,6 +32,7 @@
             border: none;
             border-radius: 10px;
             font-size: 18px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -43,36 +44,59 @@
     <button onclick="refreshBalance()">🔄 Обновить</button>
 
     <script>
+        // ======================================
+        // ==== НАСТРОЙКИ =======================
+        // ======================================
+        const SERVER_URL = 'https://balance-server.up.railway.app'; // ЗДЕСЬ ТВОЙ СЕРВЕР
+
+        // ======================================
+        // ==== TELEGRAM WEB APP =================
+        // ======================================
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
-        
-        let userId = 'guest';
+
+        let userId = null;
         const user = Telegram.WebApp.initDataUnsafe?.user;
+
         if (user) {
             userId = user.id;
             document.getElementById('user').textContent = 'Привет, ' + user.first_name;
+            loadBalance();
+        } else {
+            document.getElementById('user').textContent = 'Режим гостя';
+            userId = 'guest_' + Date.now();
+            loadBalance();
         }
-        
-        function getBalance() {
-            let key = 'balance_' + userId;
-            return Number(localStorage.getItem(key)) || 0;
+
+        // ======================================
+        // ==== РАБОТА С БАЛАНСОМ (СЕРВЕР) ======
+        // ======================================
+
+        async function loadBalance() {
+            try {
+                const res = await fetch(`${SERVER_URL}/balance/${userId}`);
+                const data = await res.json();
+                document.getElementById('balance').textContent = data.balance;
+            } catch (e) {
+                console.error('Ошибка загрузки баланса', e);
+            }
         }
-        
-        function setBalance(val) {
-            let key = 'balance_' + userId;
-            localStorage.setItem(key, val);
-            document.getElementById('balance').textContent = val;
+
+        async function addMoney() {
+            try {
+                const res = await fetch(`${SERVER_URL}/balance/${userId}/add/100`, {
+                    method: 'POST'
+                });
+                const data = await res.json();
+                document.getElementById('balance').textContent = data.balance;
+            } catch (e) {
+                console.error('Ошибка добавления', e);
+            }
         }
-        
-        function addMoney() {
-            setBalance(getBalance() + 100);
-        }
-        
+
         function refreshBalance() {
-            document.getElementById('balance').textContent = getBalance();
+            loadBalance();
         }
-        
-        setBalance(getBalance());
     </script>
 </body>
 </html>
