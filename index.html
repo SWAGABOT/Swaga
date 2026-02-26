@@ -27,6 +27,7 @@
             padding-bottom: 80px;
         }
 
+        /* Фоновые буквы */
         .swaga-bg {
             position: fixed;
             top: -50%;
@@ -78,6 +79,7 @@
             flex-direction: column;
         }
 
+        /* Приветствие */
         .greeting {
             font-size: 18px;
             font-weight: 600;
@@ -181,6 +183,7 @@
             margin-top: 5px;
         }
 
+        /* Кнопка P2P */
         .p2p-section {
             margin-top: 20px;
             padding: 15px;
@@ -232,6 +235,7 @@
             text-shadow: 0 0 20px #00FF00;
         }
 
+        /* SWAG секция */
         .swag-section {
             margin-top: 15px;
             padding: 10px;
@@ -297,6 +301,7 @@
             display: inline-block;
         }
 
+        /* P2P Page */
         .p2p-page {
             position: fixed;
             top: 0;
@@ -383,6 +388,7 @@
             transform: scale(0.95);
         }
 
+        /* Форма создания ордера */
         .order-form {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -476,6 +482,15 @@
             color: white;
             font-size: 16px;
             transition: all 0.3s ease;
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .input-group input::-webkit-inner-spin-button,
+        .input-group input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
         }
 
         .input-group input:focus {
@@ -532,6 +547,7 @@
             transform: scale(0.98);
         }
 
+        /* Список ордеров */
         .orders-header {
             display: flex;
             justify-content: space-between;
@@ -684,6 +700,7 @@
             color: white;
         }
 
+        /* Модальное окно */
         .modal {
             position: fixed;
             top: 0;
@@ -743,6 +760,15 @@
             color: white;
             font-size: 18px;
             margin-bottom: 20px;
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .modal-input::-webkit-inner-spin-button,
+        .modal-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
         }
 
         .modal-total {
@@ -809,6 +835,7 @@
             border-radius: 20px;
         }
 
+        /* Нижняя навигация */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -988,6 +1015,7 @@
     </style>
 </head>
 <body>
+    <!-- Фоновые буквы -->
     <div class="swaga-bg">
         <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
         <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
@@ -996,6 +1024,7 @@
     </div>
 
     <div class="container">
+        <!-- Страница WORK -->
         <div id="workPage" class="page active-page">
             <div class="greeting">
                 <span class="wave">👋</span>
@@ -1003,6 +1032,7 @@
                 <span id="username">bro</span>
             </div>
 
+            <!-- Баланс с переключением -->
             <div class="balance-header" onclick="switchBalance()">
                 <div class="balance-label">
                     <span id="balanceLabel">USDT BALANCE</span>
@@ -1022,6 +1052,7 @@
                 <div class="usd-value" id="secondaryBalance"></div>
             </div>
 
+            <!-- Кнопка P2P -->
             <div class="p2p-section">
                 <button class="p2p-button" onclick="openP2PPage()">
                     <div class="p2p-button-text">
@@ -1044,6 +1075,7 @@
             </div>
         </div>
 
+        <!-- Страница STATS -->
         <div id="statsPage" class="page">
             <div class="stats-placeholder">
                 <span>📊</span>
@@ -1052,6 +1084,7 @@
             </div>
         </div>
 
+        <!-- Страница PROFILE -->
         <div id="profilePage" class="page">
             <div class="profile-placeholder">
                 <span>👤</span>
@@ -1061,6 +1094,7 @@
         </div>
     </div>
 
+    <!-- P2P Page -->
     <div id="p2pPage" class="p2p-page">
         <div class="p2p-header">
             <button class="back-btn" onclick="closeP2PPage()">←</button>
@@ -1071,6 +1105,7 @@
             <button onclick="toggleOrderForm()">+ NEW ORDER</button>
         </div>
 
+        <!-- Форма создания ордера -->
         <div id="orderForm" class="order-form">
             <div class="form-title">CREATE ORDER</div>
             
@@ -1107,6 +1142,7 @@
             <button class="create-order-btn" onclick="createOrder()">CREATE ORDER</button>
         </div>
 
+        <!-- Список ордеров -->
         <div class="orders-header">
             <h3>ACTIVE ORDERS</h3>
             <span id="ordersCount">0 orders</span>
@@ -1120,6 +1156,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно для сделки -->
     <div id="tradeModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeTradeModal()">&times;</span>
@@ -1143,6 +1180,7 @@
         </div>
     </div>
 
+    <!-- Нижняя навигация -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchPage('work')">
             <span class="nav-icon">
@@ -1423,6 +1461,21 @@
             
             if (!amount) {
                 alert('Введите сумму');
+                return;
+            }
+            
+            if (currentOrder.min_limit > 0 && amount < currentOrder.min_limit) {
+                alert(`Минимальная сумма: ${currentOrder.min_limit} SWAG`);
+                return;
+            }
+            
+            if (currentOrder.max_limit > 0 && amount > currentOrder.max_limit) {
+                alert(`Максимальная сумма: ${currentOrder.max_limit} SWAG`);
+                return;
+            }
+            
+            if (amount > currentOrder.amount) {
+                alert(`Доступно только ${currentOrder.amount} SWAG`);
                 return;
             }
             
