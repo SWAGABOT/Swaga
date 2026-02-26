@@ -8,7 +8,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
         
@@ -315,7 +314,7 @@
         }
     </style>
 </head>
-<body>
+    <body>
     <!-- Фоновые буквы -->
     <div class="swaga-bg">
         <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
@@ -388,7 +387,6 @@
         let userId = null;
         const user = Telegram.WebApp.initDataUnsafe?.user;
 
-        // Приветствие с обрезанием длинного имени
         const usernameEl = document.getElementById('username');
         if (user) {
             userId = user.id;
@@ -402,9 +400,6 @@
             usernameEl.textContent = 'bro';
         }
 
-        // ======================================
-        // ==== ТУТ ВСЯ ТВОЯ ЛОГИКА ОСТАЛАСЬ ====
-        // ======================================
         const SERVER_URL = 'https://balance-server-production.up.railway.app';
         
         const balanceEl = document.getElementById('balance');
@@ -438,28 +433,16 @@
             loadBalance();
         }
 
-        // Функция для P2P кнопки
         function openP2P() {
-            if (typeof showNotification === 'function') {
-                showNotification('🚀 P2P скоро появится', 'info');
-            } else {
-                alert('P2P скоро появится');
-            }
+            alert('🚀 P2P скоро появится');
         }
 
-        // Функция для SWAG кнопки
         function openSWAG() {
-            if (typeof showNotification === 'function') {
-                showNotification('🎨 SWAG MENU скоро появится', 'info');
-            } else {
-                alert('SWAG MENU скоро появится');
-            }
+            alert('🎨 SWAG MENU скоро появится');
         }
 
-        // Загружаем баланс
         loadBalance();
 
-        // Делаем функции глобальными
         window.addMoney = addMoney;
         window.refreshBalance = refreshBalance;
         window.openP2P = openP2P;
