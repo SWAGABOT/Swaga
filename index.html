@@ -163,7 +163,7 @@
             margin-top: 5px;
         }
 
-        /* Кнопка P2P (бунтарская) */
+        /* Кнопка P2P */
         .p2p-section {
             margin-top: 20px;
             padding: 15px;
@@ -281,7 +281,7 @@
             display: inline-block;
         }
 
-        /* P2P Page (отдельный экран) */
+        /* P2P Page */
         .p2p-page {
             position: fixed;
             top: 0;
@@ -557,6 +557,7 @@
             align-items: center;
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .order-item:hover {
@@ -612,6 +613,23 @@
             font-family: 'Orbitron', sans-serif;
             color: #00FF00;
             font-weight: 700;
+        }
+
+        .cancel-btn {
+            background: rgba(255, 51, 51, 0.2);
+            border: 1px solid #FF3333;
+            color: #FF3333;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .cancel-btn:hover {
+            background: #FF3333;
+            color: white;
         }
 
         .empty-orders {
@@ -878,7 +896,7 @@
         </div>
     </div>
 
-    <!-- P2P Page (отдельный экран) -->
+    <!-- P2P Page -->
     <div id="p2pPage" class="p2p-page">
         <div class="p2p-header">
             <button class="back-btn" onclick="closeP2PPage()">←</button>
@@ -956,18 +974,22 @@
     </div>
 
     <script>
+        // ======================================
+        // ==== НАСТРОЙКИ =======================
+        // ======================================
+        const SERVER_URL = 'https://balance-server-production.up.railway.app';
+        
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
 
         let userId = null;
         let currentOrderType = 'buy';
-        let orders = [];
 
         const user = Telegram.WebApp.initDataUnsafe?.user;
         const usernameEl = document.getElementById('username');
 
         if (user) {
-            userId = user.id;
+            userId = user.id.toString();
             let name = user.first_name || 'bro';
             if (name.length > 15) {
                 name = name.substring(0, 12) + '...';
@@ -978,8 +1000,9 @@
             usernameEl.textContent = 'bro';
         }
 
-        const SERVER_URL = 'https://balance-server-production.up.railway.app';
-        
+        // ======================================
+        // ==== БАЛАНС ==========================
+        // ======================================
         const balanceEl = document.getElementById('balance');
         const usdEl = document.getElementById('usdBalance');
 
@@ -994,14 +1017,21 @@
             }
         }
 
+        // ======================================
+        // ==== P2P СТРАНИЦА ====================
+        // ======================================
         function openP2PPage() {
             document.getElementById('p2pPage').classList.add('show');
+            loadOrders();
         }
 
         function closeP2PPage() {
             document.getElementById('p2pPage').classList.remove('show');
         }
 
+        // ======================================
+        // ==== ФОРМА СОЗДАНИЯ ОРДЕРА ===========
+        // ======================================
         function toggleOrderForm() {
             const form = document.getElementById('orderForm');
             form.classList.toggle('show');
@@ -1027,7 +1057,7 @@
             document.getElementById('totalValue').textContent = total.toFixed(2) + ' USDT';
         }
 
-        function createOrder() {
+        async function createOrder() {
             const amount = parseFloat(document.getElementById('orderAmount').value);
             const price = parseFloat(document.getElementById('orderPrice').value);
 
@@ -1036,32 +1066,55 @@
                 return;
             }
 
-            const newOrder = {
-                id: Date.now(),
-                type: currentOrderType,
-                amount: amount,
-                price: price,
-                total: amount * price,
-                seller: userId,
-                time: new Date().toLocaleTimeString()
-            };
+            try {
+                const res = await fetch(`${SERVER_URL}/orders/create`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        type: currentOrderType,
+                        amount: amount,
+                        price: price
+                    })
+                });
 
-            orders.push(newOrder);
-            updateOrdersList();
-            
-            // Очищаем форму и скрываем
-            document.getElementById('orderAmount').value = '';
-            document.getElementById('orderPrice').value = '';
-            document.getElementById('orderForm').classList.remove('show');
-            
-            alert('Ордер создан!');
+                const data = await res.json();
+                
+                if (data.id) {
+                    // Очищаем форму и скрываем
+                    document.getElementById('orderAmount').value = '';
+                    document.getElementById('orderPrice').value = '';
+                    document.getElementById('orderForm').classList.remove('show');
+                    
+                    loadOrders();
+                    alert('✅ Ордер создан!');
+                }
+            } catch (e) {
+                console.error('Ошибка создания ордера:', e);
+                alert('❌ Ошибка создания ордера');
+            }
         }
 
-        function updateOrdersList() {
+        // ======================================
+        // ==== ЗАГРУЗКА ОРДЕРОВ ================
+        // ======================================
+        async function loadOrders() {
+            try {
+                const res = await fetch(`${SERVER_URL}/orders`);
+                const data = await res.json();
+                displayOrders(data.orders);
+            } catch (e) {
+                console.error('Ошибка загрузки ордеров:', e);
+            }
+        }
+
+        function displayOrders(orders) {
             const ordersList = document.getElementById('ordersList');
             const ordersCount = document.getElementById('ordersCount');
 
-            if (orders.length === 0) {
+            if (!orders || orders.length === 0) {
                 ordersList.innerHTML = `
                     <div class="empty-orders">
                         No active orders<br>
@@ -1076,19 +1129,25 @@
 
             let html = '';
             orders.forEach(order => {
+                const isMyOrder = order.user_id === userId;
                 html += `
-                    <div class="order-item ${order.type}" onclick="viewOrder(${order.id})">
+                    <div class="order-item ${order.type}">
                         <div class="order-info">
                             <div class="order-type-badge ${order.type}">
-                                ${order.type.toUpperCase()}
+                                ${order.type.toUpperCase()} ${isMyOrder ? '(YOU)' : ''}
                             </div>
                             <div class="order-details">
                                 <span class="order-amount">${order.amount} SWAG</span>
                                 <span class="order-price">@ ${order.price} USDT</span>
                             </div>
                         </div>
-                        <div class="order-total">
-                            ${order.total.toFixed(2)} USDT
+                        <div style="display: flex; align-items: center;">
+                            <div class="order-total">
+                                ${order.total.toFixed(2)} USDT
+                            </div>
+                            ${isMyOrder ? 
+                                `<button class="cancel-btn" onclick="cancelOrder(${order.id})">CANCEL</button>` : 
+                                ''}
                         </div>
                     </div>
                 `;
@@ -1096,22 +1155,47 @@
             ordersList.innerHTML = html;
         }
 
-        function viewOrder(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            alert(`
-                Order Details:
-                Type: ${order.type}
-                Amount: ${order.amount} SWAG
-                Price: ${order.price} USDT
-                Total: ${order.total} USDT
-                Time: ${order.time}
-            `);
+        // ======================================
+        // ==== ОТМЕНА ОРДЕРА ===================
+        // ======================================
+        async function cancelOrder(orderId) {
+            if (!confirm('Отменить ордер?')) return;
+
+            try {
+                const res = await fetch(`${SERVER_URL}/orders/cancel/${orderId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: userId
+                    })
+                });
+
+                const data = await res.json();
+                
+                if (data.success) {
+                    loadOrders();
+                    alert('✅ Ордер отменён');
+                } else if (data.error) {
+                    alert('❌ ' + data.error);
+                }
+            } catch (e) {
+                console.error('Ошибка отмены ордера:', e);
+                alert('❌ Ошибка отмены ордера');
+            }
         }
 
+        // ======================================
+        // ==== SWAG ============================
+        // ======================================
         function openSWAG() {
             alert('🎨 SWAG MENU скоро появится');
         }
 
+        // ======================================
+        // ==== НАВИГАЦИЯ =======================
+        // ======================================
         function switchPage(page) {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
@@ -1125,17 +1209,13 @@
             event.currentTarget.classList.add('active');
         }
 
+        // ======================================
+        // ==== ЗАПУСК ==========================
+        // ======================================
         loadBalance();
 
-        window.openP2PPage = openP2PPage;
-        window.closeP2PPage = closeP2PPage;
-        window.toggleOrderForm = toggleOrderForm;
-        window.setOrderType = setOrderType;
-        window.calculateTotal = calculateTotal;
-        window.createOrder = createOrder;
-        window.viewOrder = viewOrder;
-        window.openSWAG = openSWAG;
-        window.switchPage = switchPage;
+        // Обновляем ордера каждые 30 секунд
+        setInterval(loadOrders, 30000);
     </script>
 </body>
 </html>
