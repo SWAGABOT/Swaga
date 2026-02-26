@@ -24,6 +24,7 @@
             color: white;
             position: relative;
             overflow-x: hidden;
+            padding-bottom: 80px; /* Отступ для нижнего меню */
         }
 
         /* Фоновые буквы */
@@ -76,6 +77,11 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+
+        /* Контент (будет переключаться) */
+        .content {
+            flex: 1;
         }
 
         /* Приветствие */
@@ -303,18 +309,92 @@
             display: inline-block;
         }
 
-        /* Подвал */
-        .footer {
-            margin-top: auto;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.2);
+        /* Нижняя навигация */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 20, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 255, 0, 0.2);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 10px;
+            z-index: 100;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: rgba(255, 255, 255, 0.5);
             font-size: 12px;
-            letter-spacing: 2px;
-            padding: 20px 0 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 5px 15px;
+            border-radius: 15px;
+        }
+
+        .nav-item.active {
+            color: #00FF00;
+            text-shadow: 0 0 10px #00FF00;
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            filter: drop-shadow(0 0 5px currentColor);
+        }
+
+        .nav-label {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-item:hover {
+            color: #00FF00;
+            transform: translateY(-2px);
+        }
+
+        .nav-item:active {
+            transform: translateY(0);
+        }
+
+        /* Страницы (показываются/скрываются) */
+        .page {
+            display: none;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        /* Плейсхолдеры для других страниц */
+        .stats-placeholder, .profile-placeholder {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            margin-top: 30px;
+            border: 1px dashed rgba(0, 255, 0, 0.3);
+        }
+
+        .stats-placeholder span, .profile-placeholder span {
+            color: #00FF00;
+            font-size: 48px;
+            display: block;
+            margin-bottom: 15px;
         }
     </style>
 </head>
-    <body>
+<body>
     <!-- Фоновые буквы -->
     <div class="swaga-bg">
         <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
@@ -324,59 +404,91 @@
     </div>
 
     <div class="container">
-        <!-- Приветствие -->
-        <div class="greeting">
-            <span class="wave">👋</span>
-            <span>whats up,</span>
-            <span id="username">bro</span>
-        </div>
-
-        <!-- Баланс -->
-        <div class="balance-header">
-            <div class="balance-label">Твой баланс</div>
-            <div class="balance-amount">
-                <span class="number" id="balance">0</span>
-                <span class="currency">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#00FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 17L12 22L22 17" stroke="#00FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 12L12 17L22 12" stroke="#00FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    USDT
-                </span>
+        <!-- Страница WORK (основная) -->
+        <div id="workPage" class="page active-page">
+            <!-- Приветствие -->
+            <div class="greeting">
+                <span class="wave">👋</span>
+                <span>whats up,</span>
+                <span id="username">bro</span>
             </div>
-            <div class="usd-value" id="usdBalance">$0 USD</div>
-        </div>
 
-        <!-- P2P секция -->
-        <div class="p2p-section">
-            <div class="p2p-description">
-                <span class="dollar-icon">💱</span> Здесь вы можете обменять свою <span>SWAGA</span> на доллары или наоборот
+            <!-- Баланс -->
+            <div class="balance-header">
+                <div class="balance-label">Твой баланс</div>
+                <div class="balance-amount">
+                    <span class="number" id="balance">0</span>
+                    <span class="currency">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#00FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="#00FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="#00FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        USDT
+                    </span>
+                </div>
+                <div class="usd-value" id="usdBalance">$0 USD</div>
             </div>
-            <button class="p2p-button" onclick="openP2P()">
-                <div class="p2p-button-text">
-                    <span class="p2p-p">P</span>
-                    <span class="p2p-two">2</span>
-                    <span class="p2p-p">P</span>
+
+            <!-- P2P секция -->
+            <div class="p2p-section">
+                <div class="p2p-description">
+                    <span class="dollar-icon">💱</span> Здесь вы можете обменять свою <span>SWAGA</span> на доллары или наоборот
                 </div>
-            </button>
+                <button class="p2p-button" onclick="openP2P()">
+                    <div class="p2p-button-text">
+                        <span class="p2p-p">P</span>
+                        <span class="p2p-two">2</span>
+                        <span class="p2p-p">P</span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- SWAG секция -->
+            <div class="swag-section">
+                <button class="swag-button" onclick="openSWAG()">
+                    <div class="swag-button-text">
+                        <span class="swag-s">S</span>
+                        <span class="swag-w">W</span>
+                        <span class="swag-a">A</span>
+                        <span class="swag-g">G</span>
+                    </div>
+                </button>
+            </div>
         </div>
 
-        <!-- SWAG секция (граффити) -->
-        <div class="swag-section">
-            <button class="swag-button" onclick="openSWAG()">
-                <div class="swag-button-text">
-                    <span class="swag-s">S</span>
-                    <span class="swag-w">W</span>
-                    <span class="swag-a">A</span>
-                    <span class="swag-g">G</span>
-                </div>
-            </button>
+        <!-- Страница STATS -->
+        <div id="statsPage" class="page">
+            <div class="stats-placeholder">
+                <span>📊</span>
+                STATISTICA<br>
+                <small style="font-size: 14px; color: rgba(255,255,255,0.3);">coming soon</small>
+            </div>
         </div>
-        
-        <!-- Подвал -->
-        <div class="footer">
-            SWAGA · CRYPTO
+
+        <!-- Страница PROFILE -->
+        <div id="profilePage" class="page">
+            <div class="profile-placeholder">
+                <span>👤</span>
+                PROFILE<br>
+                <small style="font-size: 14px; color: rgba(255,255,255,0.3);">coming soon</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Нижняя навигация -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchPage('work')">
+            <span class="nav-icon">⚡</span>
+            <span class="nav-label">WORK</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('stats')">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">STATS</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('profile')">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">PROFILE</span>
         </div>
     </div>
 
@@ -441,12 +553,31 @@
             alert('🎨 SWAG MENU скоро появится');
         }
 
+        // Переключение страниц
+        function switchPage(page) {
+            // Скрываем все страницы
+            document.getElementById('workPage').classList.remove('active-page');
+            document.getElementById('statsPage').classList.remove('active-page');
+            document.getElementById('profilePage').classList.remove('active-page');
+            
+            // Показываем нужную
+            document.getElementById(page + 'Page').classList.add('active-page');
+            
+            // Обновляем активный пункт меню
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+
         loadBalance();
 
+        // Делаем функции глобальными
         window.addMoney = addMoney;
         window.refreshBalance = refreshBalance;
         window.openP2P = openP2P;
         window.openSWAG = openSWAG;
+        window.switchPage = switchPage;
     </script>
 </body>
 </html>
