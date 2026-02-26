@@ -7,6 +7,8 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
         
         * {
             margin: 0;
@@ -75,7 +77,7 @@
             flex-direction: column;
         }
 
-        /* Приветствие — теперь меньше */
+        /* Приветствие */
         .greeting {
             font-size: 18px;
             font-weight: 600;
@@ -96,7 +98,6 @@
             font-size: 20px;
         }
 
-        /* Имя пользователя с обрезанием */
         #username {
             max-width: 150px;
             overflow: hidden;
@@ -106,7 +107,7 @@
             vertical-align: bottom;
         }
 
-        /* Баланс теперь выше */
+        /* Баланс */
         .balance-header {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -183,31 +184,52 @@
             font-weight: 600;
         }
 
+        .p2p-description .dollar-icon {
+            font-size: 16px;
+            margin-right: 4px;
+            display: inline-block;
+        }
+
+        /* Бунтарская кнопка P2P */
         .p2p-button {
-            background: rgba(0, 255, 0, 0.15);
-            border: 2px solid #00FF00;
-            border-radius: 50px;
-            padding: 16px 20px;
-            color: white;
-            font-size: 20px;
-            font-weight: 700;
+            background: transparent;
+            border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
             width: 100%;
+            padding: 5px 0;
+        }
+
+        .p2p-button-text {
+            font-family: 'Orbitron', 'Rajdhani', 'Inter', sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 0, 0.5));
+            transition: all 0.3s ease;
         }
 
-        .p2p-button:hover {
-            background: #00FF00;
-            color: #0A1F0A;
-            transform: scale(1.02);
-            box-shadow: 0 0 30px #00FF00;
+        .p2p-button:hover .p2p-button-text {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 25px #00FF00);
         }
 
-        .p2p-button:active {
-            transform: scale(0.98);
+        .p2p-button:active .p2p-button-text {
+            transform: scale(0.95);
+        }
+
+        .p2p-p {
+            color: #000000;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+        }
+
+        .p2p-two {
+            color: #00FF00;
+            text-shadow: 0 0 20px #00FF00;
         }
 
         /* Подвал */
@@ -231,14 +253,14 @@
     </div>
 
     <div class="container">
-        <!-- Приветствие (теперь меньше) -->
+        <!-- Приветствие -->
         <div class="greeting">
             <span class="wave">👋</span>
             <span>whats up,</span>
             <span id="username">bro</span>
         </div>
 
-        <!-- Баланс (теперь выше) -->
+        <!-- Баланс -->
         <div class="balance-header">
             <div class="balance-label">Твой баланс</div>
             <div class="balance-amount">
@@ -255,13 +277,17 @@
             <div class="usd-value" id="usdBalance">$0 USD</div>
         </div>
 
-        <!-- P2P секция с описанием -->
+        <!-- P2P секция с долларом и бунтарской кнопкой -->
         <div class="p2p-section">
             <div class="p2p-description">
-                Здесь вы можете обменять свою <span>SWAGA</span> на доллары или наоборот 💱
+                <span class="dollar-icon">💱</span> Здесь вы можете обменять свою <span>SWAGA</span> на доллары или наоборот
             </div>
             <button class="p2p-button" onclick="openP2P()">
-                P2P
+                <div class="p2p-button-text">
+                    <span class="p2p-p">P</span>
+                    <span class="p2p-two">2</span>
+                    <span class="p2p-p">P</span>
+                </div>
             </button>
         </div>
         
@@ -283,7 +309,6 @@
         if (user) {
             userId = user.id;
             let name = user.first_name || 'bro';
-            // Обрезаем если слишком длинное
             if (name.length > 15) {
                 name = name.substring(0, 12) + '...';
             }
@@ -332,7 +357,6 @@
         // Функция для P2P кнопки
         function openP2P() {
             // Здесь будет открываться P2P интерфейс
-            // Пока просто уведомление
             if (typeof showNotification === 'function') {
                 showNotification('🚀 P2P скоро появится', 'info');
             } else {
@@ -343,11 +367,10 @@
         // Загружаем баланс
         loadBalance();
 
-        // Делаем функции глобальными для кнопок
+        // Делаем функции глобальными
         window.addMoney = addMoney;
         window.refreshBalance = refreshBalance;
         window.openP2P = openP2P;
     </script>
 </body>
 </html>
-
