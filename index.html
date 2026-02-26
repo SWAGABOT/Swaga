@@ -23,7 +23,7 @@
             overflow-x: hidden;
         }
 
-        /* Исправленный фон с буквами */
+        /* Фоновые буквы */
         .swaga-bg {
             position: fixed;
             top: -50%;
@@ -75,35 +75,45 @@
             flex-direction: column;
         }
 
-        /* Обновленное приветствие */
+        /* Приветствие — теперь меньше */
         .greeting {
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 18px;
+            font-weight: 600;
             color: white;
-            margin-bottom: 20px;
-            padding-left: 5px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .greeting span {
             color: #00FF00;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .greeting .wave {
-            font-size: 28px;
+            font-size: 20px;
         }
 
+        /* Имя пользователя с обрезанием */
+        #username {
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-block;
+            vertical-align: bottom;
+        }
+
+        /* Баланс теперь выше */
         .balance-header {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(0, 255, 0, 0.2);
             border-radius: 30px;
             padding: 20px;
-            margin-top: 10px;
+            margin-top: 5px;
             margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0, 255, 0, 0.1);
         }
@@ -150,27 +160,69 @@
             margin-top: 5px;
         }
 
-        .temp-note {
+        /* Секция P2P */
+        .p2p-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 0, 0.15);
+            border-radius: 25px;
             text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 14px;
-            border-top: 1px solid rgba(0, 255, 0, 0.2);
         }
 
-        /* Кнопки скоро будут */
-        .coming-soon {
+        .p2p-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .p2p-description span {
+            color: #00FF00;
+            font-weight: 600;
+        }
+
+        .p2p-button {
+            background: rgba(0, 255, 0, 0.15);
+            border: 2px solid #00FF00;
+            border-radius: 50px;
+            padding: 16px 20px;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .p2p-button:hover {
+            background: #00FF00;
+            color: #0A1F0A;
+            transform: scale(1.02);
+            box-shadow: 0 0 30px #00FF00;
+        }
+
+        .p2p-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Подвал */
+        .footer {
             margin-top: auto;
             text-align: center;
             color: rgba(255, 255, 255, 0.2);
             font-size: 12px;
             letter-spacing: 2px;
+            padding: 20px 0 10px;
         }
     </style>
 </head>
 <body>
-    <!-- Фоновые буквы SWAGA (теперь видны полностью) -->
+    <!-- Фоновые буквы -->
     <div class="swaga-bg">
         <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
         <span>S</span><span>W</span><span>A</span><span>G</span><span>A</span>
@@ -179,14 +231,14 @@
     </div>
 
     <div class="container">
-        <!-- Приветствие "Whats up" -->
+        <!-- Приветствие (теперь меньше) -->
         <div class="greeting">
             <span class="wave">👋</span>
             <span>whats up,</span>
             <span id="username">bro</span>
         </div>
 
-        <!-- Баланс как в Tonkeeper -->
+        <!-- Баланс (теперь выше) -->
         <div class="balance-header">
             <div class="balance-label">Твой баланс</div>
             <div class="balance-amount">
@@ -203,12 +255,18 @@
             <div class="usd-value" id="usdBalance">$0 USD</div>
         </div>
 
-        <!-- Временная заметка -->
-        <div class="temp-note">
-            🚀 кнопки скоро появятся
+        <!-- P2P секция с описанием -->
+        <div class="p2p-section">
+            <div class="p2p-description">
+                Здесь вы можете обменять свою <span>SWAGA</span> на доллары или наоборот 💱
+            </div>
+            <button class="p2p-button" onclick="openP2P()">
+                P2P
+            </button>
         </div>
         
-        <div class="coming-soon">
+        <!-- Подвал -->
+        <div class="footer">
             SWAGA · CRYPTO
         </div>
     </div>
@@ -220,11 +278,16 @@
         let userId = null;
         const user = Telegram.WebApp.initDataUnsafe?.user;
 
-        // Обновленное приветствие
+        // Приветствие с обрезанием длинного имени
         const usernameEl = document.getElementById('username');
         if (user) {
             userId = user.id;
-            usernameEl.textContent = user.first_name || 'bro';
+            let name = user.first_name || 'bro';
+            // Обрезаем если слишком длинное
+            if (name.length > 15) {
+                name = name.substring(0, 12) + '...';
+            }
+            usernameEl.textContent = name;
         } else {
             userId = 'guest_' + Date.now();
             usernameEl.textContent = 'bro';
@@ -266,17 +329,25 @@
             loadBalance();
         }
 
+        // Функция для P2P кнопки
+        function openP2P() {
+            // Здесь будет открываться P2P интерфейс
+            // Пока просто уведомление
+            if (typeof showNotification === 'function') {
+                showNotification('🚀 P2P скоро появится', 'info');
+            } else {
+                alert('P2P скоро появится');
+            }
+        }
+
         // Загружаем баланс
         loadBalance();
 
         // Делаем функции глобальными для кнопок
         window.addMoney = addMoney;
         window.refreshBalance = refreshBalance;
+        window.openP2P = openP2P;
     </script>
 </body>
 </html>
-
-
-
-
 
