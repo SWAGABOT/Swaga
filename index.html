@@ -864,35 +864,6 @@
             color: #0A1F0A;
             border: 3px solid #00FF00;
             box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .profile-avatar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px #00FF00;
-        }
-
-        .edit-avatar {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            background: #0A1F0A;
-            border: 2px solid #00FF00;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #00FF00;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .edit-avatar:hover {
-            background: #00FF00;
-            color: #0A1F0A;
         }
 
         .profile-info {
@@ -941,19 +912,6 @@
             font-size: 16px;
             font-weight: 600;
             color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .info-value:hover {
-            color: #00FF00;
-        }
-
-        .edit-icon {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.3);
         }
 
         .privacy-toggle {
@@ -971,8 +929,7 @@
             font-family: 'Orbitron', sans-serif;
             font-weight: 600;
             border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            cursor: default;
             text-align: center;
         }
 
@@ -1283,16 +1240,14 @@
             </div>
         </div>
 
-        <!-- Страница PROFILE -->
+        <!-- Страница PROFILE (упрощенная) -->
         <div id="profilePage" class="page">
             <div class="profile-container">
+                <!-- Аватар и статистика -->
                 <div class="profile-header">
                     <div class="avatar-container">
-                        <div class="profile-avatar" onclick="changeAvatar()">
+                        <div class="profile-avatar">
                             <span id="avatarEmoji">👤</span>
-                        </div>
-                        <div class="edit-avatar" onclick="changeAvatar()">
-                            ✎
                         </div>
                     </div>
                     <div class="profile-stats" style="display: flex; gap: 30px;">
@@ -1307,25 +1262,14 @@
                     </div>
                 </div>
 
+                <!-- Информация профиля -->
                 <div class="profile-info">
                     <div class="info-row">
                         <div class="info-icon">👤</div>
                         <div class="info-content">
                             <div class="info-label">DISPLAY NAME</div>
-                            <div class="info-value" onclick="editName()">
+                            <div class="info-value">
                                 <span id="displayName">Crypto Warrior</span>
-                                <span class="edit-icon">✎</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="info-row">
-                        <div class="info-icon">@</div>
-                        <div class="info-content">
-                            <div class="info-label">USERNAME</div>
-                            <div class="info-value" onclick="editUsername()">
-                                <span id="profileUsername">@swaga_lord</span>
-                                <span class="edit-icon">✎</span>
                             </div>
                         </div>
                     </div>
@@ -1334,70 +1278,34 @@
                         <div class="info-icon">📝</div>
                         <div class="info-content">
                             <div class="info-label">BIO</div>
-                            <div class="info-value" onclick="editBio()">
+                            <div class="info-value">
                                 <span id="profileBio">Crypto enthusiast | SWAGA holder</span>
-                                <span class="edit-icon">✎</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-icon">📅</div>
+                        <div class="info-content">
+                            <div class="info-label">MEMBER SINCE</div>
+                            <div class="info-value">
+                                <span id="memberSince">March 2024</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="privacy-toggle">
-                        <div class="privacy-btn active" onclick="setPrivacy('public')" id="publicBtn">🌐 PUBLIC</div>
-                        <div class="privacy-btn" onclick="setPrivacy('private')" id="privateBtn">🔒 PRIVATE</div>
+                        <div class="privacy-btn active" id="publicBtn">🌐 PUBLIC</div>
+                        <div class="privacy-btn" id="privateBtn">🔒 PRIVATE</div>
                     </div>
                 </div>
 
+                <!-- Топ пользователей -->
                 <div class="stats-leaderboard">
                     <div class="leaderboard-title">
                         <span>📈</span> TOP USERS
                     </div>
-                    <div id="leaderboardList">
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank">1</div>
-                            <div class="leaderboard-avatar">👑</div>
-                            <div class="leaderboard-info">
-                                <div class="leaderboard-name">CryptoKing</div>
-                                <div class="leaderboard-stats">1,432 trades</div>
-                            </div>
-                            <div class="leaderboard-value">$12.4K</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank">2</div>
-                            <div class="leaderboard-avatar">🐉</div>
-                            <div class="leaderboard-info">
-                                <div class="leaderboard-name">DragonWhale</div>
-                                <div class="leaderboard-stats">987 trades</div>
-                            </div>
-                            <div class="leaderboard-value">$8.2K</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank">3</div>
-                            <div class="leaderboard-avatar">⚡</div>
-                            <div class="leaderboard-info">
-                                <div class="leaderboard-name">LightningTrader</div>
-                                <div class="leaderboard-stats">756 trades</div>
-                            </div>
-                            <div class="leaderboard-value">$5.9K</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank">4</div>
-                            <div class="leaderboard-avatar">🎯</div>
-                            <div class="leaderboard-info">
-                                <div class="leaderboard-name">SniperElite</div>
-                                <div class="leaderboard-stats">543 trades</div>
-                            </div>
-                            <div class="leaderboard-value">$4.1K</div>
-                        </div>
-                        <div class="leaderboard-item">
-                            <div class="leaderboard-rank">5</div>
-                            <div class="leaderboard-avatar">🦊</div>
-                            <div class="leaderboard-info">
-                                <div class="leaderboard-name">CryptoFox</div>
-                                <div class="leaderboard-stats">432 trades</div>
-                            </div>
-                            <div class="leaderboard-value">$3.2K</div>
-                        </div>
-                    </div>
+                    <div id="leaderboardList"></div>
                 </div>
             </div>
         </div>
@@ -1526,7 +1434,6 @@
         let currentBalanceMode = 'usdt';
         let currentOrder = null;
         let balances = { usdt: 0, swag: 0 };
-        let profilePrivacy = 'public';
 
         const user = Telegram.WebApp.initDataUnsafe?.user;
         const usernameEl = document.getElementById('username');
@@ -1540,12 +1447,14 @@
             usernameEl.textContent = name;
             
             // Заполняем профиль данными из Telegram
-            document.getElementById('profileUsername').textContent = '@' + (user.username || 'swaga_user');
             document.getElementById('displayName').textContent = user.first_name || 'Crypto Warrior';
         } else {
             userId = 'guest_' + Date.now();
             usernameEl.textContent = 'bro';
         }
+
+        // Устанавливаем дату регистрации
+        document.getElementById('memberSince').textContent = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
 
         // ======================================
         // ==== БАЛАНС ==========================
@@ -1557,9 +1466,9 @@
                 balances = data;
                 updateBalanceDisplay();
                 
-                // Обновляем статистику профиля
-                document.getElementById('profileOrders').textContent = Math.floor(Math.random() * 10);
-                document.getElementById('profileTrades').textContent = Math.floor(Math.random() * 50);
+                // Загружаем статистику профиля
+                loadUserStats();
+                loadLeaderboard();
             } catch (e) {
                 console.error('Ошибка загрузки баланса', e);
             }
@@ -1862,60 +1771,79 @@
         }
 
         // ======================================
+        // ==== ПРОФИЛЬ =========================
+        // ======================================
+        async function loadUserStats() {
+            try {
+                const res = await fetch(`${SERVER_URL}/orders/user/${userId}`);
+                const data = await res.json();
+                const orders = data.orders || [];
+                
+                const activeOrders = orders.filter(o => o.status === 'active').length;
+                const completedTrades = orders.filter(o => o.status === 'completed').length;
+                
+                document.getElementById('profileOrders').textContent = activeOrders;
+                document.getElementById('profileTrades').textContent = completedTrades;
+            } catch (e) {
+                console.error('Ошибка загрузки статистики', e);
+            }
+        }
+
+        async function loadLeaderboard() {
+            try {
+                const res = await fetch(`${SERVER_URL}/orders`);
+                const data = await res.json();
+                const orders = data.orders || [];
+                
+                // Считаем статистику по каждому пользователю
+                const stats = {};
+                orders.forEach(order => {
+                    if (order.status === 'completed') {
+                        if (!stats[order.user_id]) {
+                            stats[order.user_id] = { trades: 0, volume: 0 };
+                        }
+                        stats[order.user_id].trades++;
+                        stats[order.user_id].volume += order.total;
+                    }
+                });
+                
+                // Сортируем по объему
+                const sorted = Object.entries(stats).sort((a, b) => b[1].volume - a[1].volume);
+                
+                // Показываем топ-5
+                const leaderboardList = document.getElementById('leaderboardList');
+                leaderboardList.innerHTML = '';
+                
+                sorted.slice(0, 5).forEach(([userId, userStats], index) => {
+                    const item = document.createElement('div');
+                    item.className = 'leaderboard-item';
+                    item.innerHTML = `
+                        <div class="leaderboard-rank">${index + 1}</div>
+                        <div class="leaderboard-avatar">${index === 0 ? '👑' : '👤'}</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">User ${userId.slice(0, 4)}</div>
+                            <div class="leaderboard-stats">${userStats.trades} trades</div>
+                        </div>
+                        <div class="leaderboard-value">$${userStats.volume.toFixed(0)}</div>
+                    `;
+                    leaderboardList.appendChild(item);
+                });
+                
+                // Если нет данных, показываем заглушку
+                if (sorted.length === 0) {
+                    leaderboardList.innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(255,255,255,0.3);">No trades yet</div>';
+                }
+                
+            } catch (e) {
+                console.error('Ошибка загрузки топа', e);
+            }
+        }
+
+        // ======================================
         // ==== SWAG ============================
         // ======================================
         function openSWAG() {
             alert('🎨 SWAG MENU скоро появится');
-        }
-
-        // ======================================
-        // ==== ПРОФИЛЬ =========================
-        // ======================================
-        function changeAvatar() {
-            const emojis = ['👤', '🦊', '🐉', '⚡', '👑', '🦅', '🐺', '🦁', '🐲', '🔥'];
-            const currentAvatar = document.getElementById('avatarEmoji').textContent;
-            let newAvatar = currentAvatar;
-            while (newAvatar === currentAvatar) {
-                newAvatar = emojis[Math.floor(Math.random() * emojis.length)];
-            }
-            document.getElementById('avatarEmoji').textContent = newAvatar;
-            alert('✅ Аватар изменен!');
-        }
-
-        function editName() {
-            const newName = prompt('Введите новое имя:', document.getElementById('displayName').textContent);
-            if (newName && newName.trim()) {
-                document.getElementById('displayName').textContent = newName.trim();
-            }
-        }
-
-        function editUsername() {
-            const newUsername = prompt('Введите новый username (без @):', 
-                document.getElementById('profileUsername').textContent.replace('@', ''));
-            if (newUsername && newUsername.trim()) {
-                document.getElementById('profileUsername').textContent = '@' + newUsername.trim();
-            }
-        }
-
-        function editBio() {
-            const newBio = prompt('Введите новое описание:', document.getElementById('profileBio').textContent);
-            if (newBio && newBio.trim()) {
-                document.getElementById('profileBio').textContent = newBio.trim();
-            }
-        }
-
-        function setPrivacy(mode) {
-            profilePrivacy = mode;
-            document.getElementById('publicBtn').classList.remove('active');
-            document.getElementById('privateBtn').classList.remove('active');
-            
-            if (mode === 'public') {
-                document.getElementById('publicBtn').classList.add('active');
-                alert('🌐 Профиль открыт');
-            } else {
-                document.getElementById('privateBtn').classList.add('active');
-                alert('🔒 Профиль закрыт');
-            }
         }
 
         // ======================================
