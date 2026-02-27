@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SWAGA | CRYPTO</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap');
@@ -836,226 +835,221 @@
             border-radius: 20px;
         }
 
-        /* Страница статистики */
-        .stats-container {
-            padding: 15px 0;
+        /* Страница профиля */
+        .profile-container {
+            padding: 20px 0;
         }
 
-        .stats-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .stats-title {
-            font-family: 'Orbitron', sans-serif;
-            color: #00FF00;
-            font-size: 24px;
-            text-shadow: 0 0 10px #00FF00;
-            letter-spacing: 2px;
-        }
-
-        .stats-time {
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid #00FF00;
-            border-radius: 20px;
-            padding: 5px 15px;
-            font-size: 14px;
-            color: #00FF00;
-        }
-
-        /* График */
-        .chart-container {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 25px;
-            height: 200px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .chart-container canvas {
-            width: 100% !important;
-            height: 100% !important;
-        }
-
-        /* Стакан */
-        .orderbook {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 25px;
-        }
-
-        .orderbook-header {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .orderbook-sells, .orderbook-buys {
+        .profile-header {
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            padding: 10px 0;
-        }
-
-        .orderbook-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            padding: 4px 0;
-            font-size: 14px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .orderbook-row.sell .price {
-            color: #FF3333;
-            text-shadow: 0 0 8px #FF3333;
-            font-weight: 600;
-        }
-
-        .orderbook-row.buy .price {
-            color: #00FF00;
-            text-shadow: 0 0 8px #00FF00;
-            font-weight: 600;
-        }
-
-        .orderbook-row .amount {
-            color: white;
-            text-align: center;
-        }
-
-        .orderbook-row .total {
-            color: rgba(255, 255, 255, 0.7);
-            text-align: right;
-        }
-
-        .orderbook-row::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, currentColor);
-            opacity: 0.15;
-            z-index: -1;
-            transition: width 0.3s ease;
-        }
-
-        .orderbook-row.sell::before {
-            background: linear-gradient(90deg, transparent, #FF3333);
-            width: 60%;
-        }
-
-        .orderbook-row.buy::before {
-            background: linear-gradient(90deg, transparent, #00FF00);
-            width: 40%;
-        }
-
-        .current-price {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
-            border-top: 1px solid rgba(0, 255, 0, 0.2);
-            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
-            margin: 10px 0;
+            margin-bottom: 30px;
         }
 
-        .price-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            font-weight: 800;
+        .avatar-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(145deg, #00FF00, #00CC00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #0A1F0A;
+            border: 3px solid #00FF00;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px #00FF00;
+        }
+
+        .edit-avatar {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #0A1F0A;
+            border: 2px solid #00FF00;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #00FF00;
-            text-shadow: 0 0 15px #00FF00;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .price-change {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
+        .edit-avatar:hover {
+            background: #00FF00;
+            color: #0A1F0A;
         }
 
-        .price-change.positive {
-            background: rgba(0, 255, 0, 0.15);
-            color: #00FF00;
-            border: 1px solid #00FF00;
-        }
-
-        .price-change.negative {
-            background: rgba(255, 51, 51, 0.15);
-            color: #FF3333;
-            border: 1px solid #FF3333;
-        }
-
-        /* Сетка статистики */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .stat-card {
+        .profile-info {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(0, 255, 0, 0.2);
             border-radius: 20px;
             padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
+            margin-bottom: 20px;
         }
 
-        .stat-card.toxic-green {
-            border-color: #00FF00;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.1);
         }
 
-        .stat-card.toxic-red {
-            border-color: #FF3333;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.3);
+        .info-row:last-child {
+            border-bottom: none;
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 255, 0, 0.2);
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .stat-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
-            font-weight: 800;
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
             color: #00FF00;
-            text-shadow: 0 0 10px #00FF00;
-            margin-bottom: 5px;
         }
 
-        .stat-card.toxic-red .stat-value {
-            color: #FF3333;
-            text-shadow: 0 0 10px #FF3333;
+        .info-content {
+            flex: 1;
         }
 
-        .stat-sub {
+        .info-label {
             font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-value:hover {
+            color: #00FF00;
+        }
+
+        .edit-icon {
+            font-size: 14px;
             color: rgba(255, 255, 255, 0.3);
+        }
+
+        .privacy-toggle {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .privacy-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            background: transparent;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .privacy-btn.active {
+            background: #00FF00;
+            color: #0A1F0A;
+            border-color: #00FF00;
+            box-shadow: 0 0 15px #00FF00;
+        }
+
+        .stats-leaderboard {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .leaderboard-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.1);
+        }
+
+        .leaderboard-rank {
+            width: 30px;
+            height: 30px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #00FF00;
+        }
+
+        .leaderboard-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 255, 0, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .leaderboard-info {
+            flex: 1;
+        }
+
+        .leaderboard-name {
+            font-weight: 600;
+            color: white;
+        }
+
+        .leaderboard-stats {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .leaderboard-value {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            font-weight: 700;
         }
 
         /* Нижняя навигация */
@@ -1280,73 +1274,131 @@
             </div>
         </div>
 
-        <!-- Страница STATS -->
+        <!-- Страница STATS (простая) -->
         <div id="statsPage" class="page">
-            <div class="stats-container">
-                <!-- Заголовок -->
-                <div class="stats-header">
-                    <h2 class="stats-title">📊 TOXIC STATS</h2>
-                    <div class="stats-time">24h</div>
-                </div>
-                
-                <!-- Шакала прибыли (график) -->
-                <div class="chart-container">
-                    <canvas id="priceChart" width="400" height="200"></canvas>
-                </div>
-                
-                <!-- Стакан с объемами -->
-                <div class="orderbook">
-                    <div class="orderbook-header">
-                        <span>Price (USDT)</span>
-                        <span>Amount (SWAG)</span>
-                        <span>Total</span>
-                    </div>
-                    
-                    <!-- Красная сторона (продажи) -->
-                    <div class="orderbook-sells" id="sellOrders"></div>
-                    
-                    <!-- Текущая цена -->
-                    <div class="current-price">
-                        <span class="price-value" id="currentPrice">0.0152</span>
-                        <span class="price-change positive" id="priceChange">+2.4%</span>
-                    </div>
-                    
-                    <!-- Зеленая сторона (покупки) -->
-                    <div class="orderbook-buys" id="buyOrders"></div>
-                </div>
-                
-                <!-- Статистика -->
-                <div class="stats-grid">
-                    <div class="stat-card toxic-green">
-                        <div class="stat-label">Bought (24h)</div>
-                        <div class="stat-value" id="boughtAmount">124,532</div>
-                        <div class="stat-sub">SWAG</div>
-                    </div>
-                    <div class="stat-card toxic-red">
-                        <div class="stat-label">Sold (24h)</div>
-                        <div class="stat-value" id="soldAmount">98,247</div>
-                        <div class="stat-sub">SWAG</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Volume</div>
-                        <div class="stat-value" id="volume">2,847</div>
-                        <div class="stat-sub">USDT</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Trades</div>
-                        <div class="stat-value" id="tradesCount">1,432</div>
-                        <div class="stat-sub">tx</div>
-                    </div>
-                </div>
+            <div style="text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.5);">
+                <span style="font-size: 48px; color: #00FF00; display: block; margin-bottom: 15px;">📊</span>
+                STATISTICA<br>
+                <small style="font-size: 14px; color: rgba(255,255,255,0.3);">coming soon</small>
             </div>
         </div>
 
         <!-- Страница PROFILE -->
         <div id="profilePage" class="page">
-            <div style="text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.5);">
-                <span style="font-size: 48px; color: #00FF00; display: block; margin-bottom: 15px;">👤</span>
-                PROFILE<br>
-                <small style="font-size: 14px; color: rgba(255,255,255,0.3);">coming soon</small>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="avatar-container">
+                        <div class="profile-avatar" onclick="changeAvatar()">
+                            <span id="avatarEmoji">👤</span>
+                        </div>
+                        <div class="edit-avatar" onclick="changeAvatar()">
+                            ✎
+                        </div>
+                    </div>
+                    <div class="profile-stats" style="display: flex; gap: 30px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 20px; font-weight: 700; color: #00FF00;" id="profileOrders">0</div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.5);">Orders</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 20px; font-weight: 700; color: #00FF00;" id="profileTrades">0</div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.5);">Trades</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-info">
+                    <div class="info-row">
+                        <div class="info-icon">👤</div>
+                        <div class="info-content">
+                            <div class="info-label">DISPLAY NAME</div>
+                            <div class="info-value" onclick="editName()">
+                                <span id="displayName">Crypto Warrior</span>
+                                <span class="edit-icon">✎</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-icon">@</div>
+                        <div class="info-content">
+                            <div class="info-label">USERNAME</div>
+                            <div class="info-value" onclick="editUsername()">
+                                <span id="profileUsername">@swaga_lord</span>
+                                <span class="edit-icon">✎</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-icon">📝</div>
+                        <div class="info-content">
+                            <div class="info-label">BIO</div>
+                            <div class="info-value" onclick="editBio()">
+                                <span id="profileBio">Crypto enthusiast | SWAGA holder</span>
+                                <span class="edit-icon">✎</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="privacy-toggle">
+                        <div class="privacy-btn active" onclick="setPrivacy('public')" id="publicBtn">🌐 PUBLIC</div>
+                        <div class="privacy-btn" onclick="setPrivacy('private')" id="privateBtn">🔒 PRIVATE</div>
+                    </div>
+                </div>
+
+                <div class="stats-leaderboard">
+                    <div class="leaderboard-title">
+                        <span>📈</span> TOP USERS
+                    </div>
+                    <div id="leaderboardList">
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank">1</div>
+                            <div class="leaderboard-avatar">👑</div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-name">CryptoKing</div>
+                                <div class="leaderboard-stats">1,432 trades</div>
+                            </div>
+                            <div class="leaderboard-value">$12.4K</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank">2</div>
+                            <div class="leaderboard-avatar">🐉</div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-name">DragonWhale</div>
+                                <div class="leaderboard-stats">987 trades</div>
+                            </div>
+                            <div class="leaderboard-value">$8.2K</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank">3</div>
+                            <div class="leaderboard-avatar">⚡</div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-name">LightningTrader</div>
+                                <div class="leaderboard-stats">756 trades</div>
+                            </div>
+                            <div class="leaderboard-value">$5.9K</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank">4</div>
+                            <div class="leaderboard-avatar">🎯</div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-name">SniperElite</div>
+                                <div class="leaderboard-stats">543 trades</div>
+                            </div>
+                            <div class="leaderboard-value">$4.1K</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank">5</div>
+                            <div class="leaderboard-avatar">🦊</div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-name">CryptoFox</div>
+                                <div class="leaderboard-stats">432 trades</div>
+                            </div>
+                            <div class="leaderboard-value">$3.2K</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1474,7 +1526,7 @@
         let currentBalanceMode = 'usdt';
         let currentOrder = null;
         let balances = { usdt: 0, swag: 0 };
-        let priceChart = null;
+        let profilePrivacy = 'public';
 
         const user = Telegram.WebApp.initDataUnsafe?.user;
         const usernameEl = document.getElementById('username');
@@ -1486,6 +1538,10 @@
                 name = name.substring(0, 12) + '...';
             }
             usernameEl.textContent = name;
+            
+            // Заполняем профиль данными из Telegram
+            document.getElementById('profileUsername').textContent = '@' + (user.username || 'swaga_user');
+            document.getElementById('displayName').textContent = user.first_name || 'Crypto Warrior';
         } else {
             userId = 'guest_' + Date.now();
             usernameEl.textContent = 'bro';
@@ -1500,7 +1556,10 @@
                 const data = await res.json();
                 balances = data;
                 updateBalanceDisplay();
-                console.log('Баланс загружен:', balances);
+                
+                // Обновляем статистику профиля
+                document.getElementById('profileOrders').textContent = Math.floor(Math.random() * 10);
+                document.getElementById('profileTrades').textContent = Math.floor(Math.random() * 50);
             } catch (e) {
                 console.error('Ошибка загрузки баланса', e);
             }
@@ -1803,124 +1862,60 @@
         }
 
         // ======================================
-        // ==== СТАТИСТИКА ======================
-        // ======================================
-        function initToxicChart() {
-            const ctx = document.getElementById('priceChart').getContext('2d');
-            
-            // Генерируем случайные свечи
-            const candles = [];
-            let lastClose = 0.0152;
-            
-            for (let i = 0; i < 50; i++) {
-                const open = lastClose;
-                const change = (Math.random() - 0.45) * 0.001;
-                const close = open + change;
-                const high = Math.max(open, close) + Math.random() * 0.0005;
-                const low = Math.min(open, close) - Math.random() * 0.0005;
-                
-                candles.push({ open, close, high, low });
-                lastClose = close;
-            }
-            
-            // Уничтожаем старый график если есть
-            if (priceChart) priceChart.destroy();
-            
-            // Создаем кастомные свечи
-            priceChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: Array(candles.length).fill(''),
-                    datasets: [{
-                        label: 'Price',
-                        data: candles.map(c => (c.high + c.low) / 2),
-                        backgroundColor: candles.map(c => c.close >= c.open ? 'rgba(0, 255, 0, 0.3)' : 'rgba(255, 51, 51, 0.3)'),
-                        borderColor: candles.map(c => c.close >= c.open ? '#00FF00' : '#FF3333'),
-                        borderWidth: 2,
-                        barPercentage: 0.8,
-                        categoryPercentage: 0.9
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: { duration: 0 },
-                    scales: {
-                        y: {
-                            grid: { color: 'rgba(0, 255, 0, 0.1)' },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                callback: function(value) {
-                                    return '$' + value.toFixed(4);
-                                }
-                            }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { display: false }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false }
-                    }
-                }
-            });
-
-            // Генерируем стакан
-            generateOrderBook();
-            
-            // Обновляем статистику
-            document.getElementById('boughtAmount').textContent = (124532 + Math.floor(Math.random() * 10000)).toLocaleString();
-            document.getElementById('soldAmount').textContent = (98247 + Math.floor(Math.random() * 10000)).toLocaleString();
-            document.getElementById('volume').textContent = (2847 + Math.floor(Math.random() * 500)).toLocaleString();
-            document.getElementById('tradesCount').textContent = (1432 + Math.floor(Math.random() * 200)).toLocaleString();
-        }
-
-        function generateOrderBook() {
-            const sellOrders = document.getElementById('sellOrders');
-            const buyOrders = document.getElementById('buyOrders');
-            
-            let sellHtml = '';
-            let buyHtml = '';
-            
-            // Генерируем продажи (красные)
-            for (let i = 0; i < 5; i++) {
-                const price = (0.0155 + i * 0.0002).toFixed(4);
-                const amount = Math.floor(Math.random() * 5000 + 1000);
-                const total = (price * amount).toFixed(2);
-                sellHtml += `
-                    <div class="orderbook-row sell">
-                        <span class="price">${price}</span>
-                        <span class="amount">${amount}</span>
-                        <span class="total">${total}</span>
-                    </div>
-                `;
-            }
-            
-            // Генерируем покупки (зеленые)
-            for (let i = 0; i < 5; i++) {
-                const price = (0.0149 - i * 0.0002).toFixed(4);
-                const amount = Math.floor(Math.random() * 5000 + 1000);
-                const total = (price * amount).toFixed(2);
-                buyHtml += `
-                    <div class="orderbook-row buy">
-                        <span class="price">${price}</span>
-                        <span class="amount">${amount}</span>
-                        <span class="total">${total}</span>
-                    </div>
-                `;
-            }
-            
-            sellOrders.innerHTML = sellHtml;
-            buyOrders.innerHTML = buyHtml;
-        }
-
-        // ======================================
         // ==== SWAG ============================
         // ======================================
         function openSWAG() {
             alert('🎨 SWAG MENU скоро появится');
+        }
+
+        // ======================================
+        // ==== ПРОФИЛЬ =========================
+        // ======================================
+        function changeAvatar() {
+            const emojis = ['👤', '🦊', '🐉', '⚡', '👑', '🦅', '🐺', '🦁', '🐲', '🔥'];
+            const currentAvatar = document.getElementById('avatarEmoji').textContent;
+            let newAvatar = currentAvatar;
+            while (newAvatar === currentAvatar) {
+                newAvatar = emojis[Math.floor(Math.random() * emojis.length)];
+            }
+            document.getElementById('avatarEmoji').textContent = newAvatar;
+            alert('✅ Аватар изменен!');
+        }
+
+        function editName() {
+            const newName = prompt('Введите новое имя:', document.getElementById('displayName').textContent);
+            if (newName && newName.trim()) {
+                document.getElementById('displayName').textContent = newName.trim();
+            }
+        }
+
+        function editUsername() {
+            const newUsername = prompt('Введите новый username (без @):', 
+                document.getElementById('profileUsername').textContent.replace('@', ''));
+            if (newUsername && newUsername.trim()) {
+                document.getElementById('profileUsername').textContent = '@' + newUsername.trim();
+            }
+        }
+
+        function editBio() {
+            const newBio = prompt('Введите новое описание:', document.getElementById('profileBio').textContent);
+            if (newBio && newBio.trim()) {
+                document.getElementById('profileBio').textContent = newBio.trim();
+            }
+        }
+
+        function setPrivacy(mode) {
+            profilePrivacy = mode;
+            document.getElementById('publicBtn').classList.remove('active');
+            document.getElementById('privateBtn').classList.remove('active');
+            
+            if (mode === 'public') {
+                document.getElementById('publicBtn').classList.add('active');
+                alert('🌐 Профиль открыт');
+            } else {
+                document.getElementById('privateBtn').classList.add('active');
+                alert('🔒 Профиль закрыт');
+            }
         }
 
         // ======================================
@@ -1937,11 +1932,6 @@
                 item.classList.remove('active');
             });
             event.currentTarget.classList.add('active');
-            
-            // Если открыли страницу статистики, инициализируем график
-            if (page === 'stats') {
-                setTimeout(() => initToxicChart(), 100);
-            }
         }
 
         // ======================================
