@@ -2064,12 +2064,38 @@
     </div>
 
     <script>
+        // ======================================
+        // ==== НАСТРОЙКИ =======================
+        // ======================================
         const SERVER_URL = 'https://balance-server-production.up.railway.app';
         const COMMISSION = 0.02;
         
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
 
+        // ======================================
+        // ==== ПРОВЕРКА СЕРВЕРА ================
+        // ======================================
+        async function checkServerConnection() {
+            try {
+                const res = await fetch(`${SERVER_URL}/`);
+                if (res.ok) {
+                    const data = await res.json();
+                    console.log('✅ Сервер доступен:', data);
+                    return true;
+                }
+            } catch (e) {
+                console.error('❌ Сервер недоступен:', e);
+            }
+            return false;
+        }
+
+        // Запускаем проверку через 2 секунды
+        setTimeout(checkServerConnection, 2000);
+
+        // ======================================
+        // ==== ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЯ ==========
+        // ======================================
         let userId = null;
         let currentOrderType = 'buy';
         let currentBalanceMode = 'usdt';
@@ -2084,9 +2110,6 @@
         let selectedBetType = null;
         let selectedNumber = null;
 
-        // ======================================
-        // ==== ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЯ ==========
-        // ======================================
         const user = Telegram.WebApp.initDataUnsafe?.user;
         const usernameEl = document.getElementById('username');
 
@@ -2198,7 +2221,7 @@
             document.body.appendChild(panel);
         }
 
-        // Функция начисления
+        // Функция начисления (исправленная)
         window.executeAdminAdd = async function() {
             const targetId = document.getElementById('adminUserId')?.value || userId;
             const amount = document.getElementById('adminAmount')?.value;
@@ -2210,13 +2233,28 @@
             }
             
             try {
+                console.log(`➡️ Отправка запроса: ${SERVER_URL}/balance/add/${targetId}`);
+                console.log(`📦 Данные:`, { currency, amount: parseFloat(amount) });
+                
                 const res = await fetch(`${SERVER_URL}/balance/add/${targetId}`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ currency: currency, amount: parseFloat(amount) })
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        currency: currency, 
+                        amount: parseFloat(amount) 
+                    })
                 });
                 
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    throw new Error(`HTTP ${res.status}: ${errorText}`);
+                }
+                
                 const data = await res.json();
+                console.log('✅ Ответ сервера:', data);
                 
                 if (targetId === userId) {
                     balances = data;
@@ -2234,7 +2272,8 @@
                 if (panel) panel.remove();
                 
             } catch (e) {
-                alert('❌ Ошибка: ' + e);
+                console.error('❌ Ошибка:', e);
+                alert('❌ Ошибка: ' + e.message);
             }
         };
 
@@ -2244,6 +2283,11 @@
         async function loadBalance() {
             try {
                 const res = await fetch(`${SERVER_URL}/balance/${userId}`);
+                
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
+                }
+                
                 const data = await res.json();
                 balances = data;
                 updateBalanceDisplay();
@@ -2260,7 +2304,11 @@
                 
                 console.log('✅ Баланс загружен с сервера:', balances);
             } catch (e) {
-                console.error('Ошибка загрузки баланса', e);
+                console.error('❌ Ошибка загрузки баланса:', e);
+                
+                // Показываем заглушку
+                document.getElementById('balance').textContent = '0';
+                document.getElementById('secondaryBalance').textContent = 'Ошибка загрузки';
             }
         }
 
