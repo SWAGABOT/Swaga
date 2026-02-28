@@ -2182,11 +2182,11 @@
             </div>
         </div>
 
-        <!-- Страница меню игр -->
+        <!-- Страница меню игр (ИСПРАВЛЕНО) -->
         <div id="gamesMenuPage" class="page">
             <div class="games-container">
                 <div class="games-header">
-                    <button class="back-btn" onclick="switchPage('work')">←</button>
+                    <button class="back-btn" onclick="openGamesMenu()">←</button>
                     <h2 class="games-title">🎮 SWAGA GAMES</h2>
                 </div>
                 
@@ -2223,7 +2223,7 @@
             </div>
         </div>
 
-        <!-- Страница рулетки (НОВАЯ) -->
+        <!-- Страница рулетки -->
         <div id="roulettePage" class="page">
             <div class="roulette-container">
                 <div class="roulette-header">
@@ -3620,7 +3620,7 @@
             document.getElementById('betAmount').value = amount;
         }
 
-        // Переопределение функции spinRoulette
+        // Основная функция вращения рулетки
         function spinRoulette() {
             const totalBet = Object.values(selectedBets).reduce((sum, val) => sum + val, 0);
             
@@ -3636,7 +3636,6 @@
             
             // Анимация вращения
             const wheel = document.getElementById('wheelNumbers');
-            const container = document.getElementById('wheelContainer');
             
             // Генерируем случайное число от 0 до 36
             const resultIndex = Math.floor(Math.random() * 37);
@@ -3731,9 +3730,35 @@
             }, 3000);
         }
 
-        // Обновляем функцию openRoulette
+        // ======================================
+        // ==== ИГРЫ (ИСПРАВЛЕННЫЕ ФУНКЦИИ) =====
+        // ======================================
+        function openGamesMenu() {
+            console.log('🔄 Открываем меню игр');
+            // Скрываем все страницы
+            document.getElementById('workPage').classList.remove('active-page');
+            document.getElementById('statsPage').classList.remove('active-page');
+            document.getElementById('profilePage').classList.remove('active-page');
+            document.getElementById('gamesMenuPage').classList.remove('active-page');
+            document.getElementById('roulettePage').classList.remove('active-page');
+            
+            // Показываем меню игр
+            document.getElementById('gamesMenuPage').classList.add('active-page');
+            
+            // Обновляем игровой баланс
+            document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
+        }
+
         function openRoulette() {
-            switchPage('roulette');
+            console.log('🎲 Открываем рулетку');
+            document.getElementById('workPage').classList.remove('active-page');
+            document.getElementById('statsPage').classList.remove('active-page');
+            document.getElementById('profilePage').classList.remove('active-page');
+            document.getElementById('gamesMenuPage').classList.remove('active-page');
+            document.getElementById('roulettePage').classList.remove('active-page');
+            
+            document.getElementById('roulettePage').classList.add('active-page');
+            
             document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
             clearAllBets();
             document.getElementById('betAmount').value = 10;
