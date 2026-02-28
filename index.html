@@ -2230,7 +2230,8 @@
                 alert(`✅ Начислено ${amount} ${currency} пользователю ${targetId === userId ? 'себе' : targetId}`);
                 
                 // Закрываем панель
-                document.querySelector('div[style*="transform: translate(-50%, -50%)"]').remove();
+                const panel = document.querySelector('div[style*="transform: translate(-50%, -50%)"]');
+                if (panel) panel.remove();
                 
             } catch (e) {
                 alert('❌ Ошибка: ' + e);
@@ -2256,6 +2257,8 @@
                 // Обновляем баланс в играх
                 document.getElementById('gameBalance').textContent = balances.swag.toFixed(2);
                 document.getElementById('rouletteBalance').textContent = balances.swag.toFixed(2);
+                
+                console.log('✅ Баланс загружен с сервера:', balances);
             } catch (e) {
                 console.error('Ошибка загрузки баланса', e);
             }
@@ -2899,6 +2902,39 @@
         }
 
         // ======================================
+        // ==== ФУНКЦИЯ СИНХРОНИЗАЦИИ БАЛАНСА ===
+        // ======================================
+        async function updateServerBalance(currency, newAmount) {
+            try {
+                // Сначала получаем текущий баланс с сервера
+                const getRes = await fetch(`${SERVER_URL}/balance/${userId}`);
+                const serverData = await getRes.json();
+                
+                // Вычисляем разницу
+                const currentServerBalance = serverData[currency];
+                const difference = newAmount - currentServerBalance;
+                
+                if (Math.abs(difference) > 0.01) { // Игнорируем мелкие погрешности
+                    // Отправляем только разницу
+                    const res = await fetch(`${SERVER_URL}/balance/add/${userId}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            currency: currency, 
+                            amount: difference 
+                        })
+                    });
+                    
+                    const data = await res.json();
+                    console.log(`✅ Баланс синхронизирован: ${currency} = ${data[currency]}`);
+                    return data;
+                }
+            } catch (e) {
+                console.error('❌ Ошибка синхронизации баланса:', e);
+            }
+        }
+
+        // ======================================
         // ==== ИГРЫ ============================
         // ======================================
         function openGamesMenu() {
@@ -2981,16 +3017,27 @@
 
             // Обновляем баланс
             const oldBalance = balances.swag;
+            let newBalance;
+            
             if (win) {
-                balances.swag = oldBalance + winAmount - currentBet;
+                newBalance = oldBalance + winAmount - currentBet;
             } else {
-                balances.swag = oldBalance - currentBet;
+                newBalance = oldBalance - currentBet;
             }
 
-            // Обновляем отображение
-            document.getElementById('balance').textContent = balances.swag.toFixed(2);
-            document.getElementById('gameBalance').textContent = balances.swag.toFixed(2);
-            document.getElementById('rouletteBalance').textContent = balances.swag.toFixed(2);
+            // ОТПРАВЛЯЕМ НОВЫЙ БАЛАНС НА СЕРВЕР
+            updateServerBalance('swag', newBalance).then(data => {
+                if (data) {
+                    balances = data;
+                } else {
+                    balances.swag = newBalance;
+                }
+                
+                // Обновляем отображение
+                document.getElementById('balance').textContent = balances.swag.toFixed(2);
+                document.getElementById('gameBalance').textContent = balances.swag.toFixed(2);
+                document.getElementById('rouletteBalance').textContent = balances.swag.toFixed(2);
+            });
 
             // Показываем результат
             const resultDiv = document.getElementById('rouletteResult');
