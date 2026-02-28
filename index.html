@@ -3034,7 +3034,7 @@
                 }
                 
                 // Обновляем отображение
-                document.getElementById('balance').textContent = balances.swag.toFixed(2);
+                updateBalanceDisplay();
                 document.getElementById('gameBalance').textContent = balances.swag.toFixed(2);
                 document.getElementById('rouletteBalance').textContent = balances.swag.toFixed(2);
             });
@@ -3080,6 +3080,7 @@
             
             if (page === 'work') {
                 document.querySelector('.nav-item[onclick="switchPage(\'work\')"]').classList.add('active');
+                updateBalanceDisplay(); // ← ВАЖНО: обновляем баланс при возврате на WORK
             } else if (page === 'stats') {
                 document.querySelector('.nav-item[onclick="switchPage(\'stats\')"]').classList.add('active');
                 setTimeout(() => initStats(), 100);
