@@ -110,7 +110,7 @@
             vertical-align: bottom;
         }
 
-        /* Баланс с переключением (БЕЗ USD) */
+        /* Баланс с переключением (с адаптивным шрифтом) */
         .balance-header {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -155,6 +155,8 @@
             display: flex;
             align-items: baseline;
             gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .balance-amount .number {
@@ -162,7 +164,19 @@
             font-weight: 800;
             color: #FFFFFF;
             text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            transition: font-size 0.2s ease;
+            word-break: break-word;
+            max-width: 100%;
+            line-height: 1.2;
         }
+
+        /* Адаптивные размеры шрифта */
+        .balance-amount .number[data-length="5"] { font-size: 42px; }
+        .balance-amount .number[data-length="6"] { font-size: 36px; }
+        .balance-amount .number[data-length="7"] { font-size: 32px; }
+        .balance-amount .number[data-length="8"] { font-size: 28px; }
+        .balance-amount .number[data-length="9"] { font-size: 24px; }
+        .balance-amount .number[data-length="10"] { font-size: 22px; }
 
         .balance-amount .currency {
             font-size: 24px;
@@ -171,11 +185,16 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            white-space: nowrap;
         }
 
-        .balance-amount .currency svg {
-            width: 24px;
-            height: 24px;
+        @media (max-width: 400px) {
+            .balance-amount .number[data-length="5"] { font-size: 38px; }
+            .balance-amount .number[data-length="6"] { font-size: 32px; }
+            .balance-amount .number[data-length="7"] { font-size: 28px; }
+            .balance-amount .number[data-length="8"] { font-size: 24px; }
+            .balance-amount .number[data-length="9"] { font-size: 22px; }
+            .balance-amount .number[data-length="10"] { font-size: 20px; }
         }
 
         /* Кнопка P2P */
@@ -383,7 +402,7 @@
             transform: scale(0.95);
         }
 
-        /* Форма создания ордера */
+        /* Форма создания ордера (без стрелок) */
         .order-form {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -695,7 +714,7 @@
             color: white;
         }
 
-        /* Модальное окно */
+        /* Модальное окно (без стрелок) */
         .modal {
             position: fixed;
             top: 0;
@@ -1380,6 +1399,10 @@
             text-shadow: 0 0 15px #00FF00;
         }
 
+        .balance-card.small {
+            margin-bottom: 20px;
+        }
+
         .bet-buttons {
             display: flex;
             gap: 10px;
@@ -1464,6 +1487,15 @@
             color: white;
             font-size: 18px;
             margin: 20px 0;
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .number-input::-webkit-inner-spin-button,
+        .number-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
         }
 
         .spin-btn {
@@ -1707,7 +1739,7 @@
                 <span id="username">bro</span>
             </div>
 
-            <!-- Баланс с переключением (БЕЗ USD) -->
+            <!-- Баланс с переключением -->
             <div class="balance-header" onclick="switchBalance()">
                 <div class="balance-label">
                     <span id="balanceLabel">USDT BALANCE</span>
@@ -1724,6 +1756,7 @@
                         <span id="currencyLabel">USDT</span>
                     </span>
                 </div>
+                <div class="usd-value" id="secondaryBalance"></div>
             </div>
 
             <!-- Кнопка P2P -->
@@ -2266,12 +2299,16 @@
             if (currentBalanceMode === 'usdt') {
                 balanceLabel.textContent = 'USDT BALANCE';
                 currencyLabel.textContent = 'USDT';
-                balanceEl.textContent = balances.usdt.toFixed(2);
+                const balanceStr = balances.usdt.toFixed(2);
+                balanceEl.textContent = balanceStr;
+                balanceEl.setAttribute('data-length', balanceStr.length);
                 secondaryBalance.textContent = `≈ ${balances.swag.toFixed(2)} SWAG`;
             } else {
                 balanceLabel.textContent = 'SWAG BALANCE';
                 currencyLabel.textContent = 'SWAG';
-                balanceEl.textContent = balances.swag.toFixed(2);
+                const balanceStr = balances.swag.toFixed(2);
+                balanceEl.textContent = balanceStr;
+                balanceEl.setAttribute('data-length', balanceStr.length);
                 secondaryBalance.textContent = `≈ ${balances.usdt.toFixed(2)} USDT`;
             }
         }
@@ -2581,15 +2618,21 @@
         }
 
         // ======================================
-        // ==== ЛИДЕРБОРД (ТОЛЬКО РЕАЛЬНЫЕ) =====
+        // ==== ЛИДЕРБОРД (ИСПРАВЛЕННЫЙ) ========
         // ======================================
         async function loadLeaderboard() {
             try {
-                // Получаем топ пользователей с сервера
+                console.log('Загрузка лидерборда...');
                 const res = await fetch(`${SERVER_URL}/leaderboard?limit=20`);
-                const data = await res.json();
-                const leaderboard = data.leaderboard || [];
                 
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
+                }
+                
+                const data = await res.json();
+                console.log('Данные лидерборда:', data);
+                
+                const leaderboard = data.leaderboard || [];
                 const leaderboardList = document.getElementById('leaderboardList');
                 leaderboardList.innerHTML = '';
                 
@@ -2630,7 +2673,7 @@
                         <div class="leaderboard-avatar">${userAvatar}</div>
                         <div class="leaderboard-info">
                             <div class="leaderboard-name">${displayName}</div>
-                            <div class="leaderboard-stats">${user.swag.toFixed(0)} SWAG</div>
+                            <div class="leaderboard-stats">${Math.round(user.swag).toLocaleString()} SWAG</div>
                         </div>
                     `;
                     leaderboardList.appendChild(item);
@@ -2638,6 +2681,7 @@
                 
             } catch (e) {
                 console.error('Ошибка загрузки топа:', e);
+                document.getElementById('leaderboardList').innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(255,255,255,0.3);">Error loading leaderboard</div>';
             }
         }
 
@@ -2952,6 +2996,8 @@
 
         function openRoulette() {
             switchPage('roulette');
+            // Обновляем баланс при открытии
+            document.getElementById('rouletteBalance').textContent = balances.swag.toFixed(2);
             // Сбрасываем состояние рулетки
             selectedBetType = null;
             selectedNumber = null;
@@ -3095,6 +3141,7 @@
                 setTimeout(() => initStats(), 100);
             } else if (page === 'profile') {
                 document.querySelector('.nav-item[onclick="switchPage(\'profile\')"]').classList.add('active');
+                loadLeaderboard(); // Добавляем загрузку лидерборда при открытии профиля
             }
         }
 
