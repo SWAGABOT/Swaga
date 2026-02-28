@@ -1209,8 +1209,43 @@
             border: 1px solid rgba(0, 255, 0, 0.2);
             border-radius: 20px;
             padding: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             height: 200px;
+        }
+
+        /* Переключатель графика */
+        .chart-switcher {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .chart-btn {
+            flex: 1;
+            max-width: 120px;
+            padding: 10px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            background: transparent;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .chart-btn.active {
+            background: #00FF00;
+            color: #0A1F0A;
+            border-color: #00FF00;
+            box-shadow: 0 0 15px #00FF00;
+        }
+
+        .chart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
         }
 
         /* Карточки статистики */
@@ -1218,7 +1253,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .stat-card {
@@ -1228,16 +1263,6 @@
             padding: 20px;
             text-align: center;
             transition: all 0.3s ease;
-        }
-
-        .stat-card.toxic-green {
-            border-color: #00FF00;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-        }
-
-        .stat-card.toxic-red {
-            border-color: #FF3333;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.3);
         }
 
         .stat-card:hover {
@@ -1262,131 +1287,18 @@
             margin-bottom: 5px;
         }
 
-        .stat-card.toxic-red .stat-value {
-            color: #FF3333;
-            text-shadow: 0 0 10px #FF3333;
-        }
-
-        .stat-sub {
+        .stat-change {
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Стакан */
-        .orderbook {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .orderbook-header {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
             color: rgba(255, 255, 255, 0.5);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-top: 5px;
         }
 
-        .orderbook-sells, .orderbook-buys {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            padding: 10px 0;
+        .stat-change.positive {
+            color: #00FF00;
         }
 
-        .orderbook-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            padding: 4px 0;
-            font-size: 14px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .orderbook-row.sell .price {
+        .stat-change.negative {
             color: #FF3333;
-            text-shadow: 0 0 8px #FF3333;
-            font-weight: 600;
-        }
-
-        .orderbook-row.buy .price {
-            color: #00FF00;
-            text-shadow: 0 0 8px #00FF00;
-            font-weight: 600;
-        }
-
-        .orderbook-row .amount {
-            color: white;
-            text-align: center;
-        }
-
-        .orderbook-row .total {
-            color: rgba(255, 255, 255, 0.7);
-            text-align: right;
-        }
-
-        .orderbook-row::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, currentColor);
-            opacity: 0.15;
-            z-index: -1;
-            transition: width 0.3s ease;
-        }
-
-        .orderbook-row.sell::before {
-            background: linear-gradient(90deg, transparent, #FF3333);
-            width: 60%;
-        }
-
-        .orderbook-row.buy::before {
-            background: linear-gradient(90deg, transparent, #00FF00);
-            width: 40%;
-        }
-
-        .current-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-top: 1px solid rgba(0, 255, 0, 0.2);
-            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
-            margin: 10px 0;
-        }
-
-        .price-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            font-weight: 800;
-            color: #00FF00;
-            text-shadow: 0 0 15px #00FF00;
-        }
-
-        .price-change {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .price-change.positive {
-            background: rgba(0, 255, 0, 0.15);
-            color: #00FF00;
-            border: 1px solid #00FF00;
-        }
-
-        .price-change.negative {
-            background: rgba(255, 51, 51, 0.15);
-            color: #FF3333;
-            border: 1px solid #FF3333;
         }
 
         /* Нижняя навигация */
@@ -1616,78 +1528,44 @@
             <div class="stats-container">
                 <!-- Заголовок -->
                 <div class="stats-header">
-                    <h2 class="stats-title">📊 TOXIC STATS</h2>
+                    <h2 class="stats-title">⚡ SWAGA STATS</h2>
                     <div class="stats-time">24h</div>
                 </div>
                 
-                <!-- График -->
+                <!-- График баланса пользователя -->
                 <div class="chart-container">
-                    <canvas id="priceChart"></canvas>
+                    <canvas id="userChart"></canvas>
                 </div>
                 
-                <!-- Карточки статистики -->
+                <!-- Переключатель валюты для графика -->
+                <div class="chart-switcher">
+                    <button class="chart-btn active" onclick="switchChart('usdt')" id="chartUsdtBtn">USDT</button>
+                    <button class="chart-btn" onclick="switchChart('swag')" id="chartSwagBtn">SWAG</button>
+                </div>
+                
+                <!-- Карточки статистики пользователя -->
                 <div class="stats-grid">
-                    <div class="stat-card toxic-green">
-                        <div class="stat-label">VOLUME</div>
-                        <div class="stat-value" id="totalVolume">0</div>
-                        <div class="stat-sub">USDT</div>
-                    </div>
-                    <div class="stat-card toxic-red">
-                        <div class="stat-label">TRADES</div>
-                        <div class="stat-value" id="totalTrades">0</div>
-                        <div class="stat-sub">tx</div>
+                    <div class="stat-card">
+                        <div class="stat-label">USDT BALANCE</div>
+                        <div class="stat-value" id="userUsdt">0.00</div>
+                        <div class="stat-change" id="usdtChange">+0.00 (0%)</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-label">BUY VOL</div>
-                        <div class="stat-value" id="buyVolume">0</div>
-                        <div class="stat-sub">USDT</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">SELL VOL</div>
-                        <div class="stat-value" id="sellVolume">0</div>
-                        <div class="stat-sub">USDT</div>
-                    </div>
-                </div>
-                
-                <!-- Стакан -->
-                <div class="orderbook">
-                    <div class="orderbook-header">
-                        <span>Price</span>
-                        <span>Amount</span>
-                        <span>Total</span>
-                    </div>
-                    
-                    <!-- Красная сторона (продажи) -->
-                    <div class="orderbook-sells" id="sellOrders">
-                        <!-- Генерируется через JS -->
-                    </div>
-                    
-                    <!-- Текущая цена -->
-                    <div class="current-price">
-                        <span class="price-value" id="currentPrice">0.0152</span>
-                        <span class="price-change positive" id="priceChange">+2.4%</span>
-                    </div>
-                    
-                    <!-- Зеленая сторона (покупки) -->
-                    <div class="orderbook-buys" id="buyOrders">
-                        <!-- Генерируется через JS -->
+                        <div class="stat-label">SWAG BALANCE</div>
+                        <div class="stat-value" id="userSwag">0.00</div>
+                        <div class="stat-change" id="swagChange">+0.00 (0%)</div>
                     </div>
                 </div>
                 
                 <!-- Доп статистика -->
-                <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-top: 15px;">
                     <div class="stat-card">
-                        <div class="stat-label">USERS</div>
+                        <div class="stat-label">TOTAL USERS</div>
                         <div class="stat-value" id="totalUsers">0</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-label">ORDERS</div>
+                        <div class="stat-label">ACTIVE ORDERS</div>
                         <div class="stat-value" id="totalOrders">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">FEE</div>
-                        <div class="stat-value" id="totalFee">0</div>
-                        <div class="stat-sub">USDT</div>
                     </div>
                 </div>
             </div>
@@ -1882,7 +1760,9 @@
         let currentBalanceMode = 'usdt';
         let currentOrder = null;
         let balances = { usdt: 0, swag: 0 };
-        let priceChart = null;
+        let userChart = null;
+        let chartHistory = [];
+        let chartMode = 'usdt';
 
         const user = Telegram.WebApp.initDataUnsafe?.user;
         const usernameEl = document.getElementById('username');
@@ -1908,6 +1788,9 @@
                 const data = await res.json();
                 balances = data;
                 updateBalanceDisplay();
+                
+                // Сохраняем историю баланса
+                saveBalanceHistory();
                 
                 loadUserStats();
                 loadLeaderboard();
@@ -1944,34 +1827,114 @@
         // ==== СТАТИСТИКА ======================
         // ======================================
         function initStats() {
-            initChart();
-            loadStatsData();
-            generateOrderBook();
+            loadUserStats();
+            loadGlobalStats();
+            generateUserChart();
         }
 
-        function initChart() {
-            const ctx = document.getElementById('priceChart').getContext('2d');
+        async function loadUserStats() {
+            try {
+                // Получаем историю баланса из localStorage
+                const history = JSON.parse(localStorage.getItem('swaga_history_' + userId) || '[]');
+                
+                // Если истории нет, создаем начальную
+                if (history.length === 0) {
+                    const now = Date.now();
+                    history.push({
+                        time: now,
+                        usdt: balances.usdt,
+                        swag: balances.swag
+                    });
+                    localStorage.setItem('swaga_history_' + userId, JSON.stringify(history));
+                }
+                
+                chartHistory = history;
+                
+                // Обновляем отображение текущего баланса
+                document.getElementById('userUsdt').textContent = balances.usdt.toFixed(2);
+                document.getElementById('userSwag').textContent = balances.swag.toFixed(2);
+                
+                // Рассчитываем изменения
+                if (history.length > 1) {
+                    const prev = history[history.length - 2];
+                    const usdtChange = balances.usdt - prev.usdt;
+                    const swagChange = balances.swag - prev.swag;
+                    const usdtPercent = prev.usdt > 0 ? ((usdtChange / prev.usdt) * 100).toFixed(1) : '0';
+                    const swagPercent = prev.swag > 0 ? ((swagChange / prev.swag) * 100).toFixed(1) : '0';
+                    
+                    const usdtChangeEl = document.getElementById('usdtChange');
+                    const swagChangeEl = document.getElementById('swagChange');
+                    
+                    usdtChangeEl.textContent = `${usdtChange > 0 ? '+' : ''}${usdtChange.toFixed(2)} (${usdtPercent}%)`;
+                    swagChangeEl.textContent = `${swagChange > 0 ? '+' : ''}${swagChange.toFixed(2)} (${swagPercent}%)`;
+                    
+                    usdtChangeEl.className = `stat-change ${usdtChange >= 0 ? 'positive' : 'negative'}`;
+                    swagChangeEl.className = `stat-change ${swagChange >= 0 ? 'positive' : 'negative'}`;
+                }
+                
+                generateUserChart();
+                
+            } catch (e) {
+                console.error('Ошибка загрузки статистики пользователя', e);
+            }
+        }
+
+        async function loadGlobalStats() {
+            try {
+                const res = await fetch(`${SERVER_URL}/orders`);
+                const data = await res.json();
+                const orders = data.orders || [];
+                
+                const users = new Set();
+                let activeOrders = 0;
+                
+                orders.forEach(order => {
+                    users.add(order.user_id);
+                    if (order.status === 'active') {
+                        activeOrders++;
+                    }
+                });
+                
+                document.getElementById('totalUsers').textContent = users.size;
+                document.getElementById('totalOrders').textContent = activeOrders;
+                
+            } catch (e) {
+                console.error('Ошибка загрузки глобальной статистики', e);
+            }
+        }
+
+        function generateUserChart() {
+            const ctx = document.getElementById('userChart').getContext('2d');
             
-            // Генерируем данные
-            const labels = Array.from({ length: 24 }, (_, i) => `${i}:00`);
-            const prices = [];
-            let lastPrice = 0.0152;
-            
-            for (let i = 0; i < 24; i++) {
-                const change = (Math.random() - 0.48) * 0.001;
-                lastPrice = lastPrice + change;
-                prices.push(lastPrice);
+            // Если данных мало, создаем тестовые
+            if (chartHistory.length < 2) {
+                const now = Date.now();
+                chartHistory = [];
+                for (let i = 23; i >= 0; i--) {
+                    chartHistory.push({
+                        time: now - i * 3600000,
+                        usdt: balances.usdt * (1 + (Math.random() - 0.5) * 0.1),
+                        swag: balances.swag * (1 + (Math.random() - 0.5) * 0.1)
+                    });
+                }
             }
             
-            if (priceChart) priceChart.destroy();
+            const labels = chartHistory.map(h => {
+                const date = new Date(h.time);
+                return `${date.getHours()}:00`;
+            });
             
-            priceChart = new Chart(ctx, {
+            const data = chartHistory.map(h => chartMode === 'usdt' ? h.usdt : h.swag);
+            
+            if (userChart) userChart.destroy();
+            
+            userChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Price',
-                        data: prices,
+                        label: chartMode === 'usdt' ? 'USDT Balance' : 'SWAG Balance',
+                        data: data,
                         borderColor: '#00FF00',
                         backgroundColor: 'rgba(0, 255, 0, 0.1)',
                         borderWidth: 2,
@@ -2002,7 +1965,7 @@
                             ticks: {
                                 color: 'rgba(255, 255, 255, 0.7)',
                                 callback: function(value) {
-                                    return '$' + value.toFixed(4);
+                                    return chartMode === 'usdt' ? '$' + value.toFixed(2) : value.toFixed(2) + ' SWAG';
                                 }
                             }
                         },
@@ -2020,84 +1983,32 @@
             });
         }
 
-        async function loadStatsData() {
-            try {
-                const res = await fetch(`${SERVER_URL}/orders`);
-                const data = await res.json();
-                const orders = data.orders || [];
-                
-                let totalVolume = 0;
-                let totalTrades = 0;
-                let buyVolume = 0;
-                let sellVolume = 0;
-                let totalFee = 0;
-                const users = new Set();
-                
-                orders.forEach(order => {
-                    if (order.status === 'completed') {
-                        totalVolume += order.total;
-                        totalTrades++;
-                        totalFee += order.total * COMMISSION;
-                        users.add(order.user_id);
-                        
-                        if (order.type === 'buy') {
-                            buyVolume += order.total;
-                        } else {
-                            sellVolume += order.total;
-                        }
-                    }
-                });
-                
-                document.getElementById('totalVolume').textContent = totalVolume.toFixed(0);
-                document.getElementById('totalTrades').textContent = totalTrades;
-                document.getElementById('buyVolume').textContent = buyVolume.toFixed(0);
-                document.getElementById('sellVolume').textContent = sellVolume.toFixed(0);
-                document.getElementById('totalUsers').textContent = users.size;
-                document.getElementById('totalOrders').textContent = orders.filter(o => o.status === 'active').length;
-                document.getElementById('totalFee').textContent = totalFee.toFixed(0);
-                
-            } catch (e) {
-                console.error('Ошибка загрузки статистики', e);
-            }
+        function switchChart(mode) {
+            chartMode = mode;
+            document.getElementById('chartUsdtBtn').classList.remove('active');
+            document.getElementById('chartSwagBtn').classList.remove('active');
+            document.getElementById(mode === 'usdt' ? 'chartUsdtBtn' : 'chartSwagBtn').classList.add('active');
+            generateUserChart();
         }
 
-        function generateOrderBook() {
-            const sellOrders = document.getElementById('sellOrders');
-            const buyOrders = document.getElementById('buyOrders');
+        function saveBalanceHistory() {
+            const history = JSON.parse(localStorage.getItem('swaga_history_' + userId) || '[]');
+            const now = Date.now();
             
-            let sellHtml = '';
-            let buyHtml = '';
+            // Добавляем новую запись
+            history.push({
+                time: now,
+                usdt: balances.usdt,
+                swag: balances.swag
+            });
             
-            // Продажи (красные)
-            for (let i = 0; i < 5; i++) {
-                const price = (0.0155 + i * 0.0002).toFixed(4);
-                const amount = Math.floor(Math.random() * 5000 + 1000);
-                const total = (price * amount).toFixed(2);
-                sellHtml += `
-                    <div class="orderbook-row sell">
-                        <span class="price">$${price}</span>
-                        <span class="amount">${amount}</span>
-                        <span class="total">$${total}</span>
-                    </div>
-                `;
+            // Оставляем только последние 24 записи
+            if (history.length > 24) {
+                history.shift();
             }
             
-            // Покупки (зеленые)
-            for (let i = 0; i < 5; i++) {
-                const price = (0.0149 - i * 0.0002).toFixed(4);
-                const amount = Math.floor(Math.random() * 5000 + 1000);
-                const total = (price * amount).toFixed(2);
-                buyHtml += `
-                    <div class="orderbook-row buy">
-                        <span class="price">$${price}</span>
-                        <span class="amount">${amount}</span>
-                        <span class="total">$${total}</span>
-                    </div>
-                `;
-            }
-            
-            sellOrders.innerHTML = sellHtml;
-            buyOrders.innerHTML = buyHtml;
+            localStorage.setItem('swaga_history_' + userId, JSON.stringify(history));
+            chartHistory = history;
         }
 
         // ======================================
