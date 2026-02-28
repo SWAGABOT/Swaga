@@ -1168,12 +1168,6 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        .leaderboard-value {
-            font-family: 'Orbitron', sans-serif;
-            color: #00FF00;
-            font-weight: 700;
-        }
-
         /* Страница статистики */
         .stats-container {
             padding: 20px 0;
@@ -2565,6 +2559,13 @@
             
             localStorage.setItem('swaga_profile_' + userId, JSON.stringify(profileData));
             
+            // Отправляем на сервер
+            fetch(`${SERVER_URL}/set_privacy/${userId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ privacy: mode })
+            }).catch(e => console.log('Privacy sync error:', e));
+            
             if (typeof showNotification === 'function') {
                 showNotification(mode === 'public' ? '🌐 Profile is public' : '🔒 Profile is private', 'success');
             }
@@ -2587,28 +2588,14 @@
         }
 
         // ======================================
-        // ==== ЛИДЕРБОРД (ИСПРАВЛЕННЫЙ) ========
+        // ==== ЛИДЕРБОРД (ТОЛЬКО РЕАЛЬНЫЕ) =====
         // ======================================
         async function loadLeaderboard() {
             try {
                 // Получаем топ пользователей с сервера
-                const res = await fetch(`${SERVER_URL}/leaderboard?limit=10`);
+                const res = await fetch(`${SERVER_URL}/leaderboard?limit=20`);
                 const data = await res.json();
-                let leaderboard = data.leaderboard || [];
-                
-                // Если реальных пользователей мало, добавляем тестовых китов
-                if (leaderboard.length < 5) {
-                    const testUsers = [
-                        { user_id: 'test1', swag: 15000, usdt: 150 },
-                        { user_id: 'test2', swag: 12000, usdt: 120 },
-                        { user_id: 'test3', swag: 8000, usdt: 80 },
-                        { user_id: 'test4', swag: 5000, usdt: 50 },
-                        { user_id: 'test5', swag: 3000, usdt: 30 }
-                    ];
-                    
-                    // Добавляем реальных пользователей сверху
-                    leaderboard = [...leaderboard, ...testUsers].slice(0, 5);
-                }
+                const leaderboard = data.leaderboard || [];
                 
                 const leaderboardList = document.getElementById('leaderboardList');
                 leaderboardList.innerHTML = '';
@@ -2618,13 +2605,17 @@
                     return;
                 }
                 
-                // Показываем топ-5
-                leaderboard.slice(0, 5).forEach((user, index) => {
-                    // Определяем аватарку
-                    let avatar = '👤';
-                    if (index === 0) avatar = '👑';
-                    else if (index === 1) avatar = '🐋';
-                    else if (index === 2) avatar = '🦈';
+                // Показываем топ-10
+                leaderboard.slice(0, 10).forEach((user, index) => {
+                    // Получаем аватар пользователя из localStorage
+                    let userAvatar = '👤';
+                    try {
+                        const userProfile = localStorage.getItem('swaga_profile_' + user.user_id);
+                        if (userProfile) {
+                            const profile = JSON.parse(userProfile);
+                            userAvatar = profile.avatar || '👤';
+                        }
+                    } catch (e) {}
                     
                     // Маскируем ID для приватности
                     const displayName = user.user_id === userId ? 
@@ -2643,12 +2634,11 @@
                     
                     item.innerHTML = `
                         <div class="leaderboard-rank">${index + 1}</div>
-                        <div class="leaderboard-avatar">${avatar}</div>
+                        <div class="leaderboard-avatar">${userAvatar}</div>
                         <div class="leaderboard-info">
                             <div class="leaderboard-name">${displayName}</div>
                             <div class="leaderboard-stats">${user.swag.toFixed(0)} SWAG</div>
                         </div>
-                        <div class="leaderboard-value">≈ $${(user.swag * 0.01).toFixed(0)}</div>
                     `;
                     leaderboardList.appendChild(item);
                 });
