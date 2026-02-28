@@ -864,6 +864,42 @@
             color: #0A1F0A;
             border: 3px solid #00FF00;
             box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px #00FF00;
+        }
+
+        .edit-avatar {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #0A1F0A;
+            border: 2px solid #00FF00;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00FF00;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .edit-avatar:hover {
+            background: #00FF00;
+            color: #0A1F0A;
+            transform: rotate(180deg);
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
         }
 
         .profile-info {
@@ -880,6 +916,13 @@
             gap: 15px;
             padding: 15px 0;
             border-bottom: 1px solid rgba(0, 255, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .info-row:hover {
+            background: rgba(0, 255, 0, 0.05);
+            transform: translateX(5px);
         }
 
         .info-row:last-child {
@@ -912,6 +955,21 @@
             font-size: 16px;
             font-weight: 600;
             color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .edit-icon {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-row:hover .edit-icon {
+            opacity: 1;
+            color: #00FF00;
         }
 
         .privacy-toggle {
@@ -929,8 +987,9 @@
             font-family: 'Orbitron', sans-serif;
             font-weight: 600;
             border-radius: 15px;
-            cursor: default;
+            cursor: pointer;
             text-align: center;
+            transition: all 0.3s ease;
         }
 
         .privacy-btn.active {
@@ -938,6 +997,111 @@
             color: #0A1F0A;
             border-color: #00FF00;
             box-shadow: 0 0 15px #00FF00;
+        }
+
+        .privacy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .privacy-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Модальное окно редактирования */
+        .edit-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-modal-content {
+            background: #0A1F0A;
+            border: 2px solid #00FF00;
+            border-radius: 30px;
+            padding: 30px;
+            width: 90%;
+            max-width: 350px;
+            position: relative;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .edit-modal h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .edit-modal-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00FF00;
+            border-radius: 15px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .edit-modal-input:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .edit-modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-modal-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .edit-modal-btn.save {
+            background: #00FF00;
+            color: #0A1F0A;
+        }
+
+        .edit-modal-btn.cancel {
+            background: transparent;
+            border: 1px solid #FF3333;
+            color: #FF3333;
+        }
+
+        .edit-modal-btn.save:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #00FF00;
+        }
+
+        .edit-modal-btn.cancel:hover {
+            background: #FF3333;
+            color: white;
         }
 
         .stats-leaderboard {
@@ -1231,7 +1395,7 @@
             </div>
         </div>
 
-        <!-- Страница STATS (простая) -->
+        <!-- Страница STATS -->
         <div id="statsPage" class="page">
             <div style="text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.5);">
                 <span style="font-size: 48px; color: #00FF00; display: block; margin-bottom: 15px;">📊</span>
@@ -1240,17 +1404,20 @@
             </div>
         </div>
 
-        <!-- Страница PROFILE (упрощенная) -->
+        <!-- Страница PROFILE -->
         <div id="profilePage" class="page">
             <div class="profile-container">
                 <!-- Аватар и статистика -->
                 <div class="profile-header">
                     <div class="avatar-container">
-                        <div class="profile-avatar">
+                        <div class="profile-avatar" id="profileAvatar" onclick="cycleAvatar()">
                             <span id="avatarEmoji">👤</span>
                         </div>
+                        <div class="edit-avatar" onclick="cycleAvatar()">
+                            ↻
+                        </div>
                     </div>
-                    <div class="profile-stats" style="display: flex; gap: 30px;">
+                    <div class="profile-stats">
                         <div style="text-align: center;">
                             <div style="font-size: 20px; font-weight: 700; color: #00FF00;" id="profileOrders">0</div>
                             <div style="font-size: 12px; color: rgba(255,255,255,0.5);">Orders</div>
@@ -1264,39 +1431,31 @@
 
                 <!-- Информация профиля -->
                 <div class="profile-info">
-                    <div class="info-row">
+                    <div class="info-row" onclick="editProfileField('name')">
                         <div class="info-icon">👤</div>
                         <div class="info-content">
                             <div class="info-label">DISPLAY NAME</div>
                             <div class="info-value">
                                 <span id="displayName">Crypto Warrior</span>
+                                <span class="edit-icon">✎</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="info-row">
+                    <div class="info-row" onclick="editProfileField('bio')">
                         <div class="info-icon">📝</div>
                         <div class="info-content">
                             <div class="info-label">BIO</div>
                             <div class="info-value">
                                 <span id="profileBio">Crypto enthusiast | SWAGA holder</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="info-row">
-                        <div class="info-icon">📅</div>
-                        <div class="info-content">
-                            <div class="info-label">MEMBER SINCE</div>
-                            <div class="info-value">
-                                <span id="memberSince">March 2024</span>
+                                <span class="edit-icon">✎</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="privacy-toggle">
-                        <div class="privacy-btn active" id="publicBtn">🌐 PUBLIC</div>
-                        <div class="privacy-btn" id="privateBtn">🔒 PRIVATE</div>
+                        <div class="privacy-btn active" onclick="setPrivacy('public')" id="publicBtn">🌐 PUBLIC</div>
+                        <div class="privacy-btn" onclick="setPrivacy('private')" id="privateBtn">🔒 PRIVATE</div>
                     </div>
                 </div>
 
@@ -1445,16 +1604,10 @@
                 name = name.substring(0, 12) + '...';
             }
             usernameEl.textContent = name;
-            
-            // Заполняем профиль данными из Telegram
-            document.getElementById('displayName').textContent = user.first_name || 'Crypto Warrior';
         } else {
             userId = 'guest_' + Date.now();
             usernameEl.textContent = 'bro';
         }
-
-        // Устанавливаем дату регистрации
-        document.getElementById('memberSince').textContent = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
 
         // ======================================
         // ==== БАЛАНС ==========================
@@ -1466,7 +1619,6 @@
                 balances = data;
                 updateBalanceDisplay();
                 
-                // Загружаем статистику профиля
                 loadUserStats();
                 loadLeaderboard();
             } catch (e) {
@@ -1495,6 +1647,171 @@
                 currencyLabel.textContent = 'SWAG';
                 balanceEl.textContent = balances.swag.toFixed(2);
                 secondaryBalance.textContent = `≈ $${(balances.swag * 0.01).toFixed(2)} USD`;
+            }
+        }
+
+        // ======================================
+        // ==== ПРОФИЛЬ =========================
+        // ======================================
+        
+        // Загружаем сохраненные данные профиля
+        let profileData = {
+            avatar: '👤',
+            name: user?.first_name || 'Crypto Warrior',
+            bio: 'Crypto enthusiast | SWAGA holder',
+            privacy: 'public'
+        };
+
+        try {
+            const saved = localStorage.getItem('swaga_profile_' + userId);
+            if (saved) {
+                profileData = JSON.parse(saved);
+                document.getElementById('avatarEmoji').textContent = profileData.avatar;
+                document.getElementById('displayName').textContent = profileData.name;
+                document.getElementById('profileBio').textContent = profileData.bio;
+                
+                if (profileData.privacy === 'private') {
+                    document.getElementById('publicBtn').classList.remove('active');
+                    document.getElementById('privateBtn').classList.add('active');
+                }
+            } else {
+                // Если нет сохраненных данных, сохраняем текущие
+                profileData.name = document.getElementById('displayName').textContent;
+                profileData.bio = document.getElementById('profileBio').textContent;
+                localStorage.setItem('swaga_profile_' + userId, JSON.stringify(profileData));
+            }
+        } catch (e) {}
+
+        function cycleAvatar() {
+            const emojis = ['👤', '🦊', '🐉', '⚡', '👑', '🦅', '🐺', '🦁', '🐲', '🔥', '🐳', '🦈', '🦉', '🐝', '🦋', '🐙'];
+            const current = document.getElementById('avatarEmoji').textContent;
+            let nextIndex = (emojis.indexOf(current) + 1) % emojis.length;
+            if (nextIndex === -1) nextIndex = 0;
+            
+            const newAvatar = emojis[nextIndex];
+            document.getElementById('avatarEmoji').textContent = newAvatar;
+            
+            profileData.avatar = newAvatar;
+            localStorage.setItem('swaga_profile_' + userId, JSON.stringify(profileData));
+        }
+
+        function editProfileField(field) {
+            const modal = document.createElement('div');
+            modal.className = 'edit-modal';
+            
+            const currentValue = field === 'name' ? 
+                document.getElementById('displayName').textContent : 
+                document.getElementById('profileBio').textContent;
+            
+            modal.innerHTML = `
+                <div class="edit-modal-content">
+                    <h3>EDIT ${field === 'name' ? 'NAME' : 'BIO'}</h3>
+                    <input type="text" id="editFieldInput" class="edit-modal-input" value="${currentValue.replace(/"/g, '&quot;')}" placeholder="Enter ${field === 'name' ? 'name' : 'bio'}...">
+                    <div class="edit-modal-buttons">
+                        <button class="edit-modal-btn cancel" onclick="this.closest('.edit-modal').remove()">CANCEL</button>
+                        <button class="edit-modal-btn save" onclick="saveProfileField('${field}')">SAVE</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            setTimeout(() => document.getElementById('editFieldInput').focus(), 100);
+        }
+
+        function saveProfileField(field) {
+            const input = document.getElementById('editFieldInput');
+            const newValue = input.value.trim();
+            
+            if (!newValue) {
+                alert('Введите значение');
+                return;
+            }
+            
+            if (field === 'name') {
+                document.getElementById('displayName').textContent = newValue;
+                profileData.name = newValue;
+            } else {
+                document.getElementById('profileBio').textContent = newValue;
+                profileData.bio = newValue;
+            }
+            
+            localStorage.setItem('swaga_profile_' + userId, JSON.stringify(profileData));
+            document.querySelector('.edit-modal').remove();
+        }
+
+        function setPrivacy(mode) {
+            profileData.privacy = mode;
+            document.getElementById('publicBtn').classList.remove('active');
+            document.getElementById('privateBtn').classList.remove('active');
+            document.getElementById(mode === 'public' ? 'publicBtn' : 'privateBtn').classList.add('active');
+            
+            localStorage.setItem('swaga_profile_' + userId, JSON.stringify(profileData));
+            
+            if (typeof showNotification === 'function') {
+                showNotification(mode === 'public' ? '🌐 Profile is public' : '🔒 Profile is private', 'success');
+            }
+        }
+
+        async function loadUserStats() {
+            try {
+                const res = await fetch(`${SERVER_URL}/orders/user/${userId}`);
+                const data = await res.json();
+                const orders = data.orders || [];
+                
+                const activeOrders = orders.filter(o => o.status === 'active').length;
+                const completedTrades = orders.filter(o => o.status === 'completed').length;
+                
+                document.getElementById('profileOrders').textContent = activeOrders;
+                document.getElementById('profileTrades').textContent = completedTrades;
+            } catch (e) {
+                console.error('Ошибка загрузки статистики', e);
+            }
+        }
+
+        async function loadLeaderboard() {
+            try {
+                const res = await fetch(`${SERVER_URL}/orders`);
+                const data = await res.json();
+                const orders = data.orders || [];
+                
+                const stats = {};
+                orders.forEach(order => {
+                    if (order.status === 'completed') {
+                        if (!stats[order.user_id]) {
+                            stats[order.user_id] = { trades: 0, volume: 0 };
+                        }
+                        stats[order.user_id].trades++;
+                        stats[order.user_id].volume += order.total;
+                    }
+                });
+                
+                const sorted = Object.entries(stats).sort((a, b) => b[1].volume - a[1].volume);
+                
+                const leaderboardList = document.getElementById('leaderboardList');
+                leaderboardList.innerHTML = '';
+                
+                if (sorted.length === 0) {
+                    leaderboardList.innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(255,255,255,0.3);">No trades yet</div>';
+                    return;
+                }
+                
+                sorted.slice(0, 5).forEach(([userId, userStats], index) => {
+                    const item = document.createElement('div');
+                    item.className = 'leaderboard-item';
+                    item.innerHTML = `
+                        <div class="leaderboard-rank">${index + 1}</div>
+                        <div class="leaderboard-avatar">${index === 0 ? '👑' : '👤'}</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">User ${userId.slice(0, 4)}</div>
+                            <div class="leaderboard-stats">${userStats.trades} trades</div>
+                        </div>
+                        <div class="leaderboard-value">$${userStats.volume.toFixed(0)}</div>
+                    `;
+                    leaderboardList.appendChild(item);
+                });
+                
+            } catch (e) {
+                console.error('Ошибка загрузки топа', e);
             }
         }
 
@@ -1645,9 +1962,6 @@
             ordersList.innerHTML = html;
         }
 
-        // ======================================
-        // ==== ТРЕЙДИНГ ========================
-        // ======================================
         function openTradeModal(order) {
             if (typeof order === 'string') {
                 order = JSON.parse(order);
@@ -1770,85 +2084,10 @@
             }
         }
 
-        // ======================================
-        // ==== ПРОФИЛЬ =========================
-        // ======================================
-        async function loadUserStats() {
-            try {
-                const res = await fetch(`${SERVER_URL}/orders/user/${userId}`);
-                const data = await res.json();
-                const orders = data.orders || [];
-                
-                const activeOrders = orders.filter(o => o.status === 'active').length;
-                const completedTrades = orders.filter(o => o.status === 'completed').length;
-                
-                document.getElementById('profileOrders').textContent = activeOrders;
-                document.getElementById('profileTrades').textContent = completedTrades;
-            } catch (e) {
-                console.error('Ошибка загрузки статистики', e);
-            }
-        }
-
-        async function loadLeaderboard() {
-            try {
-                const res = await fetch(`${SERVER_URL}/orders`);
-                const data = await res.json();
-                const orders = data.orders || [];
-                
-                // Считаем статистику по каждому пользователю
-                const stats = {};
-                orders.forEach(order => {
-                    if (order.status === 'completed') {
-                        if (!stats[order.user_id]) {
-                            stats[order.user_id] = { trades: 0, volume: 0 };
-                        }
-                        stats[order.user_id].trades++;
-                        stats[order.user_id].volume += order.total;
-                    }
-                });
-                
-                // Сортируем по объему
-                const sorted = Object.entries(stats).sort((a, b) => b[1].volume - a[1].volume);
-                
-                // Показываем топ-5
-                const leaderboardList = document.getElementById('leaderboardList');
-                leaderboardList.innerHTML = '';
-                
-                sorted.slice(0, 5).forEach(([userId, userStats], index) => {
-                    const item = document.createElement('div');
-                    item.className = 'leaderboard-item';
-                    item.innerHTML = `
-                        <div class="leaderboard-rank">${index + 1}</div>
-                        <div class="leaderboard-avatar">${index === 0 ? '👑' : '👤'}</div>
-                        <div class="leaderboard-info">
-                            <div class="leaderboard-name">User ${userId.slice(0, 4)}</div>
-                            <div class="leaderboard-stats">${userStats.trades} trades</div>
-                        </div>
-                        <div class="leaderboard-value">$${userStats.volume.toFixed(0)}</div>
-                    `;
-                    leaderboardList.appendChild(item);
-                });
-                
-                // Если нет данных, показываем заглушку
-                if (sorted.length === 0) {
-                    leaderboardList.innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(255,255,255,0.3);">No trades yet</div>';
-                }
-                
-            } catch (e) {
-                console.error('Ошибка загрузки топа', e);
-            }
-        }
-
-        // ======================================
-        // ==== SWAG ============================
-        // ======================================
         function openSWAG() {
             alert('🎨 SWAG MENU скоро появится');
         }
 
-        // ======================================
-        // ==== НАВИГАЦИЯ =======================
-        // ======================================
         function switchPage(page) {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
@@ -1862,9 +2101,6 @@
             event.currentTarget.classList.add('active');
         }
 
-        // ======================================
-        // ==== ЗАПУСК ==========================
-        // ======================================
         loadBalance();
         setInterval(loadOrders, 30000);
     </script>
