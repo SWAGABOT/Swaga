@@ -110,7 +110,7 @@
             vertical-align: bottom;
         }
 
-        /* Баланс с переключением */
+        /* Баланс с переключением (БЕЗ USD) */
         .balance-header {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -176,12 +176,6 @@
         .balance-amount .currency svg {
             width: 24px;
             height: 24px;
-        }
-
-        .usd-value {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 5px;
         }
 
         /* Кнопка P2P */
@@ -1713,7 +1707,7 @@
                 <span id="username">bro</span>
             </div>
 
-            <!-- Баланс с переключением -->
+            <!-- Баланс с переключением (БЕЗ USD) -->
             <div class="balance-header" onclick="switchBalance()">
                 <div class="balance-label">
                     <span id="balanceLabel">USDT BALANCE</span>
@@ -1730,7 +1724,6 @@
                         <span id="currencyLabel">USDT</span>
                     </span>
                 </div>
-                <div class="usd-value" id="secondaryBalance"></div>
             </div>
 
             <!-- Кнопка P2P -->
@@ -2279,7 +2272,7 @@
                 balanceLabel.textContent = 'SWAG BALANCE';
                 currencyLabel.textContent = 'SWAG';
                 balanceEl.textContent = balances.swag.toFixed(2);
-                secondaryBalance.textContent = `≈ $${(balances.swag * 0.01).toFixed(2)} USD`;
+                secondaryBalance.textContent = `≈ ${balances.usdt.toFixed(2)} USDT`;
             }
         }
 
