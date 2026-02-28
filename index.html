@@ -110,7 +110,7 @@
             vertical-align: bottom;
         }
 
-        /* Баланс с переключением (с адаптивным шрифтом) */
+        /* Баланс с переключением (с адаптивным шрифтом и форматированием) */
         .balance-header {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -168,15 +168,20 @@
             word-break: break-word;
             max-width: 100%;
             line-height: 1.2;
+            letter-spacing: 1px;
         }
 
-        /* Адаптивные размеры шрифта */
-        .balance-amount .number[data-length="5"] { font-size: 42px; }
-        .balance-amount .number[data-length="6"] { font-size: 36px; }
-        .balance-amount .number[data-length="7"] { font-size: 32px; }
-        .balance-amount .number[data-length="8"] { font-size: 28px; }
-        .balance-amount .number[data-length="9"] { font-size: 24px; }
-        .balance-amount .number[data-length="10"] { font-size: 22px; }
+        /* Адаптивные размеры шрифта с учетом пробелов */
+        .balance-amount .number[data-length="5"],
+        .balance-amount .number[data-length="6"] { font-size: 42px; }
+        .balance-amount .number[data-length="7"],
+        .balance-amount .number[data-length="8"] { font-size: 36px; }
+        .balance-amount .number[data-length="9"],
+        .balance-amount .number[data-length="10"] { font-size: 32px; }
+        .balance-amount .number[data-length="11"],
+        .balance-amount .number[data-length="12"] { font-size: 28px; }
+        .balance-amount .number[data-length="13"],
+        .balance-amount .number[data-length="14"] { font-size: 24px; }
 
         .balance-amount .currency {
             font-size: 24px;
@@ -189,12 +194,23 @@
         }
 
         @media (max-width: 400px) {
-            .balance-amount .number[data-length="5"] { font-size: 38px; }
-            .balance-amount .number[data-length="6"] { font-size: 32px; }
-            .balance-amount .number[data-length="7"] { font-size: 28px; }
-            .balance-amount .number[data-length="8"] { font-size: 24px; }
-            .balance-amount .number[data-length="9"] { font-size: 22px; }
-            .balance-amount .number[data-length="10"] { font-size: 20px; }
+            .balance-amount .number[data-length="5"],
+            .balance-amount .number[data-length="6"] { font-size: 38px; }
+            .balance-amount .number[data-length="7"],
+            .balance-amount .number[data-length="8"] { font-size: 32px; }
+            .balance-amount .number[data-length="9"],
+            .balance-amount .number[data-length="10"] { font-size: 28px; }
+            .balance-amount .number[data-length="11"],
+            .balance-amount .number[data-length="12"] { font-size: 24px; }
+            .balance-amount .number[data-length="13"],
+            .balance-amount .number[data-length="14"] { font-size: 22px; }
+        }
+
+        /* Вторичный баланс */
+        .usd-value {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 5px;
         }
 
         /* Кнопка P2P */
@@ -2106,6 +2122,30 @@
         let selectedNumber = null;
 
         // ======================================
+        // ==== ФОРМАТИРОВАНИЕ ЧИСЕЛ ============
+        // ======================================
+        function formatNumber(num) {
+            // Форматирует число с пробелами как разделителями тысяч
+            // и фиксированным количеством знаков после запятой
+            if (num === undefined || num === null) return '0';
+            
+            // Разделяем на целую и дробную части
+            let parts = num.toFixed(2).split('.');
+            
+            // Форматируем целую часть с пробелами
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+            
+            // Собираем обратно
+            return parts.join('.');
+        }
+
+        // Для целых чисел (без десятичной части)
+        function formatInt(num) {
+            if (num === undefined || num === null) return '0';
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+
+        // ======================================
         // ==== ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЯ ==========
         // ======================================
         const user = Telegram.WebApp.initDataUnsafe?.user;
@@ -2244,8 +2284,8 @@
                     updateBalanceDisplay();
                     
                     // Обновляем балансы в играх
-                    document.getElementById('gameBalance').textContent = balances.swag.toFixed(2);
-                    document.getElementById('rouletteBalance').textContent = balances.swag.toFixed(2);
+                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
                 }
                 
                 alert(`✅ Начислено ${amount} ${currency} пользователю ${targetId === userId ? 'себе' : targetId}`);
@@ -2276,8 +2316,8 @@
                 loadLeaderboard();
                 
                 // Обновляем баланс в играх
-                document.getElementById('gameBalance').textContent = balances.swag.toFixed(2);
-                document.getElementById('rouletteBalance').textContent = balances.swag.toFixed(2);
+                document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
+                document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
                 
                 console.log('✅ Баланс загружен с сервера:', balances);
             } catch (e) {
@@ -2299,17 +2339,17 @@
             if (currentBalanceMode === 'usdt') {
                 balanceLabel.textContent = 'USDT BALANCE';
                 currencyLabel.textContent = 'USDT';
-                const balanceStr = balances.usdt.toFixed(2);
+                const balanceStr = formatNumber(balances.usdt);
                 balanceEl.textContent = balanceStr;
                 balanceEl.setAttribute('data-length', balanceStr.length);
-                secondaryBalance.textContent = `≈ ${balances.swag.toFixed(2)} SWAG`;
+                secondaryBalance.textContent = `≈ ${formatNumber(balances.swag)} SWAG`;
             } else {
                 balanceLabel.textContent = 'SWAG BALANCE';
                 currencyLabel.textContent = 'SWAG';
-                const balanceStr = balances.swag.toFixed(2);
+                const balanceStr = formatNumber(balances.swag);
                 balanceEl.textContent = balanceStr;
                 balanceEl.setAttribute('data-length', balanceStr.length);
-                secondaryBalance.textContent = `≈ ${balances.usdt.toFixed(2)} USDT`;
+                secondaryBalance.textContent = `≈ ${formatNumber(balances.usdt)} USDT`;
             }
         }
 
@@ -2338,8 +2378,8 @@
                 
                 chartHistory = history;
                 
-                document.getElementById('userUsdt').textContent = balances.usdt.toFixed(2);
-                document.getElementById('userSwag').textContent = balances.swag.toFixed(2);
+                document.getElementById('userUsdt').textContent = formatNumber(balances.usdt);
+                document.getElementById('userSwag').textContent = formatNumber(balances.swag);
                 
                 if (history.length > 1) {
                     const prev = history[history.length - 2];
@@ -2351,8 +2391,8 @@
                     const usdtChangeEl = document.getElementById('usdtChange');
                     const swagChangeEl = document.getElementById('swagChange');
                     
-                    usdtChangeEl.textContent = `${usdtChange > 0 ? '+' : ''}${usdtChange.toFixed(2)} (${usdtPercent}%)`;
-                    swagChangeEl.textContent = `${swagChange > 0 ? '+' : ''}${swagChange.toFixed(2)} (${swagPercent}%)`;
+                    usdtChangeEl.textContent = `${usdtChange > 0 ? '+' : ''}${formatNumber(usdtChange)} (${usdtPercent}%)`;
+                    swagChangeEl.textContent = `${swagChange > 0 ? '+' : ''}${formatNumber(swagChange)} (${swagPercent}%)`;
                     
                     usdtChangeEl.className = `stat-change ${usdtChange >= 0 ? 'positive' : 'negative'}`;
                     swagChangeEl.className = `stat-change ${swagChange >= 0 ? 'positive' : 'negative'}`;
@@ -2441,7 +2481,19 @@
                             titleColor: '#00FF00',
                             bodyColor: 'white',
                             borderColor: '#00FF00',
-                            borderWidth: 1
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += formatNumber(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
                         }
                     },
                     scales: {
@@ -2450,7 +2502,7 @@
                             ticks: {
                                 color: 'rgba(255, 255, 255, 0.7)',
                                 callback: function(value) {
-                                    return chartMode === 'usdt' ? '$' + value.toFixed(2) : value.toFixed(2) + ' SWAG';
+                                    return chartMode === 'usdt' ? '$' + formatNumber(value) : formatNumber(value) + ' SWAG';
                                 }
                             }
                         },
@@ -2673,7 +2725,7 @@
                         <div class="leaderboard-avatar">${userAvatar}</div>
                         <div class="leaderboard-info">
                             <div class="leaderboard-name">${displayName}</div>
-                            <div class="leaderboard-stats">${Math.round(user.swag).toLocaleString()} SWAG</div>
+                            <div class="leaderboard-stats">${formatInt(user.swag)} SWAG</div>
                         </div>
                     `;
                     leaderboardList.appendChild(item);
@@ -2719,7 +2771,7 @@
             const amount = parseFloat(document.getElementById('orderAmount').value) || 0;
             const price = parseFloat(document.getElementById('orderPrice').value) || 0;
             const total = amount * price;
-            document.getElementById('totalValue').textContent = total.toFixed(2) + ' USDT';
+            document.getElementById('totalValue').textContent = formatNumber(total) + ' USDT';
         }
 
         async function createOrder() {
@@ -2798,8 +2850,8 @@
             orders.forEach(order => {
                 const isMyOrder = order.user_id === userId;
                 const limits = [];
-                if (order.min_limit > 0) limits.push(`Min: ${order.min_limit}`);
-                if (order.max_limit > 0) limits.push(`Max: ${order.max_limit}`);
+                if (order.min_limit > 0) limits.push(`Min: ${formatInt(order.min_limit)}`);
+                if (order.max_limit > 0) limits.push(`Max: ${formatInt(order.max_limit)}`);
                 
                 html += `
                     <div class="order-item ${order.type}" onclick='openTradeModal(${JSON.stringify(order)})'>
@@ -2813,10 +2865,10 @@
                         </div>
                         <div class="order-details">
                             <span class="order-price">${order.price} USDT</span>
-                            <span class="order-amount">${order.amount} SWAG</span>
+                            <span class="order-amount">${formatInt(order.amount)} SWAG</span>
                         </div>
                         <div class="order-footer">
-                            <span class="order-total">Total: ${order.total.toFixed(2)} USDT</span>
+                            <span class="order-total">Total: ${formatInt(order.total)} USDT</span>
                             <div class="order-actions">
                                 ${isMyOrder ? 
                                     `<button class="action-btn cancel-btn" onclick="event.stopPropagation(); cancelOrder(${order.id})">CANCEL</button>` : 
@@ -2845,9 +2897,9 @@
             title.textContent = `${order.type.toUpperCase()} ${order.type === 'buy' ? 'SELL' : 'BUY'} SWAG`;
             info.innerHTML = `
                 <div>Price: ${order.price} USDT</div>
-                <div>Available: ${order.amount} SWAG</div>
-                ${order.min_limit > 0 ? `<div>Min: ${order.min_limit} SWAG</div>` : ''}
-                ${order.max_limit > 0 ? `<div>Max: ${order.max_limit} SWAG</div>` : ''}
+                <div>Available: ${formatInt(order.amount)} SWAG</div>
+                ${order.min_limit > 0 ? `<div>Min: ${formatInt(order.min_limit)} SWAG</div>` : ''}
+                ${order.max_limit > 0 ? `<div>Max: ${formatInt(order.max_limit)} SWAG</div>` : ''}
             `;
             
             document.getElementById('tradeAmount').value = '';
@@ -2869,8 +2921,8 @@
             const total = amount * currentOrder.price;
             const fee = total * COMMISSION;
             
-            document.getElementById('modalTotal').textContent = total.toFixed(2) + ' USDT';
-            document.getElementById('modalFee').textContent = `Fee (2%): ${fee.toFixed(2)} USDT`;
+            document.getElementById('modalTotal').textContent = formatNumber(total) + ' USDT';
+            document.getElementById('modalFee').textContent = `Fee (2%): ${formatNumber(fee)} USDT`;
         }
 
         async function executeTrade() {
@@ -2884,17 +2936,17 @@
             }
             
             if (currentOrder.min_limit > 0 && amount < currentOrder.min_limit) {
-                alert(`Минимальная сумма: ${currentOrder.min_limit} SWAG`);
+                alert(`Минимальная сумма: ${formatInt(currentOrder.min_limit)} SWAG`);
                 return;
             }
             
             if (currentOrder.max_limit > 0 && amount > currentOrder.max_limit) {
-                alert(`Максимальная сумма: ${currentOrder.max_limit} SWAG`);
+                alert(`Максимальная сумма: ${formatInt(currentOrder.max_limit)} SWAG`);
                 return;
             }
             
             if (amount > currentOrder.amount) {
-                alert(`Доступно только ${currentOrder.amount} SWAG`);
+                alert(`Доступно только ${formatInt(currentOrder.amount)} SWAG`);
                 return;
             }
             
@@ -2916,7 +2968,7 @@
                     closeTradeModal();
                     loadOrders();
                     loadBalance();
-                    alert(`✅ Сделка выполнена!\nПолучено: ${amount} SWAG\nКомиссия: ${data.fee.toFixed(2)} USDT`);
+                    alert(`✅ Сделка выполнена!\nПолучено: ${formatInt(amount)} SWAG\nКомиссия: ${formatNumber(data.fee)} USDT`);
                 } else if (data.error) {
                     alert('❌ ' + data.error);
                 }
@@ -2979,7 +3031,7 @@
                     });
                     
                     const data = await res.json();
-                    console.log(`✅ Баланс синхронизирован: ${currency} = ${data[currency]}`);
+                    console.log(`✅ Баланс синхронизирован: ${currency} = ${formatNumber(data[currency])}`);
                     return data;
                 }
             } catch (e) {
@@ -2997,7 +3049,7 @@
         function openRoulette() {
             switchPage('roulette');
             // Обновляем баланс при открытии
-            document.getElementById('rouletteBalance').textContent = balances.swag.toFixed(2);
+            document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
             // Сбрасываем состояние рулетки
             selectedBetType = null;
             selectedNumber = null;
@@ -3090,8 +3142,8 @@
                 
                 // Обновляем отображение
                 updateBalanceDisplay();
-                document.getElementById('gameBalance').textContent = balances.swag.toFixed(2);
-                document.getElementById('rouletteBalance').textContent = balances.swag.toFixed(2);
+                document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
+                document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
             });
 
             // Показываем результат
@@ -3105,9 +3157,9 @@
             resultNumberDiv.textContent = result;
 
             if (win) {
-                resultMessageDiv.innerHTML = `<div class="result-win">✅ ВЫИГРЫШ +${winAmount} SWAG</div>`;
+                resultMessageDiv.innerHTML = `<div class="result-win">✅ ВЫИГРЫШ +${formatInt(winAmount)} SWAG</div>`;
             } else {
-                resultMessageDiv.innerHTML = `<div class="result-lose">❌ ПРОИГРЫШ -${currentBet} SWAG</div>`;
+                resultMessageDiv.innerHTML = `<div class="result-lose">❌ ПРОИГРЫШ -${formatInt(currentBet)} SWAG</div>`;
             }
 
             // Сохраняем историю баланса
@@ -3141,7 +3193,7 @@
                 setTimeout(() => initStats(), 100);
             } else if (page === 'profile') {
                 document.querySelector('.nav-item[onclick="switchPage(\'profile\')"]').classList.add('active');
-                loadLeaderboard(); // Добавляем загрузку лидерборда при открытии профиля
+                loadLeaderboard();
             }
         }
 
