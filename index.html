@@ -1224,7 +1224,7 @@
             background: rgba(0, 0, 0, 0.3);
             border: 2px solid #00FF00;
             border-radius: 20px;
-            padding: 30px 20px;
+            padding: 20px 20px 30px;
             margin-bottom: 20px;
             position: relative;
             overflow: hidden;
@@ -1232,7 +1232,7 @@
 
         .wheel-pointer {
             position: absolute;
-            top: -5px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
@@ -1250,15 +1250,45 @@
             50% { filter: drop-shadow(0 0 20px #FFD700); }
         }
 
-        .roulette-wheel {
+        /* Кнопка вращения сверху */
+        .wheel-spin-top {
             display: flex;
-            animation: spinWheel 0.5s ease-out;
-            margin-top: 20px;
+            justify-content: center;
+            margin: 15px 0 20px;
         }
 
-        @keyframes spinWheel {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-100% + 100%)); }
+        .wheel-spin-btn {
+            background: linear-gradient(145deg, #00FF00, #00CC00);
+            border: none;
+            border-radius: 30px;
+            padding: 12px 30px;
+            color: #0A1F0A;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .wheel-spin-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px #00FF00;
+        }
+
+        .wheel-spin-btn:active {
+            transform: scale(0.95);
+        }
+
+        .wheel-spin-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .roulette-wheel {
+            display: flex;
+            margin-top: 10px;
         }
 
         .wheel-numbers {
@@ -1610,6 +1640,7 @@
             font-size: 18px;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: none; /* Скрываем старую кнопку */
         }
 
         .spin-btn:hover {
@@ -2182,7 +2213,7 @@
             </div>
         </div>
 
-        <!-- Страница меню игр (ИСПРАВЛЕНО) -->
+        <!-- Страница меню игр -->
         <div id="gamesMenuPage" class="page">
             <div class="games-container">
                 <div class="games-header">
@@ -2223,7 +2254,7 @@
             </div>
         </div>
 
-        <!-- Страница рулетки -->
+        <!-- Страница рулетки (ИСПРАВЛЕННАЯ) -->
         <div id="roulettePage" class="page">
             <div class="roulette-container">
                 <div class="roulette-header">
@@ -2239,6 +2270,9 @@
                 <!-- Вращающаяся рулетка -->
                 <div class="roulette-wheel-container" id="wheelContainer">
                     <div class="wheel-pointer"></div>
+                    <div class="wheel-spin-top">
+                        <button class="wheel-spin-btn" onclick="spinRoulette()" id="wheelSpinBtn">🎲 КРУТИТЬ</button>
+                    </div>
                     <div class="roulette-wheel" id="rouletteWheel">
                         <div class="wheel-numbers" id="wheelNumbers"></div>
                     </div>
@@ -2284,7 +2318,7 @@
                     
                     <div class="action-buttons">
                         <button class="clear-btn" onclick="clearAllBets()">ОЧИСТИТЬ</button>
-                        <button class="spin-btn" onclick="spinRoulette()" id="spinBtn">КРУТИТЬ</button>
+                        <!-- Кнопка КРУТИТЬ убрана отсюда -->
                     </div>
                 </div>
                 
@@ -3404,13 +3438,15 @@
             updateSelectedBetsDisplay();
             updateTotalBet();
             
-            // Анимация вращения при загрузке
-            setTimeout(() => {
-                const wheel = document.getElementById('wheelNumbers');
-                if (wheel) {
-                    wheel.scrollLeft = 200; // Небольшое смещение для эффекта
-                }
-            }, 100);
+            // Сбрасываем позицию колеса
+            const wheel = document.getElementById('wheelNumbers');
+            if (wheel) {
+                wheel.style.scrollBehavior = 'auto';
+                wheel.scrollLeft = 200;
+            }
+            
+            // Разблокируем кнопки
+            document.getElementById('wheelSpinBtn').disabled = false;
         }
 
         // Генерация барабана рулетки
@@ -3620,7 +3656,7 @@
             document.getElementById('betAmount').value = amount;
         }
 
-        // Основная функция вращения рулетки
+        // Основная функция вращения рулетки (ИСПРАВЛЕННАЯ)
         function spinRoulette() {
             const totalBet = Object.values(selectedBets).reduce((sum, val) => sum + val, 0);
             
@@ -3634,6 +3670,9 @@
                 return;
             }
             
+            // Блокируем кнопки
+            document.getElementById('wheelSpinBtn').disabled = true;
+            
             // Анимация вращения
             const wheel = document.getElementById('wheelNumbers');
             
@@ -3641,25 +3680,26 @@
             const resultIndex = Math.floor(Math.random() * 37);
             const result = rouletteNumbers[resultIndex];
             
+            console.log(`🎲 Выпало число: ${result.number} (${result.color})`);
+            
             // Рассчитываем позицию для остановки
             const itemWidth = 70; // ширина элемента + отступ
-            const targetPosition = resultIndex * itemWidth + 200; // смещение для центрирования
+            // Каждое число дублировано 3 раза, поэтому добавляем смещение
+            const baseOffset = 200; // начальное смещение
+            const targetPosition = baseOffset + (resultIndex * itemWidth) + (rouletteNumbers.length * itemWidth);
             
-            // Анимация
+            // Анимация с замедлением
             wheel.style.scrollBehavior = 'smooth';
             wheel.scrollLeft = targetPosition;
             
-            // Блокируем кнопку во время анимации
-            document.getElementById('spinBtn').disabled = true;
-            
-            // Ждем окончания анимации и показываем результат
+            // Ждем окончания анимации (3 секунды для красивого вращения)
             setTimeout(() => {
                 calculateWin(result);
-                document.getElementById('spinBtn').disabled = false;
-            }, 1000);
+                document.getElementById('wheelSpinBtn').disabled = false;
+            }, 3000);
         }
 
-        // Расчет выигрыша
+        // Расчет выигрыша (ИСПРАВЛЕННАЯ)
         function calculateWin(result) {
             let winAmount = 0;
             let winDetails = [];
@@ -3671,20 +3711,22 @@
                     const number = parseInt(key.replace('num_', ''));
                     if (number === result.number) {
                         winAmount += betAmount * 35;
-                        winDetails.push(`Число ${number}: +${betAmount * 35}`);
+                        winDetails.push(`Число ${number}: +${formatInt(betAmount * 35)}`);
                     }
                 } else if (key.startsWith('color_')) {
                     const color = key.replace('color_', '');
                     if (color === result.color) {
                         const multiplier = color === 'green' ? 35 : 2;
                         winAmount += betAmount * multiplier;
-                        winDetails.push(`${color.toUpperCase()}: +${betAmount * multiplier}`);
+                        winDetails.push(`${color.toUpperCase()}: +${formatInt(betAmount * multiplier)}`);
                     }
                 }
             });
             
             const totalBet = Object.values(selectedBets).reduce((sum, val) => sum + val, 0);
             const netResult = winAmount - totalBet;
+            
+            console.log(`💰 Выигрыш: ${winAmount}, Ставка: ${totalBet}, Результат: ${netResult}`);
             
             // Обновляем баланс
             const oldBalance = balances.swag;
@@ -3727,11 +3769,11 @@
             // Очищаем ставки после игры
             setTimeout(() => {
                 clearAllBets();
-            }, 3000);
+            }, 5000);
         }
 
         // ======================================
-        // ==== ИГРЫ (ИСПРАВЛЕННЫЕ ФУНКЦИИ) =====
+        // ==== ИГРЫ ============================
         // ======================================
         function openGamesMenu() {
             console.log('🔄 Открываем меню игр');
