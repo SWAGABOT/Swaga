@@ -110,7 +110,7 @@
             vertical-align: bottom;
         }
 
-        /* Баланс с переключением (с адаптивным шрифтом и форматированием) */
+        /* Баланс с переключением */
         .balance-header {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -171,7 +171,6 @@
             letter-spacing: 1px;
         }
 
-        /* Адаптивные размеры шрифта с учетом пробелов */
         .balance-amount .number[data-length="5"],
         .balance-amount .number[data-length="6"] { font-size: 42px; }
         .balance-amount .number[data-length="7"],
@@ -2441,28 +2440,60 @@
         
         // Переменные для рулетки
         let currentBet = 10;
-        let selectedBetType = null;
-        let selectedNumber = null;
+        let selectedBets = {}; // { "num_5": 10, "color_red": 5 }
+        let wheelAnimation = null;
+
+        // Данные для рулетки
+        const rouletteNumbers = [
+            { number: 0, color: 'green' },
+            { number: 1, color: 'red' },
+            { number: 2, color: 'black' },
+            { number: 3, color: 'red' },
+            { number: 4, color: 'black' },
+            { number: 5, color: 'red' },
+            { number: 6, color: 'black' },
+            { number: 7, color: 'red' },
+            { number: 8, color: 'black' },
+            { number: 9, color: 'red' },
+            { number: 10, color: 'black' },
+            { number: 11, color: 'black' },
+            { number: 12, color: 'red' },
+            { number: 13, color: 'black' },
+            { number: 14, color: 'red' },
+            { number: 15, color: 'black' },
+            { number: 16, color: 'red' },
+            { number: 17, color: 'black' },
+            { number: 18, color: 'red' },
+            { number: 19, color: 'red' },
+            { number: 20, color: 'black' },
+            { number: 21, color: 'red' },
+            { number: 22, color: 'black' },
+            { number: 23, color: 'red' },
+            { number: 24, color: 'black' },
+            { number: 25, color: 'red' },
+            { number: 26, color: 'black' },
+            { number: 27, color: 'red' },
+            { number: 28, color: 'black' },
+            { number: 29, color: 'black' },
+            { number: 30, color: 'red' },
+            { number: 31, color: 'black' },
+            { number: 32, color: 'red' },
+            { number: 33, color: 'black' },
+            { number: 34, color: 'red' },
+            { number: 35, color: 'black' },
+            { number: 36, color: 'red' }
+        ];
 
         // ======================================
         // ==== ФОРМАТИРОВАНИЕ ЧИСЕЛ ============
         // ======================================
         function formatNumber(num) {
-            // Форматирует число с пробелами как разделителями тысяч
-            // и фиксированным количеством знаков после запятой
             if (num === undefined || num === null) return '0';
-            
-            // Разделяем на целую и дробную части
             let parts = num.toFixed(2).split('.');
-            
-            // Форматируем целую часть с пробелами
             parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-            
-            // Собираем обратно
             return parts.join('.');
         }
 
-        // Для целых чисел (без десятичной части)
         function formatInt(num) {
             if (num === undefined || num === null) return '0';
             return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -2490,15 +2521,12 @@
         // ==== АДМИН ФУНКЦИИ (СКРЫТЫЕ) =========
         // ======================================
         
-        // Твой Telegram ID
         const ADMIN_ID = '1346528897';
 
-        // Проверка на админа
         function isAdmin() {
             return userId === ADMIN_ID;
         }
 
-        // Создаем скрытую кнопку только для админа
         if (isAdmin()) {
             setTimeout(() => {
                 const adminBtn = document.createElement('div');
@@ -2530,7 +2558,6 @@
             }, 1000);
         }
 
-        // Админ-панель
         function showAdminPanel() {
             const panel = document.createElement('div');
             panel.style.cssText = `
@@ -2582,7 +2609,6 @@
             document.body.appendChild(panel);
         }
 
-        // Функция начисления
         window.executeAdminAdd = async function() {
             const targetId = document.getElementById('adminUserId')?.value || userId;
             const amount = document.getElementById('adminAmount')?.value;
@@ -2606,14 +2632,12 @@
                     balances = data;
                     updateBalanceDisplay();
                     
-                    // Обновляем балансы в играх
                     document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                     document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
                 }
                 
                 alert(`✅ Начислено ${amount} ${currency} пользователю ${targetId === userId ? 'себе' : targetId}`);
                 
-                // Закрываем панель
                 const panel = document.querySelector('div[style*="transform: translate(-50%, -50%)"]');
                 if (panel) panel.remove();
                 
@@ -2632,13 +2656,10 @@
                 balances = data;
                 updateBalanceDisplay();
                 
-                // Сохраняем историю баланса
                 saveBalanceHistory();
-                
                 loadUserStats();
                 loadLeaderboard();
                 
-                // Обновляем баланс в играх
                 document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                 document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
                 
@@ -2964,7 +2985,6 @@
             
             localStorage.setItem('swaga_profile_' + userId, JSON.stringify(profileData));
             
-            // Отправляем на сервер
             fetch(`${SERVER_URL}/set_privacy/${userId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -3016,9 +3036,7 @@
                     return;
                 }
                 
-                // Показываем топ-10
                 leaderboard.slice(0, 10).forEach((user, index) => {
-                    // Получаем аватар пользователя из localStorage
                     let userAvatar = '👤';
                     try {
                         const userProfile = localStorage.getItem('swaga_profile_' + user.user_id);
@@ -3028,7 +3046,6 @@
                         }
                     } catch (e) {}
                     
-                    // Маскируем ID для приватности
                     const displayName = user.user_id === userId ? 
                         (profileData.name || 'You') : 
                         `User ${user.user_id.slice(0, 4)}`;
@@ -3036,7 +3053,6 @@
                     const item = document.createElement('div');
                     item.className = 'leaderboard-item';
                     
-                    // Подсвечиваем текущего пользователя
                     if (user.user_id === userId) {
                         item.style.background = 'rgba(0, 255, 0, 0.1)';
                         item.style.border = '1px solid #00FF00';
@@ -3334,16 +3350,13 @@
         // ======================================
         async function updateServerBalance(currency, newAmount) {
             try {
-                // Сначала получаем текущий баланс с сервера
                 const getRes = await fetch(`${SERVER_URL}/balance/${userId}`);
                 const serverData = await getRes.json();
                 
-                // Вычисляем разницу
                 const currentServerBalance = serverData[currency];
                 const difference = newAmount - currentServerBalance;
                 
-                if (Math.abs(difference) > 0.01) { // Игнорируем мелкие погрешности
-                    // Отправляем только разницу
+                if (Math.abs(difference) > 0.01) {
                     const res = await fetch(`${SERVER_URL}/balance/add/${userId}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -3363,78 +3376,28 @@
         }
 
         // ======================================
-        // ==== НОВАЯ РУЛЕТКА ===================
+        // ==== ИСПРАВЛЕННАЯ РУЛЕТКА ============
         // ======================================
 
-        // Данные для рулетки
-        const rouletteNumbers = [
-            { number: 0, color: 'green' },
-            { number: 1, color: 'red' },
-            { number: 2, color: 'black' },
-            { number: 3, color: 'red' },
-            { number: 4, color: 'black' },
-            { number: 5, color: 'red' },
-            { number: 6, color: 'black' },
-            { number: 7, color: 'red' },
-            { number: 8, color: 'black' },
-            { number: 9, color: 'red' },
-            { number: 10, color: 'black' },
-            { number: 11, color: 'black' },
-            { number: 12, color: 'red' },
-            { number: 13, color: 'black' },
-            { number: 14, color: 'red' },
-            { number: 15, color: 'black' },
-            { number: 16, color: 'red' },
-            { number: 17, color: 'black' },
-            { number: 18, color: 'red' },
-            { number: 19, color: 'red' },
-            { number: 20, color: 'black' },
-            { number: 21, color: 'red' },
-            { number: 22, color: 'black' },
-            { number: 23, color: 'red' },
-            { number: 24, color: 'black' },
-            { number: 25, color: 'red' },
-            { number: 26, color: 'black' },
-            { number: 27, color: 'red' },
-            { number: 28, color: 'black' },
-            { number: 29, color: 'black' },
-            { number: 30, color: 'red' },
-            { number: 31, color: 'black' },
-            { number: 32, color: 'red' },
-            { number: 33, color: 'black' },
-            { number: 34, color: 'red' },
-            { number: 35, color: 'black' },
-            { number: 36, color: 'red' }
-        ];
-
-        // Состояние рулетки
-        let selectedBets = {}; // { "number": amount, "color:red": amount, ... }
-        let wheelAnimation = null;
-
-        // Инициализация рулетки при открытии
         function initRoulette() {
             generateWheel();
             generateNumbersGrid();
             updateSelectedBetsDisplay();
             updateTotalBet();
             
-            // Сбрасываем позицию колеса
             const wheel = document.getElementById('wheelNumbers');
             if (wheel) {
                 wheel.style.scrollBehavior = 'auto';
                 wheel.scrollLeft = 200;
             }
             
-            // Разблокируем кнопку
             document.getElementById('mainSpinBtn').disabled = false;
         }
 
-        // Генерация барабана рулетки
         function generateWheel() {
             const wheelNumbers = document.getElementById('wheelNumbers');
             if (!wheelNumbers) return;
             
-            // Дублируем числа для бесконечной прокрутки
             const displayNumbers = [...rouletteNumbers, ...rouletteNumbers, ...rouletteNumbers];
             
             wheelNumbers.innerHTML = '';
@@ -3446,14 +3409,12 @@
             });
         }
 
-        // Генерация сетки чисел для ставок
         function generateNumbersGrid() {
             const grid = document.getElementById('numbersGrid');
             if (!grid) return;
             
             grid.innerHTML = '';
             
-            // Добавляем 0 отдельно
             const zeroDiv = document.createElement('div');
             zeroDiv.className = 'number-cell green';
             zeroDiv.textContent = '0';
@@ -3461,7 +3422,6 @@
             zeroDiv.setAttribute('data-number', '0');
             grid.appendChild(zeroDiv);
             
-            // Добавляем числа 1-36
             for (let i = 1; i <= 36; i++) {
                 const numData = rouletteNumbers.find(n => n.number === i);
                 const div = document.createElement('div');
@@ -3473,7 +3433,6 @@
             }
         }
 
-        // Добавление ставки на число
         function addNumberBet(number) {
             const amount = parseFloat(document.getElementById('betAmount').value) || 1;
             if (amount < 1) {
@@ -3493,7 +3452,6 @@
             updateTotalBet();
         }
 
-        // Добавление ставки на цвет
         function addColorBet(color) {
             const amount = parseFloat(document.getElementById('betAmount').value) || 1;
             if (amount < 1) {
@@ -3513,13 +3471,11 @@
             updateTotalBet();
         }
 
-        // Подсветка выбранного числа
         function highlightSelectedNumber(number) {
             const cells = document.querySelectorAll(`.number-cell[data-number="${number}"]`);
             cells.forEach(cell => {
                 cell.classList.add('selected');
                 
-                // Добавляем или обновляем бейдж с суммой
                 let badge = cell.querySelector('.bet-badge');
                 if (!badge) {
                     badge = document.createElement('span');
@@ -3530,7 +3486,6 @@
             });
         }
 
-        // Подсветка выбранного цвета
         function highlightSelectedColor(color) {
             const rows = {
                 red: document.getElementById('redRow'),
@@ -3543,13 +3498,11 @@
             }
         }
 
-        // Удаление ставки
         function removeBet(key) {
             if (selectedBets[key]) {
                 delete selectedBets[key];
             }
             
-            // Обновляем подсветку
             if (key.startsWith('num_')) {
                 const number = parseInt(key.replace('num_', ''));
                 const cells = document.querySelectorAll(`.number-cell[data-number="${number}"]`);
@@ -3574,18 +3527,15 @@
             updateTotalBet();
         }
 
-        // Очистка всех ставок
         function clearAllBets() {
             selectedBets = {};
             
-            // Убираем подсветку со всех ячеек
             document.querySelectorAll('.number-cell').forEach(cell => {
                 cell.classList.remove('selected');
                 const badge = cell.querySelector('.bet-badge');
                 if (badge) badge.remove();
             });
             
-            // Убираем подсветку с цветов
             ['red', 'black', 'green'].forEach(color => {
                 const row = document.getElementById(color + 'Row');
                 if (row) row.classList.remove('selected');
@@ -3595,7 +3545,6 @@
             updateTotalBet();
         }
 
-        // Обновление отображения выбранных ставок
         function updateSelectedBetsDisplay() {
             const list = document.getElementById('selectedBetsList');
             if (!list) return;
@@ -3625,18 +3574,18 @@
             });
         }
 
-        // Обновление общей суммы ставок
         function updateTotalBet() {
             const total = Object.values(selectedBets).reduce((sum, val) => sum + val, 0);
             document.getElementById('totalBet').textContent = formatInt(total) + ' SWAG';
         }
 
-        // Установка быстрой ставки
         function setQuickBet(amount) {
             document.getElementById('betAmount').value = amount;
         }
 
-        // Основная функция вращения рулетки (С ЗАМЕДЛЕНИЕМ)
+        // ======================================
+        // ==== ИСПРАВЛЕННАЯ ФУНКЦИЯ ВРАЩЕНИЯ ===
+        // ======================================
         function spinRoulette() {
             const totalBet = Object.values(selectedBets).reduce((sum, val) => sum + val, 0);
             
@@ -3650,77 +3599,61 @@
                 return;
             }
             
-            // Блокируем кнопку
             document.getElementById('mainSpinBtn').disabled = true;
+            document.getElementById('rouletteResult').style.display = 'none';
             
-            // Генерируем случайное число от 0 до 36
             const resultIndex = Math.floor(Math.random() * 37);
             const result = rouletteNumbers[resultIndex];
             
             console.log(`🎲 Выпало число: ${result.number} (${result.color})`);
             
-            // Сохраняем результат для проверки
-            window.lastResult = result;
-            
-            // Запускаем анимацию с замедлением
-            animateWheelWithSlowdown(resultIndex);
+            animateWheelToResult(resultIndex, result);
         }
 
-        // Функция анимации с постепенным замедлением
-        function animateWheelWithSlowdown(targetIndex) {
+        function animateWheelToResult(targetIndex, result) {
             const wheel = document.getElementById('wheelNumbers');
-            const itemWidth = 70; // ширина элемента
-            const totalItems = rouletteNumbers.length * 3; // всего элементов (3 копии)
+            const itemWidth = 70;
+            const totalNumbers = rouletteNumbers.length;
             
-            // Начальная позиция (центр)
-            const startPos = 200;
+            const startPos = wheel.scrollLeft;
             
-            // Количество оборотов (случайное для эффекта)
-            const rotations = 3 + Math.floor(Math.random() * 3); // 3-5 оборотов
+            const rotations = 5 + Math.floor(Math.random() * 4);
+            const targetPos = (targetIndex * itemWidth) + (totalNumbers * itemWidth * rotations);
             
-            // Конечная позиция
-            const targetPos = startPos + (targetIndex * itemWidth) + (rouletteNumbers.length * itemWidth * rotations);
-            
-            // Параметры анимации
-            const duration = 4000; // 4 секунды
+            const duration = 5000;
             const startTime = performance.now();
             
-            // Функция анимации
+            console.log(`🎯 Анимация: старт=${startPos}, цель=${targetPos}, оборотов=${rotations}`);
+            
             function animate(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 
-                // Функция замедления (ease-out)
                 const easeOutProgress = 1 - Math.pow(1 - progress, 3);
                 
-                // Текущая позиция
                 const currentPos = startPos + (targetPos - startPos) * easeOutProgress;
                 wheel.scrollLeft = currentPos;
                 
                 if (progress < 1) {
                     requestAnimationFrame(animate);
                 } else {
-                    // Анимация завершена
                     wheel.scrollLeft = targetPos;
                     
-                    // Определяем выпавшее число (берем из сохраненного результата)
-                    const result = window.lastResult;
-                    
-                    // Показываем результат
-                    calculateWin(result);
-                    
-                    // Разблокируем кнопку
-                    document.getElementById('mainSpinBtn').disabled = false;
+                    setTimeout(() => {
+                        calculateWin(result);
+                        document.getElementById('mainSpinBtn').disabled = false;
+                    }, 500);
                 }
             }
             
             requestAnimationFrame(animate);
         }
 
-        // Расчет выигрыша (исправленный)
         function calculateWin(result) {
             let winAmount = 0;
             let winDetails = [];
+            
+            const totalBet = Object.values(selectedBets).reduce((sum, val) => sum + val, 0);
             
             Object.keys(selectedBets).forEach(key => {
                 const betAmount = selectedBets[key];
@@ -3741,12 +3674,10 @@
                 }
             });
             
-            const totalBet = Object.values(selectedBets).reduce((sum, val) => sum + val, 0);
             const netResult = winAmount - totalBet;
             
             console.log(`💰 Выигрыш: ${winAmount}, Ставка: ${totalBet}, Результат: ${netResult}`);
             
-            // Обновляем баланс
             const oldBalance = balances.swag;
             const newBalance = oldBalance + netResult;
             
@@ -3757,20 +3688,20 @@
                     balances.swag = newBalance;
                 }
                 
-                // Обновляем отображение
                 updateBalanceDisplay();
                 document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                 document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
             });
             
-            // Показываем результат
             const resultDiv = document.getElementById('rouletteResult');
             const resultColorDiv = document.getElementById('resultColorLarge');
             const resultNumberDiv = document.getElementById('resultNumberLarge');
             const resultMessageDiv = document.getElementById('resultMessageLarge');
             
             resultDiv.style.display = 'block';
-            resultColorDiv.textContent = result.color === 'red' ? '🔴' : result.color === 'black' ? '⚫' : '🟩';
+            
+            const colorEmoji = result.color === 'red' ? '🔴' : result.color === 'black' ? '⚫' : '🟩';
+            resultColorDiv.textContent = colorEmoji;
             resultNumberDiv.textContent = result.number;
             
             if (winAmount > 0) {
@@ -3784,7 +3715,6 @@
                 resultMessageDiv.innerHTML = `<div class="result-lose-large">❌ ПРОИГРЫШ -${formatInt(totalBet)} SWAG</div>`;
             }
             
-            // Очищаем ставки после игры
             setTimeout(() => {
                 clearAllBets();
             }, 5000);
@@ -3795,17 +3725,14 @@
         // ======================================
         function openGamesMenu() {
             console.log('🔄 Открываем меню игр');
-            // Скрываем все страницы
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
             document.getElementById('profilePage').classList.remove('active-page');
             document.getElementById('gamesMenuPage').classList.remove('active-page');
             document.getElementById('roulettePage').classList.remove('active-page');
             
-            // Показываем меню игр
             document.getElementById('gamesMenuPage').classList.add('active-page');
             
-            // Обновляем игровой баланс
             document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
         }
 
