@@ -3690,7 +3690,7 @@
             
             blackjackGame.dealerCards.forEach((card, index) => {
                 const cardDiv = document.createElement('div');
-                if (index === 0 && blackjackGame.active && !blackjackGame.gameOver) {
+                if (index === 1 && blackjackGame.active && !blackjackGame.gameOver) { // Вторая карта скрыта
                     cardDiv.className = 'card back';
                 } else {
                     cardDiv.className = `card ${getCardColor(card.suit)}`;
@@ -3965,4 +3965,5 @@
     </script>
 </body>
 </html>
+
 
