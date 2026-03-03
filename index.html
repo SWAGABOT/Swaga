@@ -1196,589 +1196,6 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        /* ======================================
-        // ==== КРУГЛАЯ РУЛЕТКА =================
-        // ====================================== */
-
-        .roulette-container {
-            padding: 15px 0;
-        }
-
-        .roulette-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .roulette-title {
-            font-family: 'Orbitron', sans-serif;
-            color: #00FF00;
-            font-size: 28px;
-            text-shadow: 0 0 15px #00FF00;
-        }
-
-        .balance-card {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        /* Кнопка вращения */
-        .spin-button-container {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .spin-main-btn {
-            background: linear-gradient(145deg, #00FF00, #00CC00);
-            border: none;
-            border-radius: 50px;
-            padding: 16px 40px;
-            color: #0A1F0A;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 800;
-            font-size: 22px;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .spin-main-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 50px #00FF00;
-        }
-
-        .spin-main-btn:active {
-            transform: scale(0.95);
-        }
-
-        .spin-main-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* Круглая рулетка */
-        .wheel-container {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            margin: 0 auto;
-        }
-
-        .wheel-pointer {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 40px;
-            color: #FFD700;
-            text-shadow: 0 0 10px #FFD700;
-            z-index: 20;
-        }
-
-        .roulette-wheel-circle {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: #0A1F0A;
-            border: 4px solid #00FF00;
-            box-shadow: 0 0 30px rgba(0,255,0,0.3);
-            transition: transform 5s cubic-bezier(0.1, 0.8, 0.2, 1);
-        }
-
-        .wheel-segment {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 40px;
-            height: 40px;
-            margin-left: -20px;
-            margin-top: -20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 16px;
-            border-radius: 50%;
-            background: rgba(0,0,0,0.8);
-            border: 2px solid;
-            box-shadow: 0 0 10px currentColor;
-        }
-
-        .wheel-segment:nth-child(odd) {
-            border-color: #FF3333;
-            color: #FF3333;
-        }
-
-        .wheel-segment:nth-child(even) {
-            border-color: #FFFFFF;
-            color: #FFFFFF;
-        }
-
-        .wheel-segment:first-child {
-            border-color: #00FF00;
-            color: #00FF00;
-        }
-
-        /* Игровое поле */
-        .roulette-table {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 20px;
-            padding: 15px;
-            margin: 20px 0;
-        }
-
-        .table-title {
-            font-family: 'Orbitron', sans-serif;
-            color: #00FF00;
-            font-size: 18px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .numbers-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-
-        .number-cell {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .number-cell.red {
-            background: rgba(255, 51, 51, 0.2);
-            color: #FF3333;
-            border-color: #FF3333;
-        }
-
-        .number-cell.black {
-            background: rgba(0, 0, 0, 0.3);
-            color: white;
-            border-color: #666;
-        }
-
-        .number-cell.green {
-            background: rgba(0, 255, 0, 0.1);
-            color: #00FF00;
-            border-color: #00FF00;
-            grid-column: span 6;
-            aspect-ratio: 6;
-            padding: 10px;
-        }
-
-        .number-cell.selected {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px currentColor;
-            z-index: 2;
-            border-width: 2px;
-        }
-
-        .number-cell.red.selected {
-            background: rgba(255, 51, 51, 0.4);
-        }
-
-        .number-cell.black.selected {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .number-cell.green.selected {
-            background: rgba(0, 255, 0, 0.3);
-        }
-
-        .bet-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #00FF00;
-            color: #0A1F0A;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 2px 4px;
-            border-radius: 5px;
-            min-width: 16px;
-            text-align: center;
-        }
-
-        .color-rows {
-            display: flex;
-            gap: 5px;
-            margin-top: 10px;
-        }
-
-        .color-row {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-        }
-
-        .color-row.red-row {
-            background: rgba(255, 51, 51, 0.2);
-            color: #FF3333;
-            border-color: #FF3333;
-        }
-
-        .color-row.black-row {
-            background: rgba(0, 0, 0, 0.3);
-            color: white;
-            border-color: #666;
-        }
-
-        .color-row.green-row {
-            background: rgba(0, 255, 0, 0.1);
-            color: #00FF00;
-            border-color: #00FF00;
-        }
-
-        .color-row.selected {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px currentColor;
-            border-width: 2px;
-        }
-
-        /* Панель ставок */
-        .bet-panel {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .bet-amount-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .bet-amount-label {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            min-width: 60px;
-        }
-
-        .bet-amount-input {
-            flex: 1;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #00FF00;
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            -moz-appearance: textfield;
-            appearance: textfield;
-        }
-
-        .bet-amount-input::-webkit-inner-spin-button,
-        .bet-amount-input::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            appearance: none;
-            margin: 0;
-        }
-
-        .quick-bets {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .quick-bet-btn {
-            flex: 1;
-            min-width: 60px;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #00FF00;
-            border-radius: 10px;
-            color: white;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .quick-bet-btn:hover {
-            background: rgba(0, 255, 0, 0.2);
-            transform: scale(1.05);
-        }
-
-        .quick-bet-btn.active {
-            background: #00FF00;
-            color: #0A1F0A;
-        }
-
-        .selected-bets {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            padding: 10px;
-            margin-bottom: 15px;
-            min-height: 50px;
-        }
-
-        .selected-bets-title {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 12px;
-            margin-bottom: 5px;
-        }
-
-        .selected-bets-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-
-        .selected-bet-item {
-            background: rgba(0, 255, 0, 0.2);
-            border: 1px solid #00FF00;
-            border-radius: 5px;
-            padding: 5px 8px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
-        }
-
-        .selected-bet-item .remove-bet {
-            color: #FF3333;
-            cursor: pointer;
-            font-weight: 800;
-            margin-left: 5px;
-        }
-
-        .bet-total {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-        }
-
-        .bet-total-label {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-        }
-
-        .bet-total-value {
-            font-family: 'Orbitron', sans-serif;
-            color: #00FF00;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .clear-btn {
-            flex: 1;
-            padding: 15px;
-            background: transparent;
-            border: 1px solid #FF3333;
-            border-radius: 15px;
-            color: #FF3333;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .clear-btn:hover {
-            background: #FF3333;
-            color: white;
-        }
-
-        /* Результат */
-        .roulette-result {
-            text-align: center;
-            padding: 20px;
-            margin: 20px 0;
-            border: 2px solid #00FF00;
-            border-radius: 20px;
-            animation: glow 2s infinite;
-        }
-
-        .result-number-large {
-            font-size: 72px;
-            font-weight: 800;
-            margin: 10px 0;
-        }
-
-        .result-color-large {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .result-win-large {
-            font-size: 32px;
-            font-weight: 800;
-            color: #00FF00;
-        }
-
-        .result-lose-large {
-            font-size: 32px;
-            font-weight: 800;
-            color: #FF3333;
-        }
-
-        /* Страница статистики */
-        .stats-container {
-            padding: 20px 0;
-        }
-
-        .stats-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .stats-title {
-            font-family: 'Orbitron', sans-serif;
-            color: #00FF00;
-            font-size: 28px;
-            text-shadow: 0 0 15px #00FF00;
-            letter-spacing: 2px;
-        }
-
-        .stats-time {
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid #00FF00;
-            border-radius: 20px;
-            padding: 6px 15px;
-            font-size: 14px;
-            color: #00FF00;
-            font-family: 'Orbitron', sans-serif;
-        }
-
-        /* График */
-        .chart-container {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 10px;
-            height: 200px;
-        }
-
-        /* Переключатель графика */
-        .chart-switcher {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-content: center;
-        }
-
-        .chart-btn {
-            flex: 1;
-            max-width: 120px;
-            padding: 10px;
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            background: transparent;
-            color: white;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 600;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .chart-btn.active {
-            background: #00FF00;
-            color: #0A1F0A;
-            border-color: #00FF00;
-            box-shadow: 0 0 15px #00FF00;
-        }
-
-        .chart-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
-        }
-
-        /* Карточки статистики */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .stat-card {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 255, 0, 0.2);
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .stat-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
-            font-weight: 800;
-            color: #00FF00;
-            text-shadow: 0 0 10px #00FF00;
-            margin-bottom: 5px;
-        }
-
-        .stat-change {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 5px;
-        }
-
-        .stat-change.positive {
-            color: #00FF00;
-        }
-
-        .stat-change.negative {
-            color: #FF3333;
-        }
-
         /* Страница игр */
         .games-container {
             padding: 20px 0;
@@ -1848,6 +1265,218 @@
         .game-desc {
             font-size: 12px;
             color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ======================================
+        // ==== МАЙНЕР (MINES) ==================
+        // ====================================== */
+
+        .mines-container {
+            padding: 15px 0;
+        }
+
+        .mines-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .mines-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            font-size: 28px;
+            text-shadow: 0 0 15px #00FF00;
+        }
+
+        .balance-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .mines-settings {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .settings-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        .settings-value {
+            color: #00FF00;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .mines-input {
+            width: 100px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00FF00;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            -moz-appearance: textfield;
+        }
+
+        .mines-input::-webkit-inner-spin-button,
+        .mines-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .mines-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .mine-cell {
+            aspect-ratio: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(0, 255, 0, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+        }
+
+        .mine-cell:hover {
+            transform: scale(1.05);
+            border-color: #00FF00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .mine-cell.revealed {
+            background: rgba(0, 255, 0, 0.2);
+            border-color: #00FF00;
+            box-shadow: 0 0 15px #00FF00;
+            cursor: default;
+        }
+
+        .mine-cell.revealed:hover {
+            transform: none;
+        }
+
+        .mine-cell.mine {
+            background: rgba(255, 51, 51, 0.3);
+            border-color: #FF3333;
+            box-shadow: 0 0 15px #FF3333;
+        }
+
+        .mine-cell.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .mine-cell.disabled:hover {
+            transform: none;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .game-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn {
+            background: #00FF00;
+            color: #0A1F0A;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px #00FF00;
+        }
+
+        .cashout-btn {
+            background: transparent;
+            border: 2px solid #00FF00;
+            color: #00FF00;
+        }
+
+        .cashout-btn:hover:not(:disabled) {
+            background: #00FF00;
+            color: #0A1F0A;
+            transform: scale(1.02);
+        }
+
+        .cashout-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            border-color: rgba(0, 255, 0, 0.3);
+        }
+
+        .multiplier-display {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 800;
+            color: #00FF00;
+            text-shadow: 0 0 15px #00FF00;
+            margin: 15px 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .potential-win {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .game-result {
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #00FF00;
+            border-radius: 20px;
+            animation: glow 2s infinite;
+        }
+
+        .result-win {
+            font-size: 32px;
+            font-weight: 800;
+            color: #00FF00;
+        }
+
+        .result-lose {
+            font-size: 32px;
+            font-weight: 800;
+            color: #FF3333;
         }
 
         /* Нижняя навигация */
@@ -2192,15 +1821,15 @@
                 </div>
                 
                 <div class="games-grid">
-                    <div class="game-card" onclick="openRoulette()">
-                        <div class="game-icon">🎲</div>
-                        <div class="game-name">РУЛЕТКА</div>
-                        <div class="game-desc">x2 или x35 на зеро</div>
+                    <div class="game-card" onclick="openMines()">
+                        <div class="game-icon">💣</div>
+                        <div class="game-name">МАЙНЕР</div>
+                        <div class="game-desc">x1.2 - x1000</div>
                     </div>
                     
                     <div class="game-card disabled" onclick="alert('Скоро!')">
-                        <div class="game-icon">💣</div>
-                        <div class="game-name">МАЙНЕР</div>
+                        <div class="game-icon">🎲</div>
+                        <div class="game-name">РУЛЕТКА</div>
                         <div class="game-desc">Скоро</div>
                     </div>
                     
@@ -2219,186 +1848,41 @@
             </div>
         </div>
 
-              <!-- Страница рулетки (КРУГЛАЯ С НОРМАЛЬНЫМИ ПРОМЕЖУТКАМИ) -->
-        <div id="roulettePage" class="page">
-            <div class="roulette-container">
-                <div class="roulette-header">
+        <!-- Страница МАЙНЕР (MINES) -->
+        <div id="minesPage" class="page">
+            <div class="mines-container">
+                <div class="mines-header">
                     <button class="back-btn" onclick="openGamesMenu()">←</button>
-                    <h2 class="roulette-title">🎲 РУЛЕТКА</h2>
+                    <h2 class="mines-title">💣 МАЙНЕР</h2>
                 </div>
                 
                 <div class="balance-card">
                     <div class="balance-label">Игровой баланс</div>
-                    <div class="balance-amount" id="rouletteBalance">0</div>
+                    <div class="balance-amount" id="minesBalance">0</div>
                 </div>
-                
-                <!-- КРУГЛАЯ РУЛЕТКА -->
-                <div class="wheel-container">
-                    <div class="wheel-pointer">▼</div>
-                    <div class="roulette-wheel-circle" id="rouletteWheelCircle">
-                        <div class="wheel-segment" style="--i: 0;">0</div>
-                        <div class="wheel-segment" style="--i: 1;">32</div>
-                        <div class="wheel-segment" style="--i: 2;">15</div>
-                        <div class="wheel-segment" style="--i: 3;">19</div>
-                        <div class="wheel-segment" style="--i: 4;">4</div>
-                        <div class="wheel-segment" style="--i: 5;">21</div>
-                        <div class="wheel-segment" style="--i: 6;">2</div>
-                        <div class="wheel-segment" style="--i: 7;">25</div>
-                        <div class="wheel-segment" style="--i: 8;">17</div>
-                        <div class="wheel-segment" style="--i: 9;">34</div>
-                        <div class="wheel-segment" style="--i: 10;">6</div>
-                        <div class="wheel-segment" style="--i: 11;">27</div>
-                        <div class="wheel-segment" style="--i: 12;">13</div>
-                        <div class="wheel-segment" style="--i: 13;">36</div>
-                        <div class="wheel-segment" style="--i: 14;">11</div>
-                        <div class="wheel-segment" style="--i: 15;">30</div>
-                        <div class="wheel-segment" style="--i: 16;">8</div>
-                        <div class="wheel-segment" style="--i: 17;">23</div>
-                        <div class="wheel-segment" style="--i: 18;">10</div>
-                        <div class="wheel-segment" style="--i: 19;">5</div>
-                        <div class="wheel-segment" style="--i: 20;">24</div>
-                        <div class="wheel-segment" style="--i: 21;">16</div>
-                        <div class="wheel-segment" style="--i: 22;">33</div>
-                        <div class="wheel-segment" style="--i: 23;">1</div>
-                        <div class="wheel-segment" style="--i: 24;">20</div>
-                        <div class="wheel-segment" style="--i: 25;">14</div>
-                        <div class="wheel-segment" style="--i: 26;">31</div>
-                        <div class="wheel-segment" style="--i: 27;">9</div>
-                        <div class="wheel-segment" style="--i: 28;">22</div>
-                        <div class="wheel-segment" style="--i: 29;">18</div>
-                        <div class="wheel-segment" style="--i: 30;">29</div>
-                        <div class="wheel-segment" style="--i: 31;">7</div>
-                        <div class="wheel-segment" style="--i: 32;">28</div>
-                        <div class="wheel-segment" style="--i: 33;">12</div>
-                        <div class="wheel-segment" style="--i: 34;">35</div>
-                        <div class="wheel-segment" style="--i: 35;">3</div>
-                        <div class="wheel-segment" style="--i: 36;">26</div>
+
+                <div class="mines-settings">
+                    <div class="settings-row">
+                        <span class="settings-label">Количество мин:</span>
+                        <input type="number" id="minesCount" class="mines-input" value="3" min="1" max="24">
+                    </div>
+                    <div class="settings-row">
+                        <span class="settings-label">Ставка:</span>
+                        <input type="number" id="minesBet" class="mines-input" value="10" min="1">
                     </div>
                 </div>
 
-                <style>
-                    .wheel-container {
-                        position: relative;
-                        width: 300px;
-                        height: 300px;
-                        margin: 20px auto;
-                    }
-                    
-                    .wheel-pointer {
-                        position: absolute;
-                        top: -15px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        font-size: 40px;
-                        color: #FFD700;
-                        text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
-                        z-index: 20;
-                    }
-                    
-                    .roulette-wheel-circle {
-                        position: relative;
-                        width: 100%;
-                        height: 100%;
-                        border-radius: 50%;
-                        background: #0A1F0A;
-                        border: 4px solid #00FF00;
-                        box-shadow: 0 0 30px rgba(0,255,0,0.3);
-                        transition: transform 5s cubic-bezier(0.1, 0.8, 0.2, 1);
-                    }
-                    
-                    .wheel-segment {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        width: 44px;
-                        height: 44px;
-                        margin-left: -22px;
-                        margin-top: -22px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-weight: 800;
-                        font-size: 18px;
-                        border-radius: 50%;
-                        background: rgba(10, 31, 10, 0.95);
-                        border: 3px solid;
-                        box-shadow: 0 0 15px currentColor;
-                        transform: rotate(calc(360deg / 37 * var(--i))) translate(0, -140px) rotate(calc(-360deg / 37 * var(--i)));
-                    }
-                    
-                    .wheel-segment:nth-child(odd) {
-                        border-color: #FF3333;
-                        color: #FF3333;
-                        background: #1A0A0A;
-                    }
-                    
-                    .wheel-segment:nth-child(even) {
-                        border-color: #FFFFFF;
-                        color: #FFFFFF;
-                        background: #1A1A1A;
-                    }
-                    
-                    .wheel-segment:first-child {
-                        border-color: #00FF00;
-                        color: #00FF00;
-                        background: #0A2A0A;
-                    }
-                </style>
-                
-                <!-- Кнопка вращения -->
-                <div class="spin-button-container">
-                    <button class="spin-main-btn" onclick="spinCircleRoulette()" id="mainSpinBtn">🎲 КРУТИТЬ</button>
+                <div class="multiplier-display" id="currentMultiplier">x1.00</div>
+                <div class="potential-win" id="potentialWin">Потенциальный выигрыш: 10 SWAG</div>
+
+                <div class="mines-grid" id="minesGrid"></div>
+
+                <div class="game-controls">
+                    <button class="game-btn start-btn" onclick="startMines()" id="startMinesBtn">НАЧАТЬ</button>
+                    <button class="game-btn cashout-btn" onclick="cashoutMines()" id="cashoutMinesBtn" disabled>ЗАБРАТЬ</button>
                 </div>
-                
-                <!-- Игровое поле -->
-                <div class="roulette-table">
-                    <div class="table-title">СТАВКИ НА ЧИСЛА</div>
-                    <div class="numbers-grid" id="numbersGrid"></div>
-                    
-                    <div class="color-rows">
-                        <div class="color-row red-row" onclick="addColorBet('red')" id="redRow">🔴 КРАСНОЕ (x2)</div>
-                        <div class="color-row black-row" onclick="addColorBet('black')" id="blackRow">⚫ ЧЕРНОЕ (x2)</div>
-                        <div class="color-row green-row" onclick="addColorBet('green')" id="greenRow">🟩 ЗЕЛЕНОЕ (x35)</div>
-                    </div>
-                </div>
-                
-                <!-- Панель ставок -->
-                <div class="bet-panel">
-                    <div class="bet-amount-section">
-                        <span class="bet-amount-label">СТАВКА:</span>
-                        <input type="number" id="betAmount" class="bet-amount-input" value="10" min="1" step="1">
-                    </div>
-                    
-                    <div class="quick-bets">
-                        <button class="quick-bet-btn" onclick="setQuickBet(1)">1</button>
-                        <button class="quick-bet-btn" onclick="setQuickBet(5)">5</button>
-                        <button class="quick-bet-btn" onclick="setQuickBet(10)">10</button>
-                        <button class="quick-bet-btn" onclick="setQuickBet(25)">25</button>
-                        <button class="quick-bet-btn" onclick="setQuickBet(50)">50</button>
-                        <button class="quick-bet-btn" onclick="setQuickBet(100)">100</button>
-                    </div>
-                    
-                    <div class="selected-bets">
-                        <div class="selected-bets-title">ВЫБРАННЫЕ СТАВКИ</div>
-                        <div class="selected-bets-list" id="selectedBetsList"></div>
-                    </div>
-                    
-                    <div class="bet-total">
-                        <span class="bet-total-label">ОБЩАЯ СТАВКА:</span>
-                        <span class="bet-total-value" id="totalBet">0 SWAG</span>
-                    </div>
-                    
-                    <div class="action-buttons">
-                        <button class="clear-btn" onclick="clearAllBets()">ОЧИСТИТЬ</button>
-                    </div>
-                </div>
-                
-                <!-- Результат -->
-                <div id="rouletteResult" class="roulette-result" style="display: none;">
-                    <div class="result-color-large" id="resultColorLarge"></div>
-                    <div class="result-number-large" id="resultNumberLarge"></div>
-                    <div id="resultMessageLarge"></div>
-                </div>
+
+                <div id="minesResult" class="game-result" style="display: none;"></div>
             </div>
         </div>
     </div>
@@ -2530,50 +2014,18 @@
         let chartHistory = [];
         let chartMode = 'usdt';
         
-        // Переменные для рулетки
-        let currentBet = 10;
-        let selectedBets = {}; // { "num_5": 10, "color_red": 5 }
-
-        // Данные для рулетки
-        const rouletteNumbers = [
-            { number: 0, color: 'green' },
-            { number: 1, color: 'red' },
-            { number: 2, color: 'black' },
-            { number: 3, color: 'red' },
-            { number: 4, color: 'black' },
-            { number: 5, color: 'red' },
-            { number: 6, color: 'black' },
-            { number: 7, color: 'red' },
-            { number: 8, color: 'black' },
-            { number: 9, color: 'red' },
-            { number: 10, color: 'black' },
-            { number: 11, color: 'black' },
-            { number: 12, color: 'red' },
-            { number: 13, color: 'black' },
-            { number: 14, color: 'red' },
-            { number: 15, color: 'black' },
-            { number: 16, color: 'red' },
-            { number: 17, color: 'black' },
-            { number: 18, color: 'red' },
-            { number: 19, color: 'red' },
-            { number: 20, color: 'black' },
-            { number: 21, color: 'red' },
-            { number: 22, color: 'black' },
-            { number: 23, color: 'red' },
-            { number: 24, color: 'black' },
-            { number: 25, color: 'red' },
-            { number: 26, color: 'black' },
-            { number: 27, color: 'red' },
-            { number: 28, color: 'black' },
-            { number: 29, color: 'black' },
-            { number: 30, color: 'red' },
-            { number: 31, color: 'black' },
-            { number: 32, color: 'red' },
-            { number: 33, color: 'black' },
-            { number: 34, color: 'red' },
-            { number: 35, color: 'black' },
-            { number: 36, color: 'red' }
-        ];
+        // ======================================
+        // ==== ПЕРЕМЕННЫЕ ДЛЯ МАЙНЕРА ==========
+        // ======================================
+        let minesGame = {
+            active: false,
+            bet: 0,
+            minesCount: 3,
+            revealed: [],
+            minePositions: [],
+            multiplier: 1,
+            gridSize: 25 // 5x5
+        };
 
         // ======================================
         // ==== ФОРМАТИРОВАНИЕ ЧИСЕЛ ============
@@ -2724,7 +2176,7 @@
                     updateBalanceDisplay();
                     
                     document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
-                    document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
                 }
                 
                 alert(`✅ Начислено ${amount} ${currency} пользователю ${targetId === userId ? 'себе' : targetId}`);
@@ -2752,7 +2204,7 @@
                 loadLeaderboard();
                 
                 document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
-                document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
+                document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
                 
                 console.log('✅ Баланс загружен с сервера:', balances);
             } catch (e) {
@@ -3081,10 +2533,6 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ privacy: mode })
             }).catch(e => console.log('Privacy sync error:', e));
-            
-            if (typeof showNotification === 'function') {
-                showNotification(mode === 'public' ? '🌐 Profile is public' : '🔒 Profile is private', 'success');
-            }
         }
 
         async function loadUserStats() {
@@ -3108,7 +2556,6 @@
         // ======================================
         async function loadLeaderboard() {
             try {
-                console.log('Загрузка лидерборда...');
                 const res = await fetch(`${SERVER_URL}/leaderboard?limit=20`);
                 
                 if (!res.ok) {
@@ -3116,7 +2563,6 @@
                 }
                 
                 const data = await res.json();
-                console.log('Данные лидерборда:', data);
                 
                 const leaderboard = data.leaderboard || [];
                 const leaderboardList = document.getElementById('leaderboardList');
@@ -3467,287 +2913,213 @@
         }
 
         // ======================================
-        // ==== КРУГЛАЯ РУЛЕТКА =================
+        // ==== МАЙНЕР (MINES) ==================
         // ======================================
-        
-        function generateNumbersGrid() {
-            const grid = document.getElementById('numbersGrid');
-            if (!grid) return;
+
+        function openMines() {
+            console.log('💣 Открываем майнер');
+            document.getElementById('workPage').classList.remove('active-page');
+            document.getElementById('statsPage').classList.remove('active-page');
+            document.getElementById('profilePage').classList.remove('active-page');
+            document.getElementById('gamesMenuPage').classList.remove('active-page');
+            document.getElementById('minesPage').classList.remove('active-page');
             
+            document.getElementById('minesPage').classList.add('active-page');
+            
+            document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
+            resetMines();
+        }
+
+        function resetMines() {
+            minesGame.active = false;
+            minesGame.revealed = [];
+            minesGame.minePositions = [];
+            minesGame.multiplier = 1;
+            
+            document.getElementById('startMinesBtn').disabled = false;
+            document.getElementById('cashoutMinesBtn').disabled = true;
+            document.getElementById('minesCount').disabled = false;
+            document.getElementById('minesBet').disabled = false;
+            
+            updateMultiplier();
+            renderMinesGrid();
+        }
+
+        function renderMinesGrid() {
+            const grid = document.getElementById('minesGrid');
             grid.innerHTML = '';
             
-            const zeroDiv = document.createElement('div');
-            zeroDiv.className = 'number-cell green';
-            zeroDiv.textContent = '0';
-            zeroDiv.setAttribute('onclick', 'addNumberBet(0)');
-            zeroDiv.setAttribute('data-number', '0');
-            grid.appendChild(zeroDiv);
-            
-            for (let i = 1; i <= 36; i++) {
-                const numData = rouletteNumbers.find(n => n.number === i);
-                const div = document.createElement('div');
-                div.className = `number-cell ${numData.color}`;
-                div.textContent = i;
-                div.setAttribute('onclick', `addNumberBet(${i})`);
-                div.setAttribute('data-number', i.toString());
-                grid.appendChild(div);
-            }
-        }
-
-        function addNumberBet(number) {
-            const amount = parseFloat(document.getElementById('betAmount').value) || 1;
-            if (amount < 1) {
-                alert('Минимальная ставка: 1 SWAG');
-                return;
-            }
-            
-            const key = `num_${number}`;
-            if (selectedBets[key]) {
-                selectedBets[key] += amount;
-            } else {
-                selectedBets[key] = amount;
-            }
-            
-            highlightSelectedNumber(number);
-            updateSelectedBetsDisplay();
-            updateTotalBet();
-        }
-
-        function addColorBet(color) {
-            const amount = parseFloat(document.getElementById('betAmount').value) || 1;
-            if (amount < 1) {
-                alert('Минимальная ставка: 1 SWAG');
-                return;
-            }
-            
-            const key = `color_${color}`;
-            if (selectedBets[key]) {
-                selectedBets[key] += amount;
-            } else {
-                selectedBets[key] = amount;
-            }
-            
-            highlightSelectedColor(color);
-            updateSelectedBetsDisplay();
-            updateTotalBet();
-        }
-
-        function highlightSelectedNumber(number) {
-            const cells = document.querySelectorAll(`.number-cell[data-number="${number}"]`);
-            cells.forEach(cell => {
-                cell.classList.add('selected');
+            for (let i = 0; i < 25; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'mine-cell';
+                cell.setAttribute('data-index', i);
                 
-                let badge = cell.querySelector('.bet-badge');
-                if (!badge) {
-                    badge = document.createElement('span');
-                    badge.className = 'bet-badge';
-                    cell.appendChild(badge);
+                if (minesGame.revealed.includes(i)) {
+                    cell.classList.add('revealed');
+                    cell.textContent = '💎';
+                } else if (minesGame.active && minesGame.minePositions.includes(i)) {
+                    // Не показываем мины, пока не проиграли
                 }
-                badge.textContent = formatInt(selectedBets[`num_${number}`]);
-            });
-        }
-
-        function highlightSelectedColor(color) {
-            const rows = {
-                red: document.getElementById('redRow'),
-                black: document.getElementById('blackRow'),
-                green: document.getElementById('greenRow')
-            };
-            
-            if (rows[color]) {
-                rows[color].classList.add('selected');
+                
+                if (minesGame.active && !minesGame.revealed.includes(i)) {
+                    cell.onclick = () => revealCell(i);
+                } else {
+                    cell.onclick = null;
+                }
+                
+                grid.appendChild(cell);
             }
         }
 
-        function removeBet(key) {
-            if (selectedBets[key]) {
-                delete selectedBets[key];
-            }
+        function revealCell(index) {
+            if (!minesGame.active) return;
+            if (minesGame.revealed.includes(index)) return;
             
-            if (key.startsWith('num_')) {
-                const number = parseInt(key.replace('num_', ''));
-                const cells = document.querySelectorAll(`.number-cell[data-number="${number}"]`);
-                cells.forEach(cell => {
-                    cell.classList.remove('selected');
-                    const badge = cell.querySelector('.bet-badge');
-                    if (badge) badge.remove();
+            if (minesGame.minePositions.includes(index)) {
+                // Проигрыш
+                minesGame.active = false;
+                
+                // Показываем все мины
+                const cells = document.querySelectorAll('.mine-cell');
+                minesGame.minePositions.forEach(pos => {
+                    if (cells[pos]) {
+                        cells[pos].classList.add('mine');
+                        cells[pos].textContent = '💣';
+                    }
                 });
-            } else if (key.startsWith('color_')) {
-                const color = key.replace('color_', '');
-                const rows = {
-                    red: document.getElementById('redRow'),
-                    black: document.getElementById('blackRow'),
-                    green: document.getElementById('greenRow')
-                };
-                if (rows[color]) {
-                    rows[color].classList.remove('selected');
+                
+                // Показываем результат
+                const resultDiv = document.getElementById('minesResult');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<div class="result-lose">💥 ПРОИГРЫШ -${formatInt(minesGame.bet)} SWAG</div>`;
+                
+                // Обновляем баланс
+                const newBalance = balances.swag - minesGame.bet;
+                updateServerBalance('swag', newBalance).then(data => {
+                    if (data) {
+                        balances = data;
+                    } else {
+                        balances.swag = newBalance;
+                    }
+                    updateBalanceDisplay();
+                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
+                });
+                
+                document.getElementById('startMinesBtn').disabled = false;
+                document.getElementById('cashoutMinesBtn').disabled = true;
+                document.getElementById('minesCount').disabled = false;
+                document.getElementById('minesBet').disabled = false;
+                
+            } else {
+                // Выигрыш - открываем клетку
+                minesGame.revealed.push(index);
+                
+                const cells = document.querySelectorAll('.mine-cell');
+                if (cells[index]) {
+                    cells[index].classList.add('revealed');
+                    cells[index].textContent = '💎';
                 }
+                
+                // Обновляем множитель
+                const revealedCount = minesGame.revealed.length;
+                const totalCells = 25;
+                const mines = minesGame.minesCount;
+                
+                // Формула множителя для Mines
+                minesGame.multiplier = 1 + (revealedCount * (mines / (totalCells - mines))) * 1.5;
+                
+                updateMultiplier();
+                
+                // Активируем кнопку кэшаута
+                document.getElementById('cashoutMinesBtn').disabled = false;
             }
-            
-            updateSelectedBetsDisplay();
-            updateTotalBet();
         }
 
-        function clearAllBets() {
-            selectedBets = {};
+        function updateMultiplier() {
+            const multiplierEl = document.getElementById('currentMultiplier');
+            const potentialEl = document.getElementById('potentialWin');
             
-            document.querySelectorAll('.number-cell').forEach(cell => {
-                cell.classList.remove('selected');
-                const badge = cell.querySelector('.bet-badge');
-                if (badge) badge.remove();
-            });
+            multiplierEl.textContent = `x${minesGame.multiplier.toFixed(2)}`;
             
-            ['red', 'black', 'green'].forEach(color => {
-                const row = document.getElementById(color + 'Row');
-                if (row) row.classList.remove('selected');
-            });
-            
-            updateSelectedBetsDisplay();
-            updateTotalBet();
+            const potentialWin = minesGame.bet * minesGame.multiplier;
+            potentialEl.textContent = `Потенциальный выигрыш: ${formatInt(potentialWin)} SWAG`;
         }
 
-        function updateSelectedBetsDisplay() {
-            const list = document.getElementById('selectedBetsList');
-            if (!list) return;
+        function startMines() {
+            const minesCount = parseInt(document.getElementById('minesCount').value);
+            const bet = parseFloat(document.getElementById('minesBet').value);
             
-            list.innerHTML = '';
-            
-            Object.keys(selectedBets).forEach(key => {
-                const amount = selectedBets[key];
-                let displayText = '';
-                
-                if (key.startsWith('num_')) {
-                    const number = key.replace('num_', '');
-                    displayText = `#${number}`;
-                } else if (key.startsWith('color_')) {
-                    const color = key.replace('color_', '');
-                    const emoji = color === 'red' ? '🔴' : color === 'black' ? '⚫' : '🟩';
-                    displayText = `${emoji} ${color.toUpperCase()}`;
-                }
-                
-                const item = document.createElement('div');
-                item.className = 'selected-bet-item';
-                item.innerHTML = `
-                    ${displayText}: ${formatInt(amount)}
-                    <span class="remove-bet" onclick="removeBet('${key}')">✕</span>
-                `;
-                list.appendChild(item);
-            });
-        }
-
-        function updateTotalBet() {
-            const total = Object.values(selectedBets).reduce((sum, val) => sum + val, 0);
-            document.getElementById('totalBet').textContent = formatInt(total) + ' SWAG';
-        }
-
-        function setQuickBet(amount) {
-            document.getElementById('betAmount').value = amount;
-        }
-
-        function spinCircleRoulette() {
-            const totalBet = Object.values(selectedBets).reduce((sum, val) => sum + val, 0);
-            
-            if (totalBet === 0) {
-                alert('Сделайте хотя бы одну ставку!');
+            if (minesCount < 1 || minesCount > 24) {
+                alert('Количество мин должно быть от 1 до 24');
                 return;
             }
             
-            if (balances.swag < totalBet) {
-                alert(`Недостаточно SWAG! Нужно: ${formatInt(totalBet)}, есть: ${formatInt(balances.swag)}`);
+            if (bet < 1) {
+                alert('Минимальная ставка: 1 SWAG');
                 return;
             }
             
-            document.getElementById('mainSpinBtn').disabled = true;
-            document.getElementById('rouletteResult').style.display = 'none';
+            if (bet > balances.swag) {
+                alert(`Недостаточно SWAG! Баланс: ${formatInt(balances.swag)}`);
+                return;
+            }
             
-            const resultIndex = Math.floor(Math.random() * 37);
-            const result = rouletteNumbers[resultIndex];
+            // Генерируем позиции мин
+            const minePositions = [];
+            while (minePositions.length < minesCount) {
+                const pos = Math.floor(Math.random() * 25);
+                if (!minePositions.includes(pos)) {
+                    minePositions.push(pos);
+                }
+            }
             
-            console.log(`🎲 Выпало число: ${result.number} (${result.color})`);
+            minesGame.active = true;
+            minesGame.bet = bet;
+            minesGame.minesCount = minesCount;
+            minesGame.revealed = [];
+            minesGame.minePositions = minePositions;
+            minesGame.multiplier = 1;
             
-            const segmentAngle = 360 / 37;
-            const targetRotation = 360 * 10 + (resultIndex * segmentAngle);
+            document.getElementById('startMinesBtn').disabled = true;
+            document.getElementById('cashoutMinesBtn').disabled = true;
+            document.getElementById('minesCount').disabled = true;
+            document.getElementById('minesBet').disabled = true;
+            document.getElementById('minesResult').style.display = 'none';
             
-            const wheel = document.getElementById('rouletteWheelCircle');
-            
-            wheel.style.transition = 'transform 5s cubic-bezier(0.1, 0.8, 0.2, 1)';
-            wheel.style.transform = `rotate(${targetRotation}deg)`;
-            
-            setTimeout(() => {
-                calculateWin(result);
-                document.getElementById('mainSpinBtn').disabled = false;
-            }, 5000);
+            renderMinesGrid();
+            updateMultiplier();
         }
 
-        function calculateWin(result) {
-            let winAmount = 0;
-            let winDetails = [];
+        function cashoutMines() {
+            if (!minesGame.active) return;
             
-            const totalBet = Object.values(selectedBets).reduce((sum, val) => sum + val, 0);
+            const winAmount = minesGame.bet * minesGame.multiplier;
             
-            Object.keys(selectedBets).forEach(key => {
-                const betAmount = selectedBets[key];
-                
-                if (key.startsWith('num_')) {
-                    const number = parseInt(key.replace('num_', ''));
-                    if (number === result.number) {
-                        winAmount += betAmount * 35;
-                        winDetails.push(`Число ${number}: +${formatInt(betAmount * 35)}`);
-                    }
-                } else if (key.startsWith('color_')) {
-                    const color = key.replace('color_', '');
-                    if (color === result.color) {
-                        const multiplier = color === 'green' ? 35 : 2;
-                        winAmount += betAmount * multiplier;
-                        winDetails.push(`${color.toUpperCase()}: +${formatInt(betAmount * multiplier)}`);
-                    }
-                }
-            });
+            minesGame.active = false;
             
-            const netResult = winAmount - totalBet;
+            // Показываем результат
+            const resultDiv = document.getElementById('minesResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `<div class="result-win">✅ ВЫИГРЫШ +${formatInt(winAmount - minesGame.bet)} SWAG</div>`;
             
-            console.log(`💰 Выигрыш: ${winAmount}, Ставка: ${totalBet}, Результат: ${netResult}`);
-            
-            const oldBalance = balances.swag;
-            const newBalance = oldBalance + netResult;
-            
+            // Обновляем баланс
+            const newBalance = balances.swag - minesGame.bet + winAmount;
             updateServerBalance('swag', newBalance).then(data => {
                 if (data) {
                     balances = data;
                 } else {
                     balances.swag = newBalance;
                 }
-                
                 updateBalanceDisplay();
                 document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
-                document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
+                document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
             });
             
-            const resultDiv = document.getElementById('rouletteResult');
-            const resultColorDiv = document.getElementById('resultColorLarge');
-            const resultNumberDiv = document.getElementById('resultNumberLarge');
-            const resultMessageDiv = document.getElementById('resultMessageLarge');
-            
-            resultDiv.style.display = 'block';
-            
-            const colorEmoji = result.color === 'red' ? '🔴' : result.color === 'black' ? '⚫' : '🟩';
-            resultColorDiv.textContent = colorEmoji;
-            resultNumberDiv.textContent = result.number;
-            
-            if (winAmount > 0) {
-                resultMessageDiv.innerHTML = `
-                    <div class="result-win-large">✅ ВЫИГРЫШ +${formatInt(winAmount)} SWAG</div>
-                    <div style="font-size: 14px; margin-top: 10px; color: rgba(255,255,255,0.5);">
-                        ${winDetails.join('<br>')}
-                    </div>
-                `;
-            } else {
-                resultMessageDiv.innerHTML = `<div class="result-lose-large">❌ ПРОИГРЫШ -${formatInt(totalBet)} SWAG</div>`;
-            }
-            
-            setTimeout(() => {
-                clearAllBets();
-            }, 5000);
+            document.getElementById('startMinesBtn').disabled = false;
+            document.getElementById('cashoutMinesBtn').disabled = true;
+            document.getElementById('minesCount').disabled = false;
+            document.getElementById('minesBet').disabled = false;
         }
 
         // ======================================
@@ -3759,28 +3131,11 @@
             document.getElementById('statsPage').classList.remove('active-page');
             document.getElementById('profilePage').classList.remove('active-page');
             document.getElementById('gamesMenuPage').classList.remove('active-page');
-            document.getElementById('roulettePage').classList.remove('active-page');
+            document.getElementById('minesPage').classList.remove('active-page');
             
             document.getElementById('gamesMenuPage').classList.add('active-page');
             
             document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
-        }
-
-        function openRoulette() {
-            console.log('🎲 Открываем рулетку');
-            document.getElementById('workPage').classList.remove('active-page');
-            document.getElementById('statsPage').classList.remove('active-page');
-            document.getElementById('profilePage').classList.remove('active-page');
-            document.getElementById('gamesMenuPage').classList.remove('active-page');
-            document.getElementById('roulettePage').classList.remove('active-page');
-            
-            document.getElementById('roulettePage').classList.add('active-page');
-            
-            document.getElementById('rouletteBalance').textContent = formatNumber(balances.swag);
-            clearAllBets();
-            document.getElementById('betAmount').value = 10;
-            document.getElementById('rouletteResult').style.display = 'none';
-            generateNumbersGrid();
         }
 
         // ======================================
@@ -3791,7 +3146,7 @@
             document.getElementById('statsPage').classList.remove('active-page');
             document.getElementById('profilePage').classList.remove('active-page');
             document.getElementById('gamesMenuPage').classList.remove('active-page');
-            document.getElementById('roulettePage').classList.remove('active-page');
+            document.getElementById('minesPage').classList.remove('active-page');
             
             document.getElementById(page + 'Page').classList.add('active-page');
             
@@ -3814,8 +3169,7 @@
         // Инициализация
         loadBalance();
         setInterval(loadOrders, 30000);
-        generateNumbersGrid();
+        renderMinesGrid();
     </script>
 </body>
 </html>
-
