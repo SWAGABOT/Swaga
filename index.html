@@ -417,7 +417,7 @@
             transform: scale(0.95);
         }
 
-        /* Форма создания ордера (без стрелок) */
+        /* Форма создания ордера */
         .order-form {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -729,7 +729,7 @@
             color: white;
         }
 
-        /* Модальное окно (без стрелок) */
+        /* Модальное окно */
         .modal {
             position: fixed;
             top: 0;
@@ -1952,7 +1952,7 @@
                     <div class="game-card" onclick="openMines()">
                         <div class="game-icon">💣</div>
                         <div class="game-name">МАЙНЕР</div>
-                        <div class="game-desc">x1.01 - x1000+</div>
+                        <div class="game-desc">2-24 мины, твои кэфы</div>
                     </div>
                     
                     <div class="game-card disabled" onclick="alert('Скоро!')">
@@ -1992,7 +1992,7 @@
                 <div class="mines-settings">
                     <div class="settings-row">
                         <span class="settings-label">Количество мин:</span>
-                        <input type="number" id="minesCount" class="mines-input" value="3" min="1" max="24">
+                        <input type="number" id="minesCount" class="mines-input" value="3" min="2" max="24">
                     </div>
                     <div class="settings-row">
                         <span class="settings-label">Ставка:</span>
@@ -2151,6 +2151,35 @@
             minePositions: [],
             multiplier: 1,
             gridSize: 25
+        };
+
+        // ======================================
+        // ==== ТВОИ КЭФЫ ДЛЯ МАЙНЕРА (2-24 МИНЫ) ===
+        // ======================================
+        const minesMultipliers = {
+            2: [1.07, 1.23, 1.41, 1.64, 1.91, 2.25, 2.67, 3.21, 3.9, 4.8, 6, 7.63, 9.93, 13.24, 18.2, 26.01, 39.01, 62.42, 109.25, 218.5, 546.25, 2185, 11.87],
+            3: [1.13, 1.35, 1.64, 2, 2.48, 3.1, 3.92, 5.04, 6.6, 8.8, 12, 16.8, 24.27, 36.41, 57.22, 95.37, 171.67, 343.35, 801.16, 2403.5, 12017.5],
+            4: [1.18, 1.5, 1.91, 2.48, 3.25, 4.34, 5.89, 8.15, 11.55, 16.8, 25.21, 39.21, 63.72, 109.24, 200.29, 400.58, 901.31, 2403.49, 8412.24, 50473.49],
+            5: [1.25, 1.66, 2.25, 3.1, 4.34, 6.2, 9.06, 13.59, 21, 33.61, 56.02, 98.04, 182.08, 364.16, 801.16, 2002.91, 6008.75, 24035, 168245],
+            6: [1.31, 1.86, 2.67, 3.92, 5.89, 9.06, 14.34, 23.48, 39.91, 70.96, 133.06, 266.12, 576.59, 1383.83, 3805.54, 12685.13, 57083.12, 456665],
+            7: [1.39, 2.09, 3.21, 5.04, 8.15, 13.59, 23.48, 42.26, 79.83, 159.67, 342.15, 798.36, 2075.74, 6227.25, 22833.25, 114166.25, 1027496.25],
+            8: [1.48, 2.37, 3.9, 6.6, 11.55, 21, 39.91, 79.83, 169.65, 387.77, 969.44, 2714.44, 8821.93, 35287.74, 194082.62, 1940826.24],
+            9: [1.58, 2.71, 4.8, 8.8, 16.8, 33.61, 70.96, 159.67, 387.77, 1034.07, 3102.21, 10857.76, 47050.33, 282302, 3105322],
+            10: [1.69, 3.13, 6, 12, 25.21, 56.02, 133.06, 342.15, 969.44, 3102.21, 11633.32, 54288.84, 352877.5, 4234530],
+            11: [1.82, 3.65, 7.63, 16.8, 39.21, 98.04, 266.12, 798.36, 2714.44, 10857.76, 54288.84, 380021.92, 4940284.99],
+            12: [1.97, 4.31, 9.93, 24.27, 63.72, 182.08, 576.59, 2075.75, 8821.93, 47050.33, 352877.5, 4940285],
+            13: [2.15, 5.18, 13.24, 36.41, 109.25, 364.16, 1383.83, 6227.25, 35287.75, 282302, 4234530],
+            14: [2.37, 6.33, 18.2, 57.22, 200.29, 801.16, 3805.54, 22833.25, 194082.62, 3105322],
+            15: [2.63, 7.91, 26.01, 95.37, 400.58, 2002.91, 12685.13, 114166.25, 1940826.25],
+            16: [2.96, 10.17, 39.01, 171.67, 901.31, 6008.75, 57083.12, 1027496.25],
+            17: [3.39, 13.57, 62.42, 343.35, 2403.5, 24035, 456664.99],
+            18: [3.95, 19, 109.25, 801.16, 8412.25, 168245],
+            19: [4.75, 28.5, 218.5, 2403.5, 50473.5],
+            20: [5.93, 47.5, 546.25, 12017.5],
+            21: [7.91, 95, 2185],
+            22: [11.87, 285],
+            23: [23.75],
+            24: []
         };
 
         // ======================================
@@ -3094,16 +3123,11 @@
             }
         }
 
-        function calculateMultiplier(revealedCount, minesCount) {
-            let multiplier = 1;
-            const totalCells = 25;
-            const safeCells = totalCells - minesCount;
-            
-            for (let i = 0; i < revealedCount; i++) {
-                multiplier *= (safeCells - i) / (totalCells - i);
-            }
-            
-            return (1 / multiplier) * 0.97;
+        function getMultiplier(minesCount, revealedCount) {
+            const multipliers = minesMultipliers[minesCount];
+            if (!multipliers || revealedCount === 0) return 1;
+            if (revealedCount > multipliers.length) return multipliers[multipliers.length - 1];
+            return multipliers[revealedCount - 1];
         }
 
         function revealCell(index) {
@@ -3151,7 +3175,7 @@
                     cells[index].textContent = '💎';
                 }
                 
-                minesGame.multiplier = calculateMultiplier(minesGame.revealed.length, minesGame.minesCount);
+                minesGame.multiplier = getMultiplier(minesGame.minesCount, minesGame.revealed.length);
                 
                 updateMultiplier();
                 
@@ -3173,8 +3197,8 @@
             const minesCount = parseInt(document.getElementById('minesCount').value);
             const bet = parseFloat(document.getElementById('minesBet').value);
             
-            if (minesCount < 1 || minesCount > 24) {
-                alert('Количество мин должно быть от 1 до 24');
+            if (minesCount < 2 || minesCount > 24) {
+                alert('Количество мин должно быть от 2 до 24');
                 return;
             }
             
