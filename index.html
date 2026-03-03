@@ -1438,32 +1438,71 @@
             align-items: center;
             justify-content: space-between;
             margin-bottom: 15px;
+            flex-wrap: wrap;
         }
-
+        
         .settings-label {
             color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
+            min-width: 100px;
         }
-
-        .settings-value {
-            color: #00FF00;
+        
+        .mines-badges {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            flex: 1;
+            justify-content: flex-end;
+        }
+        
+        .mine-badge {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 20px;
+            padding: 6px 12px;
+            color: white;
             font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 40px;
+            text-align: center;
         }
-
+        
+        .mine-badge:hover {
+            border-color: #00FF00;
+            background: rgba(0, 255, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .mine-badge.active {
+            background: #00FF00;
+            color: #0A1F0A;
+            border-color: #00FF00;
+            box-shadow: 0 0 15px #00FF00;
+        }
+        
         .mines-input {
-            width: 100px;
+            width: 80px;
             padding: 8px;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid #00FF00;
-            border-radius: 10px;
+            border-radius: 20px;
             color: white;
-            font-size: 16px;
+            font-size: 14px;
             text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
             -moz-appearance: textfield;
         }
-
+        
+        .mines-input.active {
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+        
         .mines-input::-webkit-inner-spin-button,
         .mines-input::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -1991,8 +2030,14 @@
 
                 <div class="mines-settings">
                     <div class="settings-row">
-                        <span class="settings-label">Количество мин:</span>
-                        <input type="number" id="minesCount" class="mines-input" value="3" min="2" max="24">
+                        <span class="settings-label">Кол-во мин:</span>
+                        <div class="mines-badges">
+                            <button class="mine-badge" onclick="setMinesCount(3)">3</button>
+                            <button class="mine-badge" onclick="setMinesCount(5)">5</button>
+                            <button class="mine-badge" onclick="setMinesCount(10)">10</button>
+                            <button class="mine-badge" onclick="setMinesCount(24)">24</button>
+                            <input type="number" id="minesCount" class="mines-input active" value="3" min="2" max="24" placeholder="Cboe">
+                        </div>
                     </div>
                     <div class="settings-row">
                         <span class="settings-label">Ставка:</span>
@@ -3082,6 +3127,7 @@
             
             document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
             resetMines();
+            setMinesCount(3); // Подсвечиваем кнопку 3 по умолчанию
         }
 
         function resetMines() {
@@ -3264,6 +3310,21 @@
             document.getElementById('cashoutMinesBtn').disabled = true;
             document.getElementById('minesCount').disabled = false;
             document.getElementById('minesBet').disabled = false;
+        }
+
+        // ======================================
+        // ==== ФУНКЦИЯ ДЛЯ КНОПОК МИН ==========
+        // ======================================
+        function setMinesCount(count) {
+            document.getElementById('minesCount').value = count;
+            
+            // Подсветка активной кнопки
+            document.querySelectorAll('.mine-badge').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.textContent) === count) {
+                    btn.classList.add('active');
+                }
+            });
         }
 
         // ======================================
