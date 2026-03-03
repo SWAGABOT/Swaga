@@ -1646,6 +1646,203 @@
             color: #FF3333;
         }
 
+        .result-push {
+            font-size: 32px;
+            font-weight: 800;
+            color: #FFFF00;
+        }
+
+        /* ======================================
+        // ==== БЛЭКДЖЕК ========================
+        // ====================================== */
+
+        .blackjack-container {
+            padding: 15px 0;
+        }
+
+        .blackjack-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .blackjack-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            font-size: 28px;
+            text-shadow: 0 0 15px #00FF00;
+        }
+
+        .blackjack-table {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid #00FF00;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 300px;
+        }
+
+        .dealer-area, .player-area {
+            margin-bottom: 25px;
+        }
+
+        .player-label {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            font-size: 14px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            width: 60px;
+            height: 90px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: dealCard 0.3s ease;
+        }
+
+        @keyframes dealCard {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .card.red {
+            color: #FF3333;
+        }
+
+        .card.black {
+            color: #000000;
+        }
+
+        .card.back {
+            background: linear-gradient(145deg, #00FF00, #00CC00);
+            color: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card.back::after {
+            content: '?';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0A1F0A;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .score {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            color: #00FF00;
+        }
+
+        .bet-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .bet-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .bet-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            min-width: 60px;
+        }
+
+        .bet-input {
+            flex: 1;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00FF00;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            -moz-appearance: textfield;
+        }
+
+        .bet-input::-webkit-inner-spin-button,
+        .bet-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .multiplier-info {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+        }
+
+        .blackjack-controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            border: 2px solid #00FF00;
+            color: #00FF00;
+        }
+
+        .action-btn:hover:not(:disabled) {
+            background: #00FF00;
+            color: #0A1F0A;
+            transform: scale(1.02);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            border-color: rgba(0, 255, 0, 0.3);
+        }
+
+        .action-btn.start-btn {
+            grid-column: span 2;
+            background: #00FF00;
+            color: #0A1F0A;
+        }
+
         /* Нижняя навигация */
         .bottom-nav {
             position: fixed;
@@ -1994,15 +2191,15 @@
                         <div class="game-desc">2-24 мины, твои кэфы</div>
                     </div>
                     
-                    <div class="game-card disabled" onclick="alert('Скоро!')">
-                        <div class="game-icon">🎲</div>
-                        <div class="game-name">РУЛЕТКА</div>
-                        <div class="game-desc">Скоро</div>
+                    <div class="game-card" onclick="openBlackjack()">
+                        <div class="game-icon">🃏</div>
+                        <div class="game-name">БЛЭКДЖЕК</div>
+                        <div class="game-desc">21 soft</div>
                     </div>
                     
                     <div class="game-card disabled" onclick="alert('Скоро!')">
-                        <div class="game-icon">🃏</div>
-                        <div class="game-name">БЛЭКДЖЕК</div>
+                        <div class="game-icon">🎲</div>
+                        <div class="game-name">РУЛЕТКА</div>
                         <div class="game-desc">Скоро</div>
                     </div>
                     
@@ -2056,6 +2253,57 @@
                 </div>
 
                 <div id="minesResult" class="game-result" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Страница БЛЭКДЖЕК -->
+        <div id="blackjackPage" class="page">
+            <div class="blackjack-container">
+                <div class="blackjack-header">
+                    <button class="back-btn" onclick="openGamesMenu()">←</button>
+                    <h2 class="blackjack-title">🃏 БЛЭКДЖЕК</h2>
+                </div>
+                
+                <div class="balance-card" style="margin-bottom: 20px;">
+                    <div class="balance-label">Игровой баланс</div>
+                    <div class="balance-amount" id="blackjackBalance">0</div>
+                </div>
+
+                <div class="blackjack-table">
+                    <!-- Карты дилера -->
+                    <div class="dealer-area">
+                        <div class="player-label">ДИЛЕР</div>
+                        <div class="cards" id="dealerCards"></div>
+                        <div class="score" id="dealerScore"></div>
+                    </div>
+
+                    <!-- Карты игрока -->
+                    <div class="player-area">
+                        <div class="player-label">ИГРОК</div>
+                        <div class="cards" id="playerCards"></div>
+                        <div class="score" id="playerScore"></div>
+                    </div>
+                </div>
+
+                <!-- Ставка -->
+                <div class="bet-section">
+                    <div class="bet-row">
+                        <span class="bet-label">Ставка:</span>
+                        <input type="number" id="blackjackBet" class="bet-input" value="10" min="1">
+                    </div>
+                    <div class="multiplier-info">Блэкджек: x2.5 | Обычная: x2</div>
+                </div>
+
+                <!-- Кнопки действий -->
+                <div class="blackjack-controls">
+                    <button class="action-btn" onclick="startBlackjack()" id="startBlackjackBtn">НАЧАТЬ</button>
+                    <button class="action-btn" onclick="hitBlackjack()" id="hitBtn" disabled>ВЗЯТЬ</button>
+                    <button class="action-btn" onclick="standBlackjack()" id="standBtn" disabled>ХВАТИТ</button>
+                    <button class="action-btn" onclick="doubleBlackjack()" id="doubleBtn" disabled>УДВОИТЬ</button>
+                </div>
+
+                <!-- Результат -->
+                <div id="blackjackResult" class="game-result" style="display: none;"></div>
             </div>
         </div>
     </div>
@@ -2196,6 +2444,18 @@
             minePositions: [],
             multiplier: 1,
             gridSize: 25
+        };
+
+        // Переменные для блэкджека
+        let blackjackGame = {
+            active: false,
+            bet: 0,
+            deck: [],
+            playerCards: [],
+            dealerCards: [],
+            playerScore: 0,
+            dealerScore: 0,
+            gameOver: false
         };
 
         // ======================================
@@ -2377,6 +2637,7 @@
                     
                     document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                     document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
                 }
                 
                 alert(`✅ Начислено ${amount} ${currency} пользователю ${targetId === userId ? 'себе' : targetId}`);
@@ -2405,6 +2666,7 @@
                 
                 document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                 document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
+                document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
                 
                 console.log('✅ Баланс загружен с сервера:', balances);
             } catch (e) {
@@ -3122,12 +3384,13 @@
             document.getElementById('profilePage').classList.remove('active-page');
             document.getElementById('gamesMenuPage').classList.remove('active-page');
             document.getElementById('minesPage').classList.remove('active-page');
+            document.getElementById('blackjackPage').classList.remove('active-page');
             
             document.getElementById('minesPage').classList.add('active-page');
             
             document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
             resetMines();
-            setMinesCount(3); // Подсвечиваем кнопку 3 по умолчанию
+            setMinesCount(3);
         }
 
         function resetMines() {
@@ -3318,13 +3581,334 @@
         function setMinesCount(count) {
             document.getElementById('minesCount').value = count;
             
-            // Подсветка активной кнопки
             document.querySelectorAll('.mine-badge').forEach(btn => {
                 btn.classList.remove('active');
                 if (parseInt(btn.textContent) === count) {
                     btn.classList.add('active');
                 }
             });
+        }
+
+        // ======================================
+        // ==== БЛЭКДЖЕК ========================
+        // ======================================
+
+        function openBlackjack() {
+            document.getElementById('workPage').classList.remove('active-page');
+            document.getElementById('statsPage').classList.remove('active-page');
+            document.getElementById('profilePage').classList.remove('active-page');
+            document.getElementById('gamesMenuPage').classList.remove('active-page');
+            document.getElementById('minesPage').classList.remove('active-page');
+            document.getElementById('blackjackPage').classList.remove('active-page');
+            
+            document.getElementById('blackjackPage').classList.add('active-page');
+            
+            document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
+            resetBlackjack();
+        }
+
+        function resetBlackjack() {
+            blackjackGame.active = false;
+            blackjackGame.playerCards = [];
+            blackjackGame.dealerCards = [];
+            blackjackGame.playerScore = 0;
+            blackjackGame.dealerScore = 0;
+            
+            document.getElementById('startBlackjackBtn').disabled = false;
+            document.getElementById('hitBtn').disabled = true;
+            document.getElementById('standBtn').disabled = true;
+            document.getElementById('doubleBtn').disabled = true;
+            document.getElementById('blackjackResult').style.display = 'none';
+            document.getElementById('blackjackBet').disabled = false;
+            
+            renderBlackjackCards();
+            updateBlackjackScores();
+        }
+
+        function createDeck() {
+            const suits = ['♠', '♥', '♦', '♣'];
+            const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+            const deck = [];
+            
+            for (let suit of suits) {
+                for (let value of values) {
+                    deck.push({
+                        value: value,
+                        suit: suit,
+                        numericValue: getNumericValue(value)
+                    });
+                }
+            }
+            
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+            
+            return deck;
+        }
+
+        function getNumericValue(value) {
+            if (value === 'A') return 11;
+            if (['K', 'Q', 'J'].includes(value)) return 10;
+            return parseInt(value);
+        }
+
+        function getCardColor(suit) {
+            return (suit === '♥' || suit === '♦') ? 'red' : 'black';
+        }
+
+        function calculateScore(cards) {
+            let score = 0;
+            let aces = 0;
+            
+            for (let card of cards) {
+                if (card.value === 'A') {
+                    aces++;
+                } else {
+                    score += card.numericValue;
+                }
+            }
+            
+            for (let i = 0; i < aces; i++) {
+                if (score + 11 <= 21) {
+                    score += 11;
+                } else {
+                    score += 1;
+                }
+            }
+            
+            return score;
+        }
+
+        function renderBlackjackCards() {
+            const dealerDiv = document.getElementById('dealerCards');
+            const playerDiv = document.getElementById('playerCards');
+            
+            dealerDiv.innerHTML = '';
+            playerDiv.innerHTML = '';
+            
+            blackjackGame.dealerCards.forEach((card, index) => {
+                const cardDiv = document.createElement('div');
+                if (index === 0 && blackjackGame.active && !blackjackGame.gameOver) {
+                    cardDiv.className = 'card back';
+                } else {
+                    cardDiv.className = `card ${getCardColor(card.suit)}`;
+                    cardDiv.innerHTML = `${card.value}${card.suit}`;
+                }
+                dealerDiv.appendChild(cardDiv);
+            });
+            
+            blackjackGame.playerCards.forEach(card => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = `card ${getCardColor(card.suit)}`;
+                cardDiv.innerHTML = `${card.value}${card.suit}`;
+                playerDiv.appendChild(cardDiv);
+            });
+        }
+
+        function updateBlackjackScores() {
+            if (blackjackGame.playerCards.length > 0) {
+                blackjackGame.playerScore = calculateScore(blackjackGame.playerCards);
+                document.getElementById('playerScore').textContent = `Очки: ${blackjackGame.playerScore}`;
+            }
+            
+            if (blackjackGame.dealerCards.length > 0) {
+                if (blackjackGame.active && !blackjackGame.gameOver) {
+                    const firstCardScore = getNumericValue(blackjackGame.dealerCards[0].value);
+                    document.getElementById('dealerScore').textContent = `Очки: ${firstCardScore}`;
+                } else {
+                    blackjackGame.dealerScore = calculateScore(blackjackGame.dealerCards);
+                    document.getElementById('dealerScore').textContent = `Очки: ${blackjackGame.dealerScore}`;
+                }
+            }
+        }
+
+        function startBlackjack() {
+            const bet = parseFloat(document.getElementById('blackjackBet').value);
+            
+            if (bet < 1) {
+                alert('Минимальная ставка: 1 SWAG');
+                return;
+            }
+            
+            if (bet > balances.swag) {
+                alert(`Недостаточно SWAG! Баланс: ${formatInt(balances.swag)}`);
+                return;
+            }
+            
+            blackjackGame.active = true;
+            blackjackGame.bet = bet;
+            blackjackGame.gameOver = false;
+            blackjackGame.deck = createDeck();
+            
+            blackjackGame.playerCards = [blackjackGame.deck.pop(), blackjackGame.deck.pop()];
+            blackjackGame.dealerCards = [blackjackGame.deck.pop(), blackjackGame.deck.pop()];
+            
+            blackjackGame.playerScore = calculateScore(blackjackGame.playerCards);
+            
+            document.getElementById('startBlackjackBtn').disabled = true;
+            document.getElementById('hitBtn').disabled = false;
+            document.getElementById('standBtn').disabled = false;
+            document.getElementById('doubleBtn').disabled = false;
+            document.getElementById('blackjackBet').disabled = true;
+            
+            renderBlackjackCards();
+            updateBlackjackScores();
+            
+            if (blackjackGame.playerScore === 21) {
+                standBlackjack();
+            }
+        }
+
+        function hitBlackjack() {
+            if (!blackjackGame.active) return;
+            
+            blackjackGame.playerCards.push(blackjackGame.deck.pop());
+            blackjackGame.playerScore = calculateScore(blackjackGame.playerCards);
+            
+            renderBlackjackCards();
+            updateBlackjackScores();
+            
+            if (blackjackGame.playerScore > 21) {
+                endBlackjackGame('lose', 'ПЕРЕБОР');
+            } else if (blackjackGame.playerScore === 21) {
+                standBlackjack();
+            }
+            
+            document.getElementById('doubleBtn').disabled = true;
+        }
+
+        function standBlackjack() {
+            if (!blackjackGame.active) return;
+            
+            blackjackGame.active = false;
+            blackjackGame.gameOver = true;
+            
+            document.getElementById('hitBtn').disabled = true;
+            document.getElementById('standBtn').disabled = true;
+            document.getElementById('doubleBtn').disabled = true;
+            
+            blackjackGame.dealerScore = calculateScore(blackjackGame.dealerCards);
+            
+            while (blackjackGame.dealerScore < 17) {
+                blackjackGame.dealerCards.push(blackjackGame.deck.pop());
+                blackjackGame.dealerScore = calculateScore(blackjackGame.dealerCards);
+            }
+            
+            renderBlackjackCards();
+            updateBlackjackScores();
+            
+            const playerScore = blackjackGame.playerScore;
+            const dealerScore = blackjackGame.dealerScore;
+            
+            if (dealerScore > 21) {
+                endBlackjackGame('win', 'ДИЛЕР ПЕРЕБРАЛ');
+            } else if (playerScore > dealerScore) {
+                endBlackjackGame('win', 'ВЫ ВЫИГРАЛИ');
+            } else if (playerScore < dealerScore) {
+                endBlackjackGame('lose', 'ДИЛЕР ВЫИГРАЛ');
+            } else {
+                endBlackjackGame('push', 'НИЧЬЯ');
+            }
+        }
+
+        function doubleBlackjack() {
+            if (!blackjackGame.active) return;
+            
+            const newBet = blackjackGame.bet * 2;
+            
+            if (newBet > balances.swag) {
+                alert('Недостаточно SWAG для удвоения');
+                return;
+            }
+            
+            blackjackGame.bet = newBet;
+            
+            blackjackGame.playerCards.push(blackjackGame.deck.pop());
+            blackjackGame.playerScore = calculateScore(blackjackGame.playerCards);
+            
+            renderBlackjackCards();
+            updateBlackjackScores();
+            
+            if (blackjackGame.playerScore > 21) {
+                endBlackjackGame('lose', 'ПЕРЕБОР');
+            } else {
+                standBlackjack();
+            }
+        }
+
+        function endBlackjackGame(result, message) {
+            blackjackGame.active = false;
+            blackjackGame.gameOver = true;
+            
+            let winAmount = 0;
+            let resultText = '';
+            
+            if (result === 'win') {
+                const isBlackjack = blackjackGame.playerCards.length === 2 && blackjackGame.playerScore === 21;
+                const multiplier = isBlackjack ? 2.5 : 2;
+                winAmount = blackjackGame.bet * multiplier;
+                
+                const netWin = winAmount - blackjackGame.bet;
+                resultText = `✅ ${message} +${formatInt(netWin)} SWAG`;
+                
+                if (isBlackjack) {
+                    resultText = `🃏 БЛЭКДЖЕК! +${formatInt(netWin)} SWAG`;
+                }
+                
+                const newBalance = balances.swag - blackjackGame.bet + winAmount;
+                updateServerBalance('swag', newBalance).then(data => {
+                    if (data) {
+                        balances = data;
+                    } else {
+                        balances.swag = newBalance;
+                    }
+                    updateBalanceDisplay();
+                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
+                });
+                
+            } else if (result === 'lose') {
+                winAmount = 0;
+                resultText = `❌ ${message} -${formatInt(blackjackGame.bet)} SWAG`;
+                
+                const newBalance = balances.swag - blackjackGame.bet;
+                updateServerBalance('swag', newBalance).then(data => {
+                    if (data) {
+                        balances = data;
+                    } else {
+                        balances.swag = newBalance;
+                    }
+                    updateBalanceDisplay();
+                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
+                });
+                
+            } else {
+                winAmount = blackjackGame.bet;
+                resultText = `🔄 ${message} +0 SWAG`;
+            }
+            
+            const resultDiv = document.getElementById('blackjackResult');
+            resultDiv.style.display = 'block';
+            
+            if (result === 'win') {
+                resultDiv.innerHTML = `<div class="result-win">${resultText}</div>`;
+            } else if (result === 'lose') {
+                resultDiv.innerHTML = `<div class="result-lose">${resultText}</div>`;
+            } else {
+                resultDiv.innerHTML = `<div class="result-push">${resultText}</div>`;
+            }
+            
+            document.getElementById('hitBtn').disabled = true;
+            document.getElementById('standBtn').disabled = true;
+            document.getElementById('doubleBtn').disabled = true;
+            document.getElementById('startBlackjackBtn').disabled = false;
+            document.getElementById('blackjackBet').disabled = false;
+            
+            renderBlackjackCards();
+            updateBlackjackScores();
         }
 
         // ======================================
@@ -3336,6 +3920,7 @@
             document.getElementById('profilePage').classList.remove('active-page');
             document.getElementById('gamesMenuPage').classList.remove('active-page');
             document.getElementById('minesPage').classList.remove('active-page');
+            document.getElementById('blackjackPage').classList.remove('active-page');
             
             document.getElementById('gamesMenuPage').classList.add('active-page');
             
@@ -3351,6 +3936,7 @@
             document.getElementById('profilePage').classList.remove('active-page');
             document.getElementById('gamesMenuPage').classList.remove('active-page');
             document.getElementById('minesPage').classList.remove('active-page');
+            document.getElementById('blackjackPage').classList.remove('active-page');
             
             document.getElementById(page + 'Page').classList.add('active-page');
             
