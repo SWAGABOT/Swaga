@@ -1843,6 +1843,215 @@
             color: #0A1F0A;
         }
 
+        /* ======================================
+        // ==== СЛОТЫ ===========================
+        // ====================================== */
+
+        .slots-container {
+            padding: 15px 0;
+        }
+
+        .slots-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .slots-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            font-size: 28px;
+            text-shadow: 0 0 15px #00FF00;
+        }
+
+        .slot-machine {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid #00FF00;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reels-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .reel {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #00FF00;
+            border-radius: 10px;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform 0.1s linear;
+        }
+
+        .reel.spinning {
+            animation: spinReel 0.2s infinite linear;
+        }
+
+        @keyframes spinReel {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100px); }
+        }
+
+        .symbol {
+            font-size: 48px;
+            text-align: center;
+            line-height: 1.2;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        .symbol.wild {
+            color: #00FF00;
+            text-shadow: 0 0 20px #00FF00;
+        }
+
+        .paylines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .payline {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #00FF00;
+            box-shadow: 0 0 10px #00FF00;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .payline.active {
+            opacity: 1;
+        }
+
+        .payline.line1 {
+            top: 20%;
+        }
+
+        .payline.line2 {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .payline.line3 {
+            bottom: 20%;
+        }
+
+        .symbols-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 15px;
+            padding: 10px;
+        }
+
+        .symbol-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00FF00;
+            border-radius: 20px;
+            padding: 5px 10px;
+        }
+
+        .symbol-item .symbol {
+            font-size: 24px;
+        }
+
+        .symbol-item .symbol-value {
+            color: #00FF00;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+        }
+
+        .lines-selector {
+            display: flex;
+            gap: 5px;
+            flex: 1;
+        }
+
+        .line-btn {
+            flex: 1;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00FF00;
+            border-radius: 10px;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .line-btn:hover {
+            background: rgba(0, 255, 0, 0.2);
+        }
+
+        .line-btn.active {
+            background: #00FF00;
+            color: #0A1F0A;
+        }
+
+        .slots-controls {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .spin-btn {
+            background: linear-gradient(145deg, #00FF00, #00CC00);
+            border: none;
+            border-radius: 50px;
+            padding: 16px 40px;
+            color: #0A1F0A;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 22px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .spin-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px #00FF00;
+        }
+
+        .spin-btn:active {
+            transform: scale(0.95);
+        }
+
+        .spin-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
         /* Нижняя навигация */
         .bottom-nav {
             position: fixed;
@@ -2197,15 +2406,15 @@
                         <div class="game-desc">21 soft</div>
                     </div>
                     
-                    <div class="game-card disabled" onclick="alert('Скоро!')">
-                        <div class="game-icon">🎲</div>
-                        <div class="game-name">РУЛЕТКА</div>
-                        <div class="game-desc">Скоро</div>
+                    <div class="game-card" onclick="openSlots()">
+                        <div class="game-icon">🎰</div>
+                        <div class="game-name">СЛОТЫ</div>
+                        <div class="game-desc">SWAGA style</div>
                     </div>
                     
                     <div class="game-card disabled" onclick="alert('Скоро!')">
-                        <div class="game-icon">🎰</div>
-                        <div class="game-name">СЛОТЫ</div>
+                        <div class="game-icon">🎲</div>
+                        <div class="game-name">РУЛЕТКА</div>
                         <div class="game-desc">Скоро</div>
                     </div>
                 </div>
@@ -2304,6 +2513,101 @@
 
                 <!-- Результат -->
                 <div id="blackjackResult" class="game-result" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Страница СЛОТЫ -->
+        <div id="slotsPage" class="page">
+            <div class="slots-container">
+                <div class="slots-header">
+                    <button class="back-btn" onclick="openGamesMenu()">←</button>
+                    <h2 class="slots-title">🎰 СЛОТЫ SWAG</h2>
+                </div>
+                
+                <div class="balance-card" style="margin-bottom: 20px;">
+                    <div class="balance-label">Игровой баланс</div>
+                    <div class="balance-amount" id="slotsBalance">0</div>
+                </div>
+
+                <!-- Слот-машина -->
+                <div class="slot-machine">
+                    <div class="reels-container">
+                        <div class="reel" id="reel1">
+                            <div class="symbol">🎤</div>
+                            <div class="symbol">🎧</div>
+                            <div class="symbol">🖍️</div>
+                        </div>
+                        <div class="reel" id="reel2">
+                            <div class="symbol">🎤</div>
+                            <div class="symbol">🎧</div>
+                            <div class="symbol">🖍️</div>
+                        </div>
+                        <div class="reel" id="reel3">
+                            <div class="symbol">🎤</div>
+                            <div class="symbol">🎧</div>
+                            <div class="symbol">🖍️</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Выигрышные линии -->
+                    <div class="paylines">
+                        <div class="payline line1"></div>
+                        <div class="payline line2"></div>
+                        <div class="payline line3"></div>
+                    </div>
+                </div>
+
+                <!-- Инфо о символах -->
+                <div class="symbols-info">
+                    <div class="symbol-item">
+                        <span class="symbol">🎤</span>
+                        <span class="symbol-value">x50</span>
+                    </div>
+                    <div class="symbol-item">
+                        <span class="symbol">🎧</span>
+                        <span class="symbol-value">x20</span>
+                    </div>
+                    <div class="symbol-item">
+                        <span class="symbol">🖍️</span>
+                        <span class="symbol-value">x10</span>
+                    </div>
+                    <div class="symbol-item">
+                        <span class="symbol">👟</span>
+                        <span class="symbol-value">x5</span>
+                    </div>
+                    <div class="symbol-item">
+                        <span class="symbol">💊</span>
+                        <span class="symbol-value">x3</span>
+                    </div>
+                    <div class="symbol-item">
+                        <span class="symbol">⭐</span>
+                        <span class="symbol-value">WILD</span>
+                    </div>
+                </div>
+
+                <!-- Ставка -->
+                <div class="bet-section">
+                    <div class="bet-row">
+                        <span class="bet-label">Ставка:</span>
+                        <input type="number" id="slotsBet" class="bet-input" value="10" min="1">
+                    </div>
+                    <div class="bet-row">
+                        <span class="bet-label">Линии:</span>
+                        <div class="lines-selector">
+                            <button class="line-btn active" onclick="setLines(1)">1</button>
+                            <button class="line-btn" onclick="setLines(3)">3</button>
+                            <button class="line-btn" onclick="setLines(5)">5</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопки -->
+                <div class="slots-controls">
+                    <button class="spin-btn" onclick="spinSlots()" id="spinSlotsBtn">🎰 КРУТИТЬ</button>
+                </div>
+
+                <!-- Результат -->
+                <div id="slotsResult" class="game-result" style="display: none;"></div>
             </div>
         </div>
     </div>
@@ -2456,6 +2760,24 @@
             playerScore: 0,
             dealerScore: 0,
             gameOver: false
+        };
+
+        // Переменные для слотов
+        let slotsGame = {
+            active: false,
+            bet: 10,
+            lines: 3,
+            symbols: ['🎤', '🎧', '🖍️', '👟', '💊', '⭐'],
+            multipliers: {
+                '🎤': 50,
+                '🎧': 20,
+                '🖍️': 10,
+                '👟': 5,
+                '💊': 3,
+                '⭐': 0
+            },
+            reels: [[], [], []],
+            spinning: false
         };
 
         // ======================================
@@ -2638,6 +2960,7 @@
                     document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                     document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
                     document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
                 }
                 
                 alert(`✅ Начислено ${amount} ${currency} пользователю ${targetId === userId ? 'себе' : targetId}`);
@@ -2667,6 +2990,7 @@
                 document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                 document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
                 document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
+                document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
                 
                 console.log('✅ Баланс загружен с сервера:', balances);
             } catch (e) {
@@ -3385,6 +3709,7 @@
             document.getElementById('gamesMenuPage').classList.remove('active-page');
             document.getElementById('minesPage').classList.remove('active-page');
             document.getElementById('blackjackPage').classList.remove('active-page');
+            document.getElementById('slotsPage').classList.remove('active-page');
             
             document.getElementById('minesPage').classList.add('active-page');
             
@@ -3600,6 +3925,7 @@
             document.getElementById('gamesMenuPage').classList.remove('active-page');
             document.getElementById('minesPage').classList.remove('active-page');
             document.getElementById('blackjackPage').classList.remove('active-page');
+            document.getElementById('slotsPage').classList.remove('active-page');
             
             document.getElementById('blackjackPage').classList.add('active-page');
             
@@ -3690,7 +4016,7 @@
             
             blackjackGame.dealerCards.forEach((card, index) => {
                 const cardDiv = document.createElement('div');
-                if (index === 1 && blackjackGame.active && !blackjackGame.gameOver) { // Вторая карта скрыта
+                if (index === 1 && blackjackGame.active && !blackjackGame.gameOver) {
                     cardDiv.className = 'card back';
                 } else {
                     cardDiv.className = `card ${getCardColor(card.suit)}`;
@@ -3707,7 +4033,7 @@
             });
         }
 
-              function updateBlackjackScores() {
+        function updateBlackjackScores() {
             if (blackjackGame.playerCards.length > 0) {
                 blackjackGame.playerScore = calculateScore(blackjackGame.playerCards);
                 document.getElementById('playerScore').textContent = `Очки: ${blackjackGame.playerScore}`;
@@ -3715,12 +4041,10 @@
             
             if (blackjackGame.dealerCards.length > 0) {
                 if (blackjackGame.active && !blackjackGame.gameOver) {
-                    // Пока игра активна - показываем только первую карту
                     const firstCard = blackjackGame.dealerCards[0];
                     const firstCardScore = getNumericValue(firstCard.value);
                     document.getElementById('dealerScore').textContent = `Очки: ${firstCardScore} + ?`;
                 } else {
-                    // Когда игра закончена - показываем полный счет
                     blackjackGame.dealerScore = calculateScore(blackjackGame.dealerCards);
                     document.getElementById('dealerScore').textContent = `Очки: ${blackjackGame.dealerScore}`;
                 }
@@ -3915,6 +4239,207 @@
         }
 
         // ======================================
+        // ==== СЛОТЫ ===========================
+        // ======================================
+
+        function openSlots() {
+            document.getElementById('workPage').classList.remove('active-page');
+            document.getElementById('statsPage').classList.remove('active-page');
+            document.getElementById('profilePage').classList.remove('active-page');
+            document.getElementById('gamesMenuPage').classList.remove('active-page');
+            document.getElementById('minesPage').classList.remove('active-page');
+            document.getElementById('blackjackPage').classList.remove('active-page');
+            document.getElementById('slotsPage').classList.remove('active-page');
+            
+            document.getElementById('slotsPage').classList.add('active-page');
+            
+            document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
+            resetSlots();
+        }
+
+        function resetSlots() {
+            slotsGame.active = false;
+            document.getElementById('spinSlotsBtn').disabled = false;
+            document.getElementById('slotsResult').style.display = 'none';
+            updateReelsDisplay();
+        }
+
+        function setLines(count) {
+            slotsGame.lines = count;
+            document.querySelectorAll('.line-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent == count) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function spinSlots() {
+            const bet = parseFloat(document.getElementById('slotsBet').value);
+            
+            if (bet < 1) {
+                alert('Минимальная ставка: 1 SWAG');
+                return;
+            }
+            
+            const totalBet = bet * slotsGame.lines;
+            
+            if (totalBet > balances.swag) {
+                alert(`Недостаточно SWAG! Нужно: ${formatInt(totalBet)}, есть: ${formatInt(balances.swag)}`);
+                return;
+            }
+            
+            slotsGame.bet = bet;
+            slotsGame.active = true;
+            
+            document.getElementById('spinSlotsBtn').disabled = true;
+            document.getElementById('slotsResult').style.display = 'none';
+            
+            // Анимация прокрутки
+            slotsGame.spinning = true;
+            document.querySelectorAll('.reel').forEach(reel => {
+                reel.classList.add('spinning');
+            });
+            
+            // Генерируем результаты
+            setTimeout(() => {
+                generateSpinResult();
+                
+                // Останавливаем анимацию
+                slotsGame.spinning = false;
+                document.querySelectorAll('.reel').forEach(reel => {
+                    reel.classList.remove('spinning');
+                });
+                
+                // Обновляем отображение
+                updateReelsDisplay();
+                
+                // Проверяем выигрыш
+                checkWin(totalBet);
+                
+                document.getElementById('spinSlotsBtn').disabled = false;
+            }, 1000);
+        }
+
+        function generateSpinResult() {
+            for (let i = 0; i < 3; i++) {
+                slotsGame.reels[i] = [];
+                for (let j = 0; j < 3; j++) {
+                    const randomIndex = Math.floor(Math.random() * slotsGame.symbols.length);
+                    slotsGame.reels[i].push(slotsGame.symbols[randomIndex]);
+                }
+            }
+        }
+
+        function updateReelsDisplay() {
+            for (let i = 0; i < 3; i++) {
+                const reel = document.getElementById(`reel${i+1}`);
+                if (reel) {
+                    const symbols = reel.querySelectorAll('.symbol');
+                    for (let j = 0; j < 3; j++) {
+                        if (symbols[j] && slotsGame.reels[i] && slotsGame.reels[i][j]) {
+                            symbols[j].textContent = slotsGame.reels[i][j];
+                            if (slotsGame.reels[i][j] === '⭐') {
+                                symbols[j].classList.add('wild');
+                            } else {
+                                symbols[j].classList.remove('wild');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function checkWin(totalBet) {
+            let winAmount = 0;
+            let winLines = [];
+            
+            // Проверяем линии
+            const lines = [
+                [[0,0], [0,1], [0,2]], // Верхняя
+                [[1,0], [1,1], [1,2]], // Средняя
+                [[2,0], [2,1], [2,2]], // Нижняя
+                [[0,0], [1,1], [2,2]], // Диагональ 1
+                [[0,2], [1,1], [2,0]]  // Диагональ 2
+            ];
+            
+            for (let l = 0; l < slotsGame.lines; l++) {
+                if (l >= lines.length) break;
+                
+                const line = lines[l];
+                const symbols = line.map(pos => slotsGame.reels[pos[0]][pos[1]]);
+                
+                // Проверяем все ли символы одинаковы (учитывая Wild)
+                const firstNonWild = symbols.find(s => s !== '⭐');
+                if (firstNonWild) {
+                    const isWin = symbols.every(s => s === firstNonWild || s === '⭐');
+                    if (isWin) {
+                        const multiplier = slotsGame.multipliers[firstNonWild] || 1;
+                        winAmount += slotsGame.bet * multiplier;
+                        winLines.push(l + 1);
+                    }
+                } else {
+                    // Все Wild
+                    winAmount += slotsGame.bet * 100; // Максимальный выигрыш
+                    winLines.push(l + 1);
+                }
+            }
+            
+            // Показываем выигрышные линии
+            document.querySelectorAll('.payline').forEach(line => line.classList.remove('active'));
+            winLines.forEach(lineNum => {
+                const line = document.querySelector(`.payline.line${lineNum}`);
+                if (line) line.classList.add('active');
+            });
+            
+            const netResult = winAmount - totalBet;
+            
+            if (winAmount > 0) {
+                const newBalance = balances.swag - totalBet + winAmount;
+                updateServerBalance('swag', newBalance).then(data => {
+                    if (data) {
+                        balances = data;
+                    } else {
+                        balances.swag = newBalance;
+                    }
+                    updateBalanceDisplay();
+                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
+                });
+                
+                const resultDiv = document.getElementById('slotsResult');
+                resultDiv.style.display = 'block';
+                
+                let linesText = '';
+                if (winLines.length > 0) {
+                    linesText = `<div style="font-size: 14px; margin-top: 10px; color: rgba(255,255,255,0.5);">Линии: ${winLines.join(', ')}</div>`;
+                }
+                
+                resultDiv.innerHTML = `
+                    <div class="result-win">✅ ВЫИГРЫШ +${formatInt(winAmount - totalBet)} SWAG</div>
+                    ${linesText}
+                `;
+                
+            } else {
+                const newBalance = balances.swag - totalBet;
+                updateServerBalance('swag', newBalance).then(data => {
+                    if (data) {
+                        balances = data;
+                    } else {
+                        balances.swag = newBalance;
+                    }
+                    updateBalanceDisplay();
+                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
+                });
+                
+                const resultDiv = document.getElementById('slotsResult');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<div class="result-lose">❌ ПРОИГРЫШ -${formatInt(totalBet)} SWAG</div>`;
+            }
+        }
+
+        // ======================================
         // ==== ИГРЫ ============================
         // ======================================
         function openGamesMenu() {
@@ -3924,6 +4449,7 @@
             document.getElementById('gamesMenuPage').classList.remove('active-page');
             document.getElementById('minesPage').classList.remove('active-page');
             document.getElementById('blackjackPage').classList.remove('active-page');
+            document.getElementById('slotsPage').classList.remove('active-page');
             
             document.getElementById('gamesMenuPage').classList.add('active-page');
             
@@ -3940,6 +4466,7 @@
             document.getElementById('gamesMenuPage').classList.remove('active-page');
             document.getElementById('minesPage').classList.remove('active-page');
             document.getElementById('blackjackPage').classList.remove('active-page');
+            document.getElementById('slotsPage').classList.remove('active-page');
             
             document.getElementById(page + 'Page').classList.add('active-page');
             
@@ -3965,5 +4492,3 @@
     </script>
 </body>
 </html>
-
-
