@@ -3707,7 +3707,7 @@
             });
         }
 
-        function updateBlackjackScores() {
+              function updateBlackjackScores() {
             if (blackjackGame.playerCards.length > 0) {
                 blackjackGame.playerScore = calculateScore(blackjackGame.playerCards);
                 document.getElementById('playerScore').textContent = `Очки: ${blackjackGame.playerScore}`;
@@ -3715,9 +3715,12 @@
             
             if (blackjackGame.dealerCards.length > 0) {
                 if (blackjackGame.active && !blackjackGame.gameOver) {
-                    const firstCardScore = getNumericValue(blackjackGame.dealerCards[0].value);
+                    // Пока игра активна - показываем только первую карту
+                    const firstCard = blackjackGame.dealerCards[0];
+                    const firstCardScore = getNumericValue(firstCard.value);
                     document.getElementById('dealerScore').textContent = `Очки: ${firstCardScore} + ?`;
                 } else {
+                    // Когда игра закончена - показываем полный счет
                     blackjackGame.dealerScore = calculateScore(blackjackGame.dealerCards);
                     document.getElementById('dealerScore').textContent = `Очки: ${blackjackGame.dealerScore}`;
                 }
@@ -3962,3 +3965,4 @@
     </script>
 </body>
 </html>
+
