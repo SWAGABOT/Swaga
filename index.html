@@ -417,7 +417,7 @@
             transform: scale(0.95);
         }
 
-        /* Форма создания ордера */
+        /* Форма создания ордера (без стрелок) */
         .order-form {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -729,7 +729,7 @@
             color: white;
         }
 
-        /* Модальное окно */
+        /* Модальное окно (без стрелок) */
         .modal {
             position: fixed;
             top: 0;
@@ -1196,6 +1196,134 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
+        /* Страница статистики */
+        .stats-container {
+            padding: 20px 0;
+        }
+
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .stats-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            font-size: 28px;
+            text-shadow: 0 0 15px #00FF00;
+            letter-spacing: 2px;
+        }
+
+        .stats-time {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00FF00;
+            border-radius: 20px;
+            padding: 6px 15px;
+            font-size: 14px;
+            color: #00FF00;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* График */
+        .chart-container {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 10px;
+            height: 200px;
+        }
+
+        /* Переключатель графика */
+        .chart-switcher {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .chart-btn {
+            flex: 1;
+            max-width: 120px;
+            padding: 10px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            background: transparent;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .chart-btn.active {
+            background: #00FF00;
+            color: #0A1F0A;
+            border-color: #00FF00;
+            box-shadow: 0 0 15px #00FF00;
+        }
+
+        .chart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+        }
+
+        /* Карточки статистики */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 0, 0.2);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: #00FF00;
+            text-shadow: 0 0 10px #00FF00;
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 5px;
+        }
+
+        .stat-change.positive {
+            color: #00FF00;
+        }
+
+        .stat-change.negative {
+            color: #FF3333;
+        }
+
         /* Страница игр */
         .games-container {
             padding: 20px 0;
@@ -1268,7 +1396,7 @@
         }
 
         /* ======================================
-        // ==== МАЙНЕР (MINES) С ПРАВИЛЬНЫМИ ИКСАМИ ====
+        // ==== МАЙНЕР (MINES) ==================
         // ====================================== */
 
         .mines-container {
@@ -1815,7 +1943,7 @@
                     <h2 class="games-title">🎮 SWAGA GAMES</h2>
                 </div>
                 
-                <div class="balance-card">
+                <div class="balance-card" style="margin-bottom: 20px;">
                     <div class="balance-label">Игровой баланс</div>
                     <div class="balance-amount" id="gameBalance">0</div>
                 </div>
@@ -1848,7 +1976,7 @@
             </div>
         </div>
 
-        <!-- Страница МАЙНЕР (MINES) С ПРАВИЛЬНЫМИ ИКСАМИ -->
+        <!-- Страница МАЙНЕР (MINES) -->
         <div id="minesPage" class="page">
             <div class="mines-container">
                 <div class="mines-header">
@@ -1856,7 +1984,7 @@
                     <h2 class="mines-title">💣 МАЙНЕР</h2>
                 </div>
                 
-                <div class="balance-card">
+                <div class="balance-card" style="margin-bottom: 20px;">
                     <div class="balance-label">Игровой баланс</div>
                     <div class="balance-amount" id="minesBalance">0</div>
                 </div>
@@ -2014,9 +2142,7 @@
         let chartHistory = [];
         let chartMode = 'usdt';
         
-        // ======================================
-        // ==== ПЕРЕМЕННЫЕ ДЛЯ МАЙНЕРА ==========
-        // ======================================
+        // Переменные для майнера
         let minesGame = {
             active: false,
             bet: 0,
@@ -2024,7 +2150,7 @@
             revealed: [],
             minePositions: [],
             multiplier: 1,
-            gridSize: 25 // 5x5
+            gridSize: 25
         };
 
         // ======================================
@@ -2913,11 +3039,10 @@
         }
 
         // ======================================
-        // ==== МАЙНЕР (MINES) С ПРАВИЛЬНЫМИ ИКСАМИ ====
+        // ==== МАЙНЕР (MINES) ==================
         // ======================================
 
         function openMines() {
-            console.log('💣 Открываем майнер');
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
             document.getElementById('profilePage').classList.remove('active-page');
@@ -2957,8 +3082,6 @@
                 if (minesGame.revealed.includes(i)) {
                     cell.classList.add('revealed');
                     cell.textContent = '💎';
-                } else if (minesGame.active && minesGame.minePositions.includes(i)) {
-                    // Не показываем мины, пока не проиграли
                 }
                 
                 if (minesGame.active && !minesGame.revealed.includes(i)) {
@@ -2972,7 +3095,6 @@
         }
 
         function calculateMultiplier(revealedCount, minesCount) {
-            // Правильная формула для Mines (как на Stake)
             let multiplier = 1;
             const totalCells = 25;
             const safeCells = totalCells - minesCount;
@@ -2981,7 +3103,6 @@
                 multiplier *= (safeCells - i) / (totalCells - i);
             }
             
-            // Инвертируем и добавляем комиссию (97% RTP)
             return (1 / multiplier) * 0.97;
         }
 
@@ -2990,10 +3111,8 @@
             if (minesGame.revealed.includes(index)) return;
             
             if (minesGame.minePositions.includes(index)) {
-                // Проигрыш
                 minesGame.active = false;
                 
-                // Показываем все мины
                 const cells = document.querySelectorAll('.mine-cell');
                 minesGame.minePositions.forEach(pos => {
                     if (cells[pos]) {
@@ -3002,12 +3121,10 @@
                     }
                 });
                 
-                // Показываем результат
                 const resultDiv = document.getElementById('minesResult');
                 resultDiv.style.display = 'block';
                 resultDiv.innerHTML = `<div class="result-lose">💥 ПРОИГРЫШ -${formatInt(minesGame.bet)} SWAG</div>`;
                 
-                // Обновляем баланс
                 const newBalance = balances.swag - minesGame.bet;
                 updateServerBalance('swag', newBalance).then(data => {
                     if (data) {
@@ -3026,7 +3143,6 @@
                 document.getElementById('minesBet').disabled = false;
                 
             } else {
-                // Выигрыш - открываем клетку
                 minesGame.revealed.push(index);
                 
                 const cells = document.querySelectorAll('.mine-cell');
@@ -3035,12 +3151,10 @@
                     cells[index].textContent = '💎';
                 }
                 
-                // Обновляем множитель по правильной формуле
                 minesGame.multiplier = calculateMultiplier(minesGame.revealed.length, minesGame.minesCount);
                 
                 updateMultiplier();
                 
-                // Активируем кнопку кэшаута
                 document.getElementById('cashoutMinesBtn').disabled = false;
             }
         }
@@ -3074,7 +3188,6 @@
                 return;
             }
             
-            // Генерируем позиции мин
             const minePositions = [];
             while (minePositions.length < minesCount) {
                 const pos = Math.floor(Math.random() * 25);
@@ -3088,7 +3201,7 @@
             minesGame.minesCount = minesCount;
             minesGame.revealed = [];
             minesGame.minePositions = minePositions;
-            minesGame.multiplier = calculateMultiplier(0, minesCount); // Начальный множитель 1.0
+            minesGame.multiplier = 1;
             
             document.getElementById('startMinesBtn').disabled = true;
             document.getElementById('cashoutMinesBtn').disabled = true;
@@ -3107,12 +3220,10 @@
             
             minesGame.active = false;
             
-            // Показываем результат
             const resultDiv = document.getElementById('minesResult');
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `<div class="result-win">✅ ВЫИГРЫШ +${formatInt(winAmount - minesGame.bet)} SWAG</div>`;
             
-            // Обновляем баланс
             const newBalance = balances.swag - minesGame.bet + winAmount;
             updateServerBalance('swag', newBalance).then(data => {
                 if (data) {
@@ -3135,7 +3246,6 @@
         // ==== ИГРЫ ============================
         // ======================================
         function openGamesMenu() {
-            console.log('🔄 Открываем меню игр');
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
             document.getElementById('profilePage').classList.remove('active-page');
@@ -3175,7 +3285,6 @@
             }
         }
 
-        // Инициализация
         loadBalance();
         setInterval(loadOrders, 30000);
         renderMinesGrid();
