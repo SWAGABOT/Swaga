@@ -417,7 +417,7 @@
             transform: scale(0.95);
         }
 
-        /* Форма создания ордера (без стрелок) */
+        /* Форма создания ордера */
         .order-form {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -729,7 +729,7 @@
             color: white;
         }
 
-        /* Модальное окно (без стрелок) */
+        /* Модальное окно */
         .modal {
             position: fixed;
             top: 0;
@@ -1268,7 +1268,7 @@
         }
 
         /* ======================================
-        // ==== МАЙНЕР (MINES) ==================
+        // ==== МАЙНЕР (MINES) С ПРАВИЛЬНЫМИ ИКСАМИ ====
         // ====================================== */
 
         .mines-container {
@@ -1824,7 +1824,7 @@
                     <div class="game-card" onclick="openMines()">
                         <div class="game-icon">💣</div>
                         <div class="game-name">МАЙНЕР</div>
-                        <div class="game-desc">x1.2 - x1000</div>
+                        <div class="game-desc">x1.01 - x1000+</div>
                     </div>
                     
                     <div class="game-card disabled" onclick="alert('Скоро!')">
@@ -1848,7 +1848,7 @@
             </div>
         </div>
 
-        <!-- Страница МАЙНЕР (MINES) -->
+        <!-- Страница МАЙНЕР (MINES) С ПРАВИЛЬНЫМИ ИКСАМИ -->
         <div id="minesPage" class="page">
             <div class="mines-container">
                 <div class="mines-header">
@@ -2913,7 +2913,7 @@
         }
 
         // ======================================
-        // ==== МАЙНЕР (MINES) ==================
+        // ==== МАЙНЕР (MINES) С ПРАВИЛЬНЫМИ ИКСАМИ ====
         // ======================================
 
         function openMines() {
@@ -2971,6 +2971,20 @@
             }
         }
 
+        function calculateMultiplier(revealedCount, minesCount) {
+            // Правильная формула для Mines (как на Stake)
+            let multiplier = 1;
+            const totalCells = 25;
+            const safeCells = totalCells - minesCount;
+            
+            for (let i = 0; i < revealedCount; i++) {
+                multiplier *= (safeCells - i) / (totalCells - i);
+            }
+            
+            // Инвертируем и добавляем комиссию (97% RTP)
+            return (1 / multiplier) * 0.97;
+        }
+
         function revealCell(index) {
             if (!minesGame.active) return;
             if (minesGame.revealed.includes(index)) return;
@@ -3021,13 +3035,8 @@
                     cells[index].textContent = '💎';
                 }
                 
-                // Обновляем множитель
-                const revealedCount = minesGame.revealed.length;
-                const totalCells = 25;
-                const mines = minesGame.minesCount;
-                
-                // Формула множителя для Mines
-                minesGame.multiplier = 1 + (revealedCount * (mines / (totalCells - mines))) * 1.5;
+                // Обновляем множитель по правильной формуле
+                minesGame.multiplier = calculateMultiplier(minesGame.revealed.length, minesGame.minesCount);
                 
                 updateMultiplier();
                 
@@ -3079,7 +3088,7 @@
             minesGame.minesCount = minesCount;
             minesGame.revealed = [];
             minesGame.minePositions = minePositions;
-            minesGame.multiplier = 1;
+            minesGame.multiplier = calculateMultiplier(0, minesCount); // Начальный множитель 1.0
             
             document.getElementById('startMinesBtn').disabled = true;
             document.getElementById('cashoutMinesBtn').disabled = true;
