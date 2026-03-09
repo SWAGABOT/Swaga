@@ -86,7 +86,34 @@ def show_id(message):
     bot.reply_to(message, f"🆔 Твой Telegram ID: `{message.from_user.id}`", parse_mode='Markdown')
 
 # ======================================
-# ==== АДМИН КОМАНДЫ ===================
+# ==== КОМАНДА /ADMIN (админ-панель) ===
+# ======================================
+@bot.message_handler(commands=['admin'])
+def admin_panel(message):
+    user_id = message.from_user.id
+    
+    # Проверяем, админ ли это
+    if user_id != ADMIN_ID:
+        bot.reply_to(message, "❌ У тебя нет доступа к админ-панели")
+        return
+    
+    # Кнопка для открытия админки
+    markup = InlineKeyboardMarkup()
+    button = InlineKeyboardButton(
+        text="👑 Открыть админ-панель",
+        web_app=WebAppInfo(url="https://swagabot.github.io/Swaga/admin.html")
+    )
+    markup.add(button)
+    
+    bot.send_message(
+        user_id,
+        "👑 Добро пожаловать в админ-панель\n\n"
+        "Нажми кнопку ниже, чтобы открыть статистику и список всех пользователей.",
+        reply_markup=markup
+    )
+
+# ======================================
+# ==== АДМИН КОМАНДЫ (ДЛЯ ТЕСТОВ) ======
 # ======================================
 
 @bot.message_handler(commands=['add'])
@@ -278,6 +305,7 @@ if __name__ == "__main__":
     print("  /start - открыть приложение")
     print("  /id - узнать свой Telegram ID")
     print("  /balance - показать свой баланс")
+    print("  /admin - открыть админ-панель")
     print("\n🔐 Админ команды (только для тебя):")
     print("  /add <сумма> <usdt/swag> - начислить себе")
     print("  /give <id> <сумма> <usdt/swag> - начислить другому")
@@ -293,4 +321,3 @@ if __name__ == "__main__":
             print(f"❌ Ошибка: {e}")
             time.sleep(5)
             print("🔄 Перезапуск...")
-
