@@ -81,11 +81,58 @@
             color: rgba(255,255,255,0.3);
             font-size: 12px;
         }
+        .manual-input {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00FF00;
+            border-radius: 15px;
+            padding: 20px;
+        }
+        .manual-input input {
+            flex: 1;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00FF00;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+        }
+        .manual-input button {
+            padding: 12px 25px;
+            background: #00FF00;
+            color: #0A1F0A;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .manual-input button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #00FF00;
+        }
+        .info-box {
+            background: rgba(0, 255, 0, 0.1);
+            border-left: 4px solid #00FF00;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>👑 SWAGA ADMIN PANEL</h1>
+        
+        <div class="info-box" id="userInfo">
+            Загрузка данных пользователя...
+        </div>
+        
+        <div class="manual-input">
+            <input type="text" id="manualUserId" placeholder="Или введи Telegram ID вручную" value="1346528897">
+            <button onclick="loadWithManualId()">Войти</button>
+        </div>
         
         <div id="stats" class="stats-grid"></div>
         
@@ -104,23 +151,33 @@
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
 
+        let currentUserId = null;
         const user = Telegram.WebApp.initDataUnsafe?.user;
+
+        // Отображаем информацию о пользователе
+        const userInfo = document.getElementById('userInfo');
         
-        async function loadAdminData() {
-            if (!user) {
-                document.getElementById('users-table').innerHTML = '<div class="error">❌ Ошибка: не удалось получить данные пользователя</div>';
+        if (user) {
+            currentUserId = user.id.toString();
+            userInfo.innerHTML = `✅ Вошел как: <strong>${user.first_name}</strong> (ID: ${currentUserId})`;
+        } else {
+            userInfo.innerHTML = `⚠️ Не удалось получить данные из Telegram. Используй ручной ввод.`;
+        }
+
+        async function loadAdminData(targetUserId) {
+            if (!targetUserId) {
+                document.getElementById('users-table').innerHTML = '<div class="error">❌ Нет ID пользователя</div>';
                 return;
             }
 
-            const userId = user.id.toString();
-            
             try {
                 // Загружаем общую статистику
-                const statsRes = await fetch(`${SERVER_URL}/admin/stats?user_id=${userId}`);
+                const statsRes = await fetch(`${SERVER_URL}/admin/stats?user_id=${targetUserId}`);
                 const statsData = await statsRes.json();
                 
                 if (statsData.error) {
                     document.getElementById('stats').innerHTML = `<div class="error">❌ ${statsData.error}</div>`;
+                    document.getElementById('users-table').innerHTML = '';
                     return;
                 }
                 
@@ -149,7 +206,7 @@
                 `;
                 
                 // Загружаем список пользователей
-                const usersRes = await fetch(`${SERVER_URL}/admin/users?user_id=${userId}`);
+                const usersRes = await fetch(`${SERVER_URL}/admin/users?user_id=${targetUserId}`);
                 const usersData = await usersRes.json();
                 
                 if (usersData.error) {
@@ -196,9 +253,27 @@
                 document.getElementById('users-table').innerHTML = '<div class="error">❌ Ошибка загрузки данных</div>';
             }
         }
-        
-        loadAdminData();
-        setInterval(loadAdminData, 30000); // Обновляем каждые 30 секунд
+
+        function loadWithManualId() {
+            const manualId = document.getElementById('manualUserId').value.trim();
+            if (manualId) {
+                currentUserId = manualId;
+                userInfo.innerHTML = `🔑 Ручной вход: ID ${manualId}`;
+                loadAdminData(manualId);
+            }
+        }
+
+        // Загружаем данные
+        if (currentUserId) {
+            loadAdminData(currentUserId);
+        }
+
+        // Обновляем каждые 30 секунд
+        setInterval(() => {
+            if (currentUserId) {
+                loadAdminData(currentUserId);
+            }
+        }, 30000);
     </script>
 </body>
 </html>
