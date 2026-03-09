@@ -3825,7 +3825,7 @@
             
             document.getElementById('tradeAmount').value = '';
             document.getElementById('modalTotal').textContent = '0 USDT';
-            document.getElementById('modalFee').textContent = 'Fee (2%): 0 USDT';
+            document.getElementById('modalFee').textContent = 'Fee (0%): 0 USDT';
             
             modal.classList.add('show');
         }
@@ -3843,7 +3843,7 @@
             const fee = total * COMMISSION;
             
             document.getElementById('modalTotal').textContent = formatNumber(total) + ' USDT';
-            document.getElementById('modalFee').textContent = `Fee (2%): ${formatNumber(fee)} USDT`;
+            document.getElementById('modalFee').textContent = `Fee (0%): ${formatNumber(fee)} USDT`;
         }
 
         async function executeTrade() {
@@ -5115,4 +5115,5 @@
     </script>
 </body>
 </html>
+
 
