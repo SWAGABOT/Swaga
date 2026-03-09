@@ -2136,9 +2136,7 @@
     </div>
 
     <div class="container">
-        <!-- ======================================
-             СТРАНИЦА WORK (ГЛАВНАЯ)
-             ====================================== -->
+        <!-- СТРАНИЦА WORK -->
         <div id="workPage" class="page active-page">
             <div class="greeting">
                 <span class="wave">👋</span>
@@ -2146,7 +2144,6 @@
                 <span id="username">bro</span>
             </div>
 
-            <!-- Баланс с переключением -->
             <div class="balance-header" onclick="switchBalance()">
                 <div class="balance-label">
                     <span id="balanceLabel">USDT BALANCE</span>
@@ -2166,7 +2163,6 @@
                 <div class="usd-value" id="secondaryBalance"></div>
             </div>
 
-            <!-- Кнопка P2P -->
             <div class="p2p-section">
                 <button class="p2p-button" onclick="openP2PPage()">
                     <div class="p2p-button-text">
@@ -2177,7 +2173,6 @@
                 </button>
             </div>
 
-            <!-- Кнопка SWAG (игры) -->
             <div class="swag-section">
                 <button class="swag-button" onclick="openGamesMenu()">
                     <div class="swag-button-text">
@@ -2190,9 +2185,7 @@
             </div>
         </div>
 
-        <!-- ======================================
-             СТРАНИЦА СТАТИСТИКИ
-             ====================================== -->
+        <!-- СТРАНИЦА СТАТИСТИКИ -->
         <div id="statsPage" class="page">
             <div class="stats-container">
                 <div class="stats-header">
@@ -2235,9 +2228,7 @@
             </div>
         </div>
 
-        <!-- ======================================
-             СТРАНИЦА ПРОФИЛЯ
-             ====================================== -->
+        <!-- СТРАНИЦА ПРОФИЛЯ -->
         <div id="profilePage" class="page">
             <div class="profile-container">
                 <div class="profile-header">
@@ -2299,9 +2290,7 @@
             </div>
         </div>
 
-        <!-- ======================================
-             СТРАНИЦА МЕНЮ ИГР
-             ====================================== -->
+        <!-- СТРАНИЦА МЕНЮ ИГР -->
         <div id="gamesMenuPage" class="page">
             <div class="games-container">
                 <div class="games-header">
@@ -2342,9 +2331,7 @@
             </div>
         </div>
 
-        <!-- ======================================
-             СТРАНИЦА MINES
-             ====================================== -->
+        <!-- СТРАНИЦА MINES -->
         <div id="minesPage" class="page">
             <div class="mines-container">
                 <div class="mines-header">
@@ -2388,9 +2375,7 @@
             </div>
         </div>
 
-        <!-- ======================================
-             СТРАНИЦА БЛЭКДЖЕК
-             ====================================== -->
+        <!-- СТРАНИЦА БЛЭКДЖЕК -->
         <div id="blackjackPage" class="page">
             <div class="blackjack-container">
                 <div class="blackjack-header">
@@ -2436,9 +2421,7 @@
             </div>
         </div>
 
-        <!-- ======================================
-             СТРАНИЦА ПОКЕРА
-             ====================================== -->
+        <!-- СТРАНИЦА ПОКЕРА -->
         <div id="pokerPage" class="page">
             <div class="poker-container">
                 <div class="poker-header">
@@ -2513,9 +2496,7 @@
         </div>
     </div>
 
-    <!-- ======================================
-         P2P PAGE (ОТДЕЛЬНАЯ СТРАНИЦА)
-         ====================================== -->
+    <!-- P2P PAGE -->
     <div id="p2pPage" class="p2p-page">
         <div class="p2p-header">
             <button class="back-btn" onclick="closeP2PPage()">←</button>
@@ -2570,9 +2551,7 @@
         <div id="ordersList" class="orders-list"></div>
     </div>
 
-    <!-- ======================================
-         МОДАЛЬНОЕ ОКНО ДЛЯ СДЕЛКИ
-         ====================================== -->
+    <!-- МОДАЛЬНОЕ ОКНО ДЛЯ СДЕЛКИ -->
     <div id="tradeModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeTradeModal()">&times;</span>
@@ -2596,9 +2575,62 @@
         </div>
     </div>
 
-    <!-- ======================================
-         НИЖНЯЯ НАВИГАЦИЯ
-         ====================================== -->
+    <!-- АДМИН-ПАНЕЛЬ (только для админа) -->
+    <div id="adminModal" class="modal" style="z-index: 1000;">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="modal-close" onclick="closeAdminModal()">&times;</span>
+            <h3 style="font-family: 'Orbitron'; color: #00FF00; margin-bottom: 20px; text-align: center;">👑 АДМИН ПАНЕЛЬ</h3>
+            
+            <div style="margin-bottom: 20px; background: rgba(0,255,0,0.1); padding: 15px; border-radius: 15px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span style="color: rgba(255,255,255,0.7);">Всего пользователей:</span>
+                    <span style="color: #00FF00; font-weight: 700;" id="adminTotalUsers">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span style="color: rgba(255,255,255,0.7);">Всего USDT:</span>
+                    <span style="color: #00FF00; font-weight: 700;" id="adminTotalUsdt">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span style="color: rgba(255,255,255,0.7);">Всего SWAG:</span>
+                    <span style="color: #00FF00; font-weight: 700;" id="adminTotalSwag">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: rgba(255,255,255,0.7);">Активных ордеров:</span>
+                    <span style="color: #00FF00; font-weight: 700;" id="adminActiveOrders">0</span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="color: rgba(255,255,255,0.7); font-size: 12px;">ID ПОЛЬЗОВАТЕЛЯ</label>
+                <input type="text" id="adminUserId" placeholder="Оставь пустым для себя" 
+                       style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid #00FF00; border-radius: 15px; color: white; margin-top: 5px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="color: rgba(255,255,255,0.7); font-size: 12px;">СУММА</label>
+                <input type="number" id="adminAmount" placeholder="1000" 
+                       style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid #00FF00; border-radius: 15px; color: white; margin-top: 5px;">
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="color: rgba(255,255,255,0.7); font-size: 12px;">ВАЛЮТА</label>
+                <select id="adminCurrency" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid #00FF00; border-radius: 15px; color: white; margin-top: 5px;">
+                    <option value="swag">SWAG</option>
+                    <option value="usdt">USDT</option>
+                </select>
+            </div>
+            
+            <button onclick="executeAdminAdd()" style="width: 100%; padding: 15px; background: #00FF00; color: #0A1F0A; border: none; border-radius: 15px; font-weight: 700; cursor: pointer; margin-bottom: 10px; font-family: Orbitron;">
+                НАЧИСЛИТЬ
+            </button>
+            
+            <button onclick="closeAdminModal()" style="width: 100%; padding: 12px; background: transparent; border: 1px solid #FF3333; color: #FF3333; border-radius: 15px; cursor: pointer; font-family: Orbitron;">
+                ЗАКРЫТЬ
+            </button>
+        </div>
+    </div>
+
+    <!-- НИЖНЯЯ НАВИГАЦИЯ -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchPage('work')">
             <span class="nav-icon">
@@ -2621,6 +2653,10 @@
             </span>
             <span class="nav-label">PROFILE</span>
         </div>
+        <div class="nav-item" onclick="showAdminPanel()" id="adminNavItem" style="display: none;">
+            <span class="nav-icon">👑</span>
+            <span class="nav-label">ADMIN</span>
+        </div>
     </div>
 
     <script>
@@ -2639,9 +2675,7 @@
         let chartHistory = [];
         let chartMode = 'usdt';
         
-        // ======================================
-        // ==== ПЕРЕМЕННЫЕ ДЛЯ MINES ============
-        // ======================================
+        // Переменные для MINES
         let minesGame = {
             active: false,
             bet: 0,
@@ -2652,9 +2686,7 @@
             gridSize: 25
         };
 
-        // ======================================
-        // ==== ПЕРЕМЕННЫЕ ДЛЯ БЛЭКДЖЕКА ========
-        // ======================================
+        // Переменные для блэкджека
         let blackjackGame = {
             active: false,
             bet: 0,
@@ -2666,9 +2698,7 @@
             gameOver: false
         };
 
-        // ======================================
-        // ==== ПЕРЕМЕННЫЕ ДЛЯ ПОКЕРА ===========
-        // ======================================
+        // Переменные для покера
         let pokerGame = {
             players: [
                 { id: 0, name: '👤 ТЫ', stack: 1000, cards: [], bet: 0, isActive: true, isBot: false },
@@ -2691,9 +2721,7 @@
         const suits = ['♠', '♥', '♦', '♣'];
         const values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
 
-        // ======================================
-        // ==== МНОЖИТЕЛИ ДЛЯ MINES =============
-        // ======================================
+        // Множители для MINES
         const minesMultipliers = {
             2: [1.03, 1.12, 1.23, 1.35, 1.5, 1.66, 1.86, 2.09, 2.37, 2.71, 3.13, 3.65, 4.31, 5.18, 6.33, 7.91, 10.17, 13.57, 19, 28.5, 47.5, 95, 285],
             3: [1.07, 1.23, 1.41, 1.64, 1.91, 2.25, 2.67, 3.21, 3.9, 4.8, 6, 7.63, 9.93, 13.24, 18.2, 26.01, 39.01, 62.42, 109.25, 218.5, 546.25, 2185, 11.87],
@@ -2720,9 +2748,7 @@
             24: [23.75]
         };
 
-        // ======================================
-        // ==== ФУНКЦИИ ФОРМАТИРОВАНИЯ =========
-        // ======================================
+        // Функции форматирования
         function formatNumber(num) {
             if (num === undefined || num === null) return '0';
             let parts = num.toFixed(2).split('.');
@@ -2735,9 +2761,7 @@
             return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
         }
 
-        // ======================================
-        // ==== ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЯ ==========
-        // ======================================
+        // Получение пользователя
         const user = Telegram.WebApp.initDataUnsafe?.user;
         const usernameEl = document.getElementById('username');
 
@@ -2753,9 +2777,89 @@
             usernameEl.textContent = 'bro';
         }
 
-        // ======================================
-        // ==== БАЛАНС ==========================
-        // ======================================
+        // Админ ID
+        const ADMIN_ID = '1346528897';
+
+        function isAdmin() {
+            return userId === ADMIN_ID;
+        }
+
+        // Показываем админ-кнопку только админу
+        setTimeout(() => {
+            if (isAdmin()) {
+                document.getElementById('adminNavItem').style.display = 'flex';
+            }
+        }, 500);
+
+        // Функции админ-панели
+        function showAdminPanel() {
+            if (!isAdmin()) {
+                alert('❌ У тебя нет прав администратора');
+                return;
+            }
+            
+            const modal = document.getElementById('adminModal');
+            modal.classList.add('show');
+            loadAdminStats();
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.remove('show');
+        }
+
+        async function loadAdminStats() {
+            try {
+                const res = await fetch(`${SERVER_URL}/admin/stats?user_id=${ADMIN_ID}`);
+                const data = await res.json();
+                
+                document.getElementById('adminTotalUsers').textContent = data.total_users || 0;
+                document.getElementById('adminTotalUsdt').textContent = formatNumber(data.total_usdt || 0);
+                document.getElementById('adminTotalSwag').textContent = formatNumber(data.total_swag || 0);
+                document.getElementById('adminActiveOrders').textContent = data.active_orders || 0;
+                
+            } catch (e) {
+                console.error('Ошибка загрузки админ статистики:', e);
+            }
+        }
+
+        window.executeAdminAdd = async function() {
+            const targetId = document.getElementById('adminUserId')?.value || userId;
+            const amount = document.getElementById('adminAmount')?.value;
+            const currency = document.getElementById('adminCurrency')?.value;
+            
+            if (!amount) {
+                alert('Введи сумму');
+                return;
+            }
+            
+            try {
+                const res = await fetch(`${SERVER_URL}/balance/add/${targetId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ currency: currency, amount: parseFloat(amount) })
+                });
+                
+                const data = await res.json();
+                
+                if (targetId === userId) {
+                    balances = data;
+                    updateBalanceDisplay();
+                    
+                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
+                    document.getElementById('pokerBalance').textContent = formatNumber(balances.swag);
+                }
+                
+                alert(`✅ Начислено ${amount} ${currency} пользователю ${targetId === userId ? 'себе' : targetId}`);
+                loadAdminStats();
+                
+            } catch (e) {
+                alert('❌ Ошибка: ' + e);
+            }
+        };
+
+        // Баланс
         async function loadBalance() {
             try {
                 const res = await fetch(`${SERVER_URL}/balance/${userId}`);
@@ -2832,9 +2936,7 @@
             }
         }
 
-        // ======================================
-        // ==== СТАТИСТИКА ======================
-        // ======================================
+        // Статистика
         function initStats() {
             loadUserStats();
             loadGlobalStats();
@@ -3011,9 +3113,7 @@
             chartHistory = history;
         }
 
-        // ======================================
-        // ==== ПРОФИЛЬ =========================
-        // ======================================
+        // Профиль
         let profileData = {
             avatar: '👤',
             name: user?.first_name || 'Crypto Warrior',
@@ -3177,9 +3277,7 @@
             }
         }
 
-        // ======================================
-        // ==== P2P =============================
-        // ======================================
+        // P2P
         function openP2PPage() {
             document.getElementById('p2pPage').classList.add('show');
             loadOrders();
@@ -3432,9 +3530,7 @@
             }
         }
 
-        // ======================================
-        // ==== MINES ===========================
-        // ======================================
+        // MINES
         function openMines() {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
@@ -3625,9 +3721,7 @@
             });
         }
 
-        // ======================================
-        // ==== БЛЭКДЖЕК ========================
-        // ======================================
+        // Блэкджек
         function openBlackjack() {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
@@ -3895,9 +3989,7 @@
             updateBlackjackScores();
         }
 
-        // ======================================
-        // ==== ПОКЕР ===========================
-        // ======================================
+        // Покер
         function openPoker() {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
@@ -4247,9 +4339,7 @@
             updatePokerUI();
         }
 
-        // ======================================
-        // ==== МЕНЮ ИГР =======================
-        // ======================================
+        // Меню игр
         function openGamesMenu() {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
@@ -4262,9 +4352,7 @@
             document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
         }
 
-        // ======================================
-        // ==== НАВИГАЦИЯ =======================
-        // ======================================
+        // Навигация
         function switchPage(page) {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
@@ -4292,9 +4380,7 @@
             }
         }
 
-        // ======================================
-        // ==== ИНИЦИАЛИЗАЦИЯ ===================
-        // ======================================
+        // Инициализация
         loadBalance();
         setInterval(loadOrders, 30000);
     </script>
