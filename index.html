@@ -205,7 +205,6 @@
             .balance-amount .number[data-length="14"] { font-size: 22px; }
         }
 
-        /* Вторичный баланс */
         .usd-value {
             font-size: 16px;
             color: rgba(255, 255, 255, 0.5);
@@ -264,7 +263,7 @@
             text-shadow: 0 0 20px #00FF00;
         }
 
-        /* SWAG секция (кнопка для игр) */
+        /* SWAG секция */
         .swag-section {
             margin-top: 15px;
             padding: 10px;
@@ -1154,9 +1153,12 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid rgba(0, 255, 0, 0.1);
-            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
         }
 
         .leaderboard-rank {
@@ -1196,6 +1198,12 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
+        .leaderboard-value {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            font-weight: 700;
+        }
+
         /* Страница статистики */
         .stats-container {
             padding: 20px 0;
@@ -1226,7 +1234,6 @@
             font-family: 'Orbitron', sans-serif;
         }
 
-        /* График */
         .chart-container {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(0, 255, 0, 0.2);
@@ -1236,7 +1243,6 @@
             height: 200px;
         }
 
-        /* Переключатель графика */
         .chart-switcher {
             display: flex;
             gap: 10px;
@@ -1266,12 +1272,6 @@
             box-shadow: 0 0 15px #00FF00;
         }
 
-        .chart-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
-        }
-
-        /* Карточки статистики */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -1322,6 +1322,77 @@
 
         .stat-change.negative {
             color: #FF3333;
+        }
+
+        /* Sweet Bonanza стиль */
+        .sweet-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 5px;
+            background: linear-gradient(145deg, #FF69B4, #FF1493);
+            padding: 15px;
+            border-radius: 20px;
+            margin: 15px 0;
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+            border: 2px solid gold;
+        }
+
+        .sweet-cell {
+            aspect-ratio: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid gold;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sweet-cell.win {
+            animation: winPulse 0.5s ease infinite;
+            border-color: white;
+            box-shadow: 0 0 30px gold;
+        }
+
+        @keyframes winPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .sweet-cell.cascade {
+            animation: cascadeDrop 0.3s ease;
+        }
+
+        @keyframes cascadeDrop {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .free-spins-info {
+            background: linear-gradient(145deg, #FF1493, #FF69B4);
+            border: 2px solid gold;
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 0 30px rgba(255, 20, 147, 0.5);
+        }
+
+        .sweet-symbol {
+            font-size: 24px;
+            filter: drop-shadow(0 0 10px currentColor);
         }
 
         /* Страница игр */
@@ -1393,812 +1464,6 @@
         .game-desc {
             font-size: 12px;
             color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* ======================================
-        // ==== MINES (МАЙНЕР) ==================
-        // ====================================== */
-
-        .mines-container {
-            padding: 15px 0;
-        }
-
-        .mines-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .mines-title {
-            font-family: 'Orbitron', sans-serif;
-            color: #00FF00;
-            font-size: 28px;
-            text-shadow: 0 0 15px #00FF00;
-        }
-
-        .balance-card {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .mines-settings {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .settings-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .settings-label {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            min-width: 100px;
-        }
-        
-        .mines-badges {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            flex: 1;
-            justify-content: flex-end;
-        }
-        
-        .mine-badge {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            border-radius: 20px;
-            padding: 6px 12px;
-            color: white;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-width: 40px;
-            text-align: center;
-        }
-        
-        .mine-badge:hover {
-            border-color: #00FF00;
-            background: rgba(0, 255, 0, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        .mine-badge.active {
-            background: #00FF00;
-            color: #0A1F0A;
-            border-color: #00FF00;
-            box-shadow: 0 0 15px #00FF00;
-        }
-        
-        .mines-input {
-            width: 80px;
-            padding: 8px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #00FF00;
-            border-radius: 20px;
-            color: white;
-            font-size: 14px;
-            text-align: center;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 600;
-            -moz-appearance: textfield;
-        }
-        
-        .mines-input.active {
-            background: rgba(0, 255, 0, 0.1);
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-        }
-        
-        .mines-input::-webkit-inner-spin-button,
-        .mines-input::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .mines-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            margin: 20px 0;
-        }
-
-        .mine-cell {
-            aspect-ratio: 1;
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid rgba(0, 255, 0, 0.3);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
-        }
-
-        .mine-cell:hover {
-            transform: scale(1.05);
-            border-color: #00FF00;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-        }
-
-        .mine-cell.revealed {
-            background: rgba(0, 255, 0, 0.2);
-            border-color: #00FF00;
-            box-shadow: 0 0 15px #00FF00;
-            cursor: default;
-        }
-
-        .mine-cell.revealed:hover {
-            transform: none;
-        }
-
-        .mine-cell.mine {
-            background: rgba(255, 51, 51, 0.3);
-            border-color: #FF3333;
-            box-shadow: 0 0 15px #FF3333;
-        }
-
-        .mine-cell.disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        .mine-cell.disabled:hover {
-            transform: none;
-        }
-
-        .game-controls {
-            display: flex;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .game-btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 15px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .start-btn {
-            background: #00FF00;
-            color: #0A1F0A;
-        }
-
-        .start-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px #00FF00;
-        }
-
-        .cashout-btn {
-            background: transparent;
-            border: 2px solid #00FF00;
-            color: #00FF00;
-        }
-
-        .cashout-btn:hover:not(:disabled) {
-            background: #00FF00;
-            color: #0A1F0A;
-            transform: scale(1.02);
-        }
-
-        .cashout-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            border-color: rgba(0, 255, 0, 0.3);
-        }
-
-        .multiplier-display {
-            text-align: center;
-            font-size: 24px;
-            font-weight: 800;
-            color: #00FF00;
-            text-shadow: 0 0 15px #00FF00;
-            margin: 15px 0;
-            font-family: 'Orbitron', sans-serif;
-        }
-
-        .potential-win {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .game-result {
-            text-align: center;
-            padding: 20px;
-            margin: 20px 0;
-            border: 2px solid #00FF00;
-            border-radius: 20px;
-            animation: glow 2s infinite;
-        }
-
-        .result-win {
-            font-size: 32px;
-            font-weight: 800;
-            color: #00FF00;
-        }
-
-        .result-lose {
-            font-size: 32px;
-            font-weight: 800;
-            color: #FF3333;
-        }
-
-        .result-push {
-            font-size: 32px;
-            font-weight: 800;
-            color: #FFFF00;
-        }
-
-        /* ======================================
-        // ==== БЛЭКДЖЕК ========================
-        // ====================================== */
-
-        .blackjack-container {
-            padding: 15px 0;
-        }
-
-        .blackjack-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .blackjack-title {
-            font-family: 'Orbitron', sans-serif;
-            color: #00FF00;
-            font-size: 28px;
-            text-shadow: 0 0 15px #00FF00;
-        }
-
-        .blackjack-table {
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid #00FF00;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            min-height: 300px;
-        }
-
-        .dealer-area, .player-area {
-            margin-bottom: 25px;
-        }
-
-        .player-label {
-            font-family: 'Orbitron', sans-serif;
-            color: #00FF00;
-            font-size: 14px;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .cards {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
-
-        .card {
-            width: 60px;
-            height: 90px;
-            background: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 800;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            position: relative;
-            animation: dealCard 0.3s ease;
-        }
-
-        @keyframes dealCard {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .card.red {
-            color: #FF3333;
-        }
-
-        .card.black {
-            color: #000000;
-        }
-
-        .card.back {
-            background: linear-gradient(145deg, #00FF00, #00CC00);
-            color: transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card.back::after {
-            content: '?';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #0A1F0A;
-            font-size: 24px;
-            font-weight: 800;
-        }
-
-        .score {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
-            color: #00FF00;
-        }
-
-        .bet-section {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .bet-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .bet-label {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            min-width: 60px;
-        }
-
-        .bet-input {
-            flex: 1;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #00FF00;
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            -moz-appearance: textfield;
-        }
-
-        .bet-input::-webkit-inner-spin-button,
-        .bet-input::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .multiplier-info {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 12px;
-        }
-
-        .blackjack-controls {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .action-btn {
-            padding: 15px;
-            border: none;
-            border-radius: 15px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: transparent;
-            border: 2px solid #00FF00;
-            color: #00FF00;
-        }
-
-        .action-btn:hover:not(:disabled) {
-            background: #00FF00;
-            color: #0A1F0A;
-            transform: scale(1.02);
-        }
-
-        .action-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            border-color: rgba(0, 255, 0, 0.3);
-        }
-
-        .action-btn.start-btn {
-            grid-column: span 2;
-            background: #00FF00;
-            color: #0A1F0A;
-        }
-
-        /* ======================================
-        // ==== СЛОТЫ ===========================
-        // ====================================== */
-
-        .slots-container {
-            padding: 15px 0;
-        }
-
-        .slots-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .slots-title {
-            font-family: 'Orbitron', sans-serif;
-            color: #00FF00;
-            font-size: 28px;
-            text-shadow: 0 0 15px #00FF00;
-        }
-
-        .slot-machine {
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid #00FF00;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .reels-container {
-            display: flex;
-            justify-content: space-around;
-            gap: 10px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .reel {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid #00FF00;
-            border-radius: 10px;
-            padding: 10px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            transition: transform 0.1s linear;
-        }
-
-        .reel.spinning {
-            animation: spinReel 0.2s infinite linear;
-        }
-
-        @keyframes spinReel {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-100px); }
-        }
-
-        .symbol {
-            font-size: 48px;
-            text-align: center;
-            line-height: 1.2;
-            filter: drop-shadow(0 0 10px currentColor);
-        }
-
-        .symbol.wild {
-            color: #00FF00;
-            text-shadow: 0 0 20px #00FF00;
-        }
-
-        .paylines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 3;
-        }
-
-        .payline {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: #00FF00;
-            box-shadow: 0 0 10px #00FF00;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .payline.active {
-            opacity: 1;
-        }
-
-        .payline.line1 {
-            top: 20%;
-        }
-
-        .payline.line2 {
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .payline.line3 {
-            bottom: 20%;
-        }
-
-        .symbols-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 15px;
-            padding: 10px;
-        }
-
-        .symbol-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #00FF00;
-            border-radius: 20px;
-            padding: 5px 10px;
-        }
-
-        .symbol-item .symbol {
-            font-size: 24px;
-        }
-
-        .symbol-item .symbol-value {
-            color: #00FF00;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
-        }
-
-        .lines-selector {
-            display: flex;
-            gap: 5px;
-            flex: 1;
-        }
-
-        .line-btn {
-            flex: 1;
-            padding: 8px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #00FF00;
-            border-radius: 10px;
-            color: white;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .line-btn:hover {
-            background: rgba(0, 255, 0, 0.2);
-        }
-
-        .line-btn.active {
-            background: #00FF00;
-            color: #0A1F0A;
-        }
-
-        .slots-controls {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .spin-btn {
-            background: linear-gradient(145deg, #00FF00, #00CC00);
-            border: none;
-            border-radius: 50px;
-            padding: 16px 40px;
-            color: #0A1F0A;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 800;
-            font-size: 22px;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .spin-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 50px #00FF00;
-        }
-
-        .spin-btn:active {
-            transform: scale(0.95);
-        }
-
-        .spin-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* ======================================
-        // ==== ПОКЕР ===========================
-        // ====================================== */
-
-        .poker-container {
-            padding: 15px 0;
-        }
-
-        .poker-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .poker-title {
-            font-family: 'Orbitron', sans-serif;
-            color: #00FF00;
-            font-size: 28px;
-            text-shadow: 0 0 15px #00FF00;
-        }
-
-        .poker-table {
-            background: #0A2A0A;
-            border: 3px solid #00FF00;
-            border-radius: 200px 200px 50px 50px;
-            padding: 30px 20px;
-            margin-bottom: 20px;
-            position: relative;
-            box-shadow: 0 0 50px rgba(0,255,0,0.2);
-        }
-
-        .community-cards {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-            padding: 10px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 15px;
-        }
-
-        .card.small {
-            width: 40px;
-            height: 55px;
-            font-size: 16px;
-        }
-
-        .players {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .player {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid #00FF00;
-            border-radius: 15px;
-            padding: 10px;
-            min-width: 120px;
-            text-align: center;
-        }
-
-        .player.active {
-            border: 2px solid #FFD700;
-            box-shadow: 0 0 20px gold;
-        }
-
-        .player-name {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .player-cards {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin: 5px 0;
-        }
-
-        .player-stack {
-            font-size: 12px;
-            color: #00FF00;
-        }
-
-        .player-bet {
-            font-size: 12px;
-            color: #FFD700;
-        }
-
-        .poker-actions {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .poker-btn {
-            padding: 15px;
-            border: 2px solid #00FF00;
-            background: transparent;
-            color: #00FF00;
-            border-radius: 15px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .poker-btn:hover {
-            background: #00FF00;
-            color: #0A1F0A;
-        }
-
-        .poker-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        .poker-btn.fold {
-            border-color: #FF3333;
-            color: #FF3333;
-        }
-
-        .poker-btn.fold:hover {
-            background: #FF3333;
-            color: white;
-        }
-
-        .poker-btn.raise {
-            border-color: #FFD700;
-            color: #FFD700;
-        }
-
-        .poker-btn.raise:hover {
-            background: #FFD700;
-            color: #0A1F0A;
-        }
-
-        .pot {
-            text-align: center;
-            font-size: 18px;
-            color: #FFD700;
-            margin: 10px 0;
         }
 
         /* Нижняя навигация */
@@ -2372,7 +1637,9 @@
     </div>
 
     <div class="container">
-        <!-- Страница WORK -->
+        <!-- ======================================
+             СТРАНИЦА WORK (ГЛАВНАЯ)
+             ====================================== -->
         <div id="workPage" class="page active-page">
             <div class="greeting">
                 <span class="wave">👋</span>
@@ -2424,7 +1691,9 @@
             </div>
         </div>
 
-        <!-- Страница STATS -->
+        <!-- ======================================
+             СТРАНИЦА СТАТИСТИКИ
+             ====================================== -->
         <div id="statsPage" class="page">
             <div class="stats-container">
                 <div class="stats-header">
@@ -2467,7 +1736,9 @@
             </div>
         </div>
 
-        <!-- Страница PROFILE -->
+        <!-- ======================================
+             СТРАНИЦА ПРОФИЛЯ
+             ====================================== -->
         <div id="profilePage" class="page">
             <div class="profile-container">
                 <div class="profile-header">
@@ -2529,7 +1800,9 @@
             </div>
         </div>
 
-        <!-- Страница меню игр -->
+        <!-- ======================================
+             СТРАНИЦА МЕНЮ ИГР
+             ====================================== -->
         <div id="gamesMenuPage" class="page">
             <div class="games-container">
                 <div class="games-header">
@@ -2558,7 +1831,7 @@
                     <div class="game-card" onclick="openSlots()">
                         <div class="game-icon">🎰</div>
                         <div class="game-name">СЛОТЫ</div>
-                        <div class="game-desc">SWAGA style</div>
+                        <div class="game-desc">SWEET SWAGA</div>
                     </div>
                     
                     <div class="game-card" onclick="openPoker()">
@@ -2570,7 +1843,9 @@
             </div>
         </div>
 
-        <!-- Страница MINES -->
+        <!-- ======================================
+             СТРАНИЦА MINES
+             ====================================== -->
         <div id="minesPage" class="page">
             <div class="mines-container">
                 <div class="mines-header">
@@ -2591,7 +1866,7 @@
                             <button class="mine-badge" onclick="setMinesCount(5)">5</button>
                             <button class="mine-badge" onclick="setMinesCount(10)">10</button>
                             <button class="mine-badge" onclick="setMinesCount(24)">24</button>
-                            <input type="number" id="minesCount" class="mines-input active" value="3" min="2" max="24" placeholder="Cboe">
+                            <input type="number" id="minesCount" class="mines-input active" value="3" min="2" max="24" placeholder="Свое">
                         </div>
                     </div>
                     <div class="settings-row">
@@ -2614,7 +1889,9 @@
             </div>
         </div>
 
-        <!-- Страница БЛЭКДЖЕК -->
+        <!-- ======================================
+             СТРАНИЦА БЛЭКДЖЕК
+             ====================================== -->
         <div id="blackjackPage" class="page">
             <div class="blackjack-container">
                 <div class="blackjack-header">
@@ -2628,14 +1905,12 @@
                 </div>
 
                 <div class="blackjack-table">
-                    <!-- Карты дилера -->
                     <div class="dealer-area">
                         <div class="player-label">ДИЛЕР</div>
                         <div class="cards" id="dealerCards"></div>
                         <div class="score" id="dealerScore"></div>
                     </div>
 
-                    <!-- Карты игрока -->
                     <div class="player-area">
                         <div class="player-label">ИГРОК</div>
                         <div class="cards" id="playerCards"></div>
@@ -2643,7 +1918,6 @@
                     </div>
                 </div>
 
-                <!-- Ставка -->
                 <div class="bet-section">
                     <div class="bet-row">
                         <span class="bet-label">Ставка:</span>
@@ -2652,7 +1926,6 @@
                     <div class="multiplier-info">Блэкджек: x2.5 | Обычная: x2</div>
                 </div>
 
-                <!-- Кнопки действий -->
                 <div class="blackjack-controls">
                     <button class="action-btn" onclick="startBlackjack()" id="startBlackjackBtn">НАЧАТЬ</button>
                     <button class="action-btn" onclick="hitBlackjack()" id="hitBtn" disabled>ВЗЯТЬ</button>
@@ -2660,17 +1933,18 @@
                     <button class="action-btn" onclick="doubleBlackjack()" id="doubleBtn" disabled>УДВОИТЬ</button>
                 </div>
 
-                <!-- Результат -->
                 <div id="blackjackResult" class="game-result" style="display: none;"></div>
             </div>
         </div>
 
-        <!-- Страница СЛОТЫ -->
+        <!-- ======================================
+             СТРАНИЦА СЛОТОВ (Sweet Bonanza)
+             ====================================== -->
         <div id="slotsPage" class="page">
             <div class="slots-container">
                 <div class="slots-header">
                     <button class="back-btn" onclick="openGamesMenu()">←</button>
-                    <h2 class="slots-title">🎰 СЛОТЫ SWAG</h2>
+                    <h2 class="slots-title">🍬 SWEET SWAGA</h2>
                 </div>
                 
                 <div class="balance-card" style="margin-bottom: 20px;">
@@ -2678,89 +1952,42 @@
                     <div class="balance-amount" id="slotsBalance">0</div>
                 </div>
 
-                <!-- Слот-машина -->
-                <div class="slot-machine">
-                    <div class="reels-container">
-                        <div class="reel" id="reel1">
-                            <div class="symbol">🎤</div>
-                            <div class="symbol">🎧</div>
-                            <div class="symbol">🖍️</div>
-                        </div>
-                        <div class="reel" id="reel2">
-                            <div class="symbol">🎤</div>
-                            <div class="symbol">🎧</div>
-                            <div class="symbol">🖍️</div>
-                        </div>
-                        <div class="reel" id="reel3">
-                            <div class="symbol">🎤</div>
-                            <div class="symbol">🎧</div>
-                            <div class="symbol">🖍️</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Выигрышные линии -->
-                    <div class="paylines">
-                        <div class="payline line1"></div>
-                        <div class="payline line2"></div>
-                        <div class="payline line3"></div>
-                    </div>
+                <div id="freeSpinsInfo" class="free-spins-info" style="display: none;">
+                    <div class="multiplier-display">🔥 FREE SPINS: <span id="freeSpinsCount">0</span></div>
+                    <div class="multiplier-display">💥 ТЕКУЩИЙ МНОЖИТЕЛЬ: x<span id="currentMultiplier">1</span></div>
                 </div>
 
-                <!-- Инфо о символах -->
+                <div class="sweet-grid" id="sweetGrid"></div>
+
                 <div class="symbols-info">
-                    <div class="symbol-item">
-                        <span class="symbol">🎤</span>
-                        <span class="symbol-value">x50</span>
-                    </div>
-                    <div class="symbol-item">
-                        <span class="symbol">🎧</span>
-                        <span class="symbol-value">x20</span>
-                    </div>
-                    <div class="symbol-item">
-                        <span class="symbol">🖍️</span>
-                        <span class="symbol-value">x10</span>
-                    </div>
-                    <div class="symbol-item">
-                        <span class="symbol">👟</span>
-                        <span class="symbol-value">x5</span>
-                    </div>
-                    <div class="symbol-item">
-                        <span class="symbol">💊</span>
-                        <span class="symbol-value">x3</span>
-                    </div>
-                    <div class="symbol-item">
-                        <span class="symbol">⭐</span>
-                        <span class="symbol-value">WILD</span>
-                    </div>
+                    <div class="symbol-item"><span class="sweet-symbol">🍬</span> x10</div>
+                    <div class="symbol-item"><span class="sweet-symbol">🍭</span> x8</div>
+                    <div class="symbol-item"><span class="sweet-symbol">🍎</span> x6</div>
+                    <div class="symbol-item"><span class="sweet-symbol">🍇</span> x5</div>
+                    <div class="symbol-item"><span class="sweet-symbol">🍊</span> x4</div>
+                    <div class="symbol-item"><span class="sweet-symbol">🍋</span> x3</div>
+                    <div class="symbol-item"><span class="sweet-symbol">⭐</span> SCATTER</div>
+                    <div class="symbol-item"><span class="sweet-symbol">💎</span> x2 (FS)</div>
                 </div>
 
-                <!-- Ставка -->
                 <div class="bet-section">
                     <div class="bet-row">
                         <span class="bet-label">Ставка:</span>
                         <input type="number" id="slotsBet" class="bet-input" value="10" min="1">
                     </div>
-                    <div class="bet-row">
-                        <span class="bet-label">Линии:</span>
-                        <div class="lines-selector">
-                            <button class="line-btn active" onclick="setLines(1)">1</button>
-                            <button class="line-btn" onclick="setLines(3)">3</button>
-                            <button class="line-btn" onclick="setLines(5)">5</button>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Кнопки -->
                 <div class="slots-controls">
-                    <button class="spin-btn" onclick="spinSlots()" id="spinSlotsBtn">🎰 КРУТИТЬ</button>
+                    <button class="spin-btn" onclick="spinSweetSlots()" id="spinSweetBtn">🎰 SPIN</button>
                 </div>
 
-                <!-- Результат -->
                 <div id="slotsResult" class="game-result" style="display: none;"></div>
             </div>
         </div>
 
-        <!-- Страница ПОКЕР -->
+        <!-- ======================================
+             СТРАНИЦА ПОКЕРА
+             ====================================== -->
         <div id="pokerPage" class="page">
             <div class="poker-container">
                 <div class="poker-header">
@@ -2773,9 +2000,7 @@
                     <div class="balance-amount" id="pokerBalance">1000</div>
                 </div>
 
-                <!-- Покерный стол -->
                 <div class="poker-table">
-                    <!-- Общие карты -->
                     <div class="community-cards" id="communityCards">
                         <div class="card back"></div>
                         <div class="card back"></div>
@@ -2784,9 +2009,7 @@
                         <div class="card back"></div>
                     </div>
 
-                    <!-- Игроки -->
                     <div class="players" id="players">
-                        <!-- Игрок 1 (бот) -->
                         <div class="player" id="player2">
                             <div class="player-name">🤖 BOT 1</div>
                             <div class="player-cards">
@@ -2797,7 +2020,6 @@
                             <div class="player-bet" id="bet2">0</div>
                         </div>
 
-                        <!-- Игрок 2 (бот) -->
                         <div class="player" id="player3">
                             <div class="player-name">🤖 BOT 2</div>
                             <div class="player-cards">
@@ -2809,7 +2031,6 @@
                         </div>
                     </div>
 
-                    <!-- Текущий игрок (ты) -->
                     <div class="player" id="player1" style="margin-top: 15px;">
                         <div class="player-name">👤 ТЫ</div>
                         <div class="player-cards" id="myCards">
@@ -2821,10 +2042,8 @@
                     </div>
                 </div>
 
-                <!-- Пот -->
                 <div class="pot" id="pot">💰 ПОТ: 0</div>
 
-                <!-- Кнопки действий -->
                 <div class="poker-actions">
                     <button class="poker-btn fold" onclick="fold()" id="foldBtn" disabled>FOLD</button>
                     <button class="poker-btn" onclick="check()" id="checkBtn" disabled>CHECK</button>
@@ -2833,19 +2052,19 @@
                     <button class="poker-btn" onclick="startPoker()" id="startPokerBtn">НАЧАТЬ</button>
                 </div>
 
-                <!-- Ввод ставки -->
                 <div class="bet-control" id="betControl" style="display: none;">
                     <input type="number" id="betAmount" class="bet-input" placeholder="Сумма" min="10" value="10">
                     <button class="poker-btn" onclick="confirmRaise()">✅</button>
                 </div>
 
-                <!-- Результат -->
                 <div class="game-result" id="pokerResult" style="display: none;"></div>
             </div>
         </div>
     </div>
 
-    <!-- P2P Page -->
+    <!-- ======================================
+         P2P PAGE (ОТДЕЛЬНАЯ СТРАНИЦА)
+         ====================================== -->
     <div id="p2pPage" class="p2p-page">
         <div class="p2p-header">
             <button class="back-btn" onclick="closeP2PPage()">←</button>
@@ -2856,7 +2075,6 @@
             <button onclick="toggleOrderForm()">+ NEW ORDER</button>
         </div>
 
-        <!-- Форма создания ордера -->
         <div id="orderForm" class="order-form">
             <div class="form-title">CREATE ORDER</div>
             
@@ -2893,21 +2111,17 @@
             <button class="create-order-btn" onclick="createOrder()">CREATE ORDER</button>
         </div>
 
-        <!-- Список ордеров -->
         <div class="orders-header">
             <h3>ACTIVE ORDERS</h3>
             <span id="ordersCount">0 orders</span>
         </div>
 
-        <div id="ordersList" class="orders-list">
-            <div class="empty-orders">
-                No active orders<br>
-                <small style="font-size: 12px;">Create your first order</small>
-            </div>
-        </div>
+        <div id="ordersList" class="orders-list"></div>
     </div>
 
-    <!-- Модальное окно для сделки -->
+    <!-- ======================================
+         МОДАЛЬНОЕ ОКНО ДЛЯ СДЕЛКИ
+         ====================================== -->
     <div id="tradeModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeTradeModal()">&times;</span>
@@ -2931,7 +2145,9 @@
         </div>
     </div>
 
-    <!-- Нижняя навигация -->
+    <!-- ======================================
+         НИЖНЯЯ НАВИГАЦИЯ
+         ====================================== -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchPage('work')">
             <span class="nav-icon">
@@ -2955,10 +2171,9 @@
             <span class="nav-label">PROFILE</span>
         </div>
     </div>
-
     <script>
         const SERVER_URL = 'https://balance-server-production.up.railway.app';
-        const COMMISSION = 0.02;
+        const COMMISSION = 0.00;
         
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
@@ -2972,7 +2187,9 @@
         let chartHistory = [];
         let chartMode = 'usdt';
         
-        // Переменные для MINES
+        // ======================================
+        // ==== ПЕРЕМЕННЫЕ ДЛЯ MINES ============
+        // ======================================
         let minesGame = {
             active: false,
             bet: 0,
@@ -2983,7 +2200,9 @@
             gridSize: 25
         };
 
-        // Переменные для блэкджека
+        // ======================================
+        // ==== ПЕРЕМЕННЫЕ ДЛЯ БЛЭКДЖЕКА ========
+        // ======================================
         let blackjackGame = {
             active: false,
             bet: 0,
@@ -2995,25 +2214,27 @@
             gameOver: false
         };
 
-        // Переменные для слотов
-        let slotsGame = {
-            active: false,
-            bet: 10,
-            lines: 3,
-            symbols: ['🎤', '🎧', '🖍️', '👟', '💊', '⭐'],
-            multipliers: {
-                '🎤': 50,
-                '🎧': 20,
-                '🖍️': 10,
-                '👟': 5,
-                '💊': 3,
-                '⭐': 0
-            },
-            reels: [[], [], []],
-            spinning: false
+        // ======================================
+        // ==== ПЕРЕМЕННЫЕ ДЛЯ СЛОТОВ ===========
+        // ======================================
+        const sweetSymbols = ['🍬', '🍭', '🍎', '🍇', '🍊', '🍋', '⭐', '💎'];
+        const symbolMultipliers = {
+            '🍬': 10, '🍭': 8, '🍎': 6, '🍇': 5,
+            '🍊': 4, '🍋': 3, '⭐': 0, '💎': 2
         };
 
-        // Переменные для покера
+        let sweetGame = {
+            grid: [],
+            bet: 10,
+            freeSpins: 0,
+            freeSpinsMultiplier: 1,
+            totalWin: 0,
+            cascading: false
+        };
+
+        // ======================================
+        // ==== ПЕРЕМЕННЫЕ ДЛЯ ПОКЕРА ===========
+        // ======================================
         let pokerGame = {
             players: [
                 { id: 0, name: '👤 ТЫ', stack: 1000, cards: [], bet: 0, isActive: true, isBot: false },
@@ -3033,12 +2254,11 @@
             minRaise: 20
         };
 
-        // Масти и значения для покера
         const suits = ['♠', '♥', '♦', '♣'];
         const values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
 
         // ======================================
-        // ==== ТВОИ КЭФЫ ДЛЯ MINES (2-24 МИНЫ) ===
+        // ==== МНОЖИТЕЛИ ДЛЯ MINES =============
         // ======================================
         const minesMultipliers = {
             2: [1.03, 1.12, 1.23, 1.35, 1.5, 1.66, 1.86, 2.09, 2.37, 2.71, 3.13, 3.65, 4.31, 5.18, 6.33, 7.91, 10.17, 13.57, 19, 28.5, 47.5, 95, 285],
@@ -3067,7 +2287,7 @@
         };
 
         // ======================================
-        // ==== ФОРМАТИРОВАНИЕ ЧИСЕЛ ============
+        // ==== ФУНКЦИИ ФОРМАТИРОВАНИЯ =========
         // ======================================
         function formatNumber(num) {
             if (num === undefined || num === null) return '0';
@@ -3100,136 +2320,13 @@
         }
 
         // ======================================
-        // ==== АДМИН ФУНКЦИИ (СКРЫТЫЕ) =========
+        // ==== АДМИН ID =======================
         // ======================================
-        
         const ADMIN_ID = '1346528897';
 
         function isAdmin() {
             return userId === ADMIN_ID;
         }
-
-        if (isAdmin()) {
-            setTimeout(() => {
-                const adminBtn = document.createElement('div');
-                adminBtn.innerHTML = '👑';
-                adminBtn.style.cssText = `
-                    position: fixed;
-                    bottom: 100px;
-                    right: 10px;
-                    width: 40px;
-                    height: 40px;
-                    background: #00FF00;
-                    color: #0A1F0A;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 20px;
-                    cursor: pointer;
-                    z-index: 1000;
-                    opacity: 0.3;
-                    transition: opacity 0.3s;
-                    box-shadow: 0 0 10px #00FF00;
-                `;
-                adminBtn.onmouseover = () => adminBtn.style.opacity = '1';
-                adminBtn.onmouseout = () => adminBtn.style.opacity = '0.3';
-                adminBtn.onclick = showAdminPanel;
-                
-                document.body.appendChild(adminBtn);
-            }, 1000);
-        }
-
-        function showAdminPanel() {
-            const panel = document.createElement('div');
-            panel.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: #0A1F0A;
-                border: 2px solid #00FF00;
-                border-radius: 30px;
-                padding: 25px;
-                width: 300px;
-                z-index: 1001;
-                box-shadow: 0 0 50px rgba(0,255,0,0.5);
-            `;
-            
-            panel.innerHTML = `
-                <h3 style="color: #00FF00; text-align: center; margin-bottom: 20px; font-family: Orbitron;">👑 АДМИН ПАНЕЛЬ</h3>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="color: rgba(255,255,255,0.7); font-size: 12px;">ID ПОЛЬЗОВАТЕЛЯ</label>
-                    <input type="text" id="adminUserId" placeholder="Оставь пустым для себя" 
-                           style="width: 100%; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid #00FF00; border-radius: 10px; color: white; margin-top: 5px;">
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="color: rgba(255,255,255,0.7); font-size: 12px;">СУММА</label>
-                    <input type="number" id="adminAmount" placeholder="1000" 
-                           style="width: 100%; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid #00FF00; border-radius: 10px; color: white; margin-top: 5px;">
-                </div>
-                
-                <div style="margin-bottom: 20px;">
-                    <label style="color: rgba(255,255,255,0.7); font-size: 12px;">ВАЛЮТА</label>
-                    <select id="adminCurrency" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid #00FF00; border-radius: 10px; color: white; margin-top: 5px;">
-                        <option value="swag">SWAG</option>
-                        <option value="usdt">USDT</option>
-                    </select>
-                </div>
-                
-                <button onclick="executeAdminAdd()" style="width: 100%; padding: 15px; background: #00FF00; color: #0A1F0A; border: none; border-radius: 15px; font-weight: 700; cursor: pointer; margin-bottom: 10px; font-family: Orbitron;">
-                    НАЧИСЛИТЬ
-                </button>
-                
-                <button onclick="this.parentElement.parentElement.remove()" style="width: 100%; padding: 10px; background: transparent; border: 1px solid #FF3333; color: #FF3333; border-radius: 15px; cursor: pointer; font-family: Orbitron;">
-                    ЗАКРЫТЬ
-                </button>
-            `;
-            
-            document.body.appendChild(panel);
-        }
-
-        window.executeAdminAdd = async function() {
-            const targetId = document.getElementById('adminUserId')?.value || userId;
-            const amount = document.getElementById('adminAmount')?.value;
-            const currency = document.getElementById('adminCurrency')?.value;
-            
-            if (!amount) {
-                alert('Введи сумму');
-                return;
-            }
-            
-            try {
-                const res = await fetch(`${SERVER_URL}/balance/add/${targetId}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ currency: currency, amount: parseFloat(amount) })
-                });
-                
-                const data = await res.json();
-                
-                if (targetId === userId) {
-                    balances = data;
-                    updateBalanceDisplay();
-                    
-                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
-                    document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
-                    document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
-                    document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
-                    document.getElementById('pokerBalance').textContent = formatNumber(balances.swag);
-                }
-                
-                alert(`✅ Начислено ${amount} ${currency} пользователю ${targetId === userId ? 'себе' : targetId}`);
-                
-                const panel = document.querySelector('div[style*="transform: translate(-50%, -50%)"]');
-                if (panel) panel.remove();
-                
-            } catch (e) {
-                alert('❌ Ошибка: ' + e);
-            }
-        };
 
         // ======================================
         // ==== БАЛАНС ==========================
@@ -3251,7 +2348,7 @@
                 document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
                 document.getElementById('pokerBalance').textContent = formatNumber(balances.swag);
                 
-                console.log('✅ Баланс загружен с сервера:', balances);
+                console.log('✅ Баланс загружен:', balances);
             } catch (e) {
                 console.error('Ошибка загрузки баланса', e);
             }
@@ -3285,6 +2382,32 @@
             }
         }
 
+        async function updateServerBalance(currency, newAmount) {
+            try {
+                const getRes = await fetch(`${SERVER_URL}/balance/${userId}`);
+                const serverData = await getRes.json();
+                
+                const currentServerBalance = serverData[currency];
+                const difference = newAmount - currentServerBalance;
+                
+                if (Math.abs(difference) > 0.01) {
+                    const res = await fetch(`${SERVER_URL}/balance/add/${userId}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            currency: currency, 
+                            amount: difference 
+                        })
+                    });
+                    
+                    const data = await res.json();
+                    return data;
+                }
+            } catch (e) {
+                console.error('❌ Ошибка синхронизации:', e);
+            }
+        }
+
         // ======================================
         // ==== СТАТИСТИКА ======================
         // ======================================
@@ -3300,11 +2423,7 @@
                 
                 if (history.length === 0) {
                     const now = Date.now();
-                    history.push({
-                        time: now,
-                        usdt: balances.usdt,
-                        swag: balances.swag
-                    });
+                    history.push({ time: now, usdt: balances.usdt, swag: balances.swag });
                     localStorage.setItem('swaga_history_' + userId, JSON.stringify(history));
                 }
                 
@@ -3333,7 +2452,7 @@
                 generateUserChart();
                 
             } catch (e) {
-                console.error('Ошибка загрузки статистики пользователя', e);
+                console.error('Ошибка загрузки статистики', e);
             }
         }
 
@@ -3348,9 +2467,7 @@
                 
                 orders.forEach(order => {
                     users.add(order.user_id);
-                    if (order.status === 'active') {
-                        activeOrders++;
-                    }
+                    if (order.status === 'active') activeOrders++;
                 });
                 
                 document.getElementById('totalUsers').textContent = users.size;
@@ -3417,9 +2534,7 @@
                             callbacks: {
                                 label: function(context) {
                                     let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
+                                    if (label) label += ': ';
                                     if (context.parsed.y !== null) {
                                         label += formatNumber(context.parsed.y);
                                     }
@@ -3464,15 +2579,9 @@
             const history = JSON.parse(localStorage.getItem('swaga_history_' + userId) || '[]');
             const now = Date.now();
             
-            history.push({
-                time: now,
-                usdt: balances.usdt,
-                swag: balances.swag
-            });
+            history.push({ time: now, usdt: balances.usdt, swag: balances.swag });
             
-            if (history.length > 24) {
-                history.shift();
-            }
+            if (history.length > 24) history.shift();
             
             localStorage.setItem('swaga_history_' + userId, JSON.stringify(history));
             chartHistory = history;
@@ -3481,7 +2590,6 @@
         // ======================================
         // ==== ПРОФИЛЬ =========================
         // ======================================
-        
         let profileData = {
             avatar: '👤',
             name: user?.first_name || 'Crypto Warrior',
@@ -3572,12 +2680,6 @@
             document.getElementById(mode === 'public' ? 'publicBtn' : 'privateBtn').classList.add('active');
             
             localStorage.setItem('swaga_profile_' + userId, JSON.stringify(profileData));
-            
-            fetch(`${SERVER_URL}/set_privacy/${userId}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ privacy: mode })
-            }).catch(e => console.log('Privacy sync error:', e));
         }
 
         async function loadUserStats() {
@@ -3596,19 +2698,12 @@
             }
         }
 
-        // ======================================
-        // ==== ЛИДЕРБОРД =======================
-        // ======================================
         async function loadLeaderboard() {
             try {
                 const res = await fetch(`${SERVER_URL}/leaderboard?limit=20`);
-                
-                if (!res.ok) {
-                    throw new Error(`HTTP ${res.status}`);
-                }
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 
                 const data = await res.json();
-                
                 const leaderboard = data.leaderboard || [];
                 const leaderboardList = document.getElementById('leaderboardList');
                 leaderboardList.innerHTML = '';
@@ -3657,8 +2752,7 @@
                 document.getElementById('leaderboardList').innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(255,255,255,0.3);">Error loading leaderboard</div>';
             }
         }
-
-        // ======================================
+                // ======================================
         // ==== P2P =============================
         // ======================================
         function openP2PPage() {
@@ -3709,9 +2803,7 @@
             try {
                 const res = await fetch(`${SERVER_URL}/orders/create`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         user_id: userId,
                         type: currentOrderType,
@@ -3840,10 +2932,7 @@
             if (!currentOrder) return;
             
             const total = amount * currentOrder.price;
-            const fee = total * COMMISSION;
-            
             document.getElementById('modalTotal').textContent = formatNumber(total) + ' USDT';
-            document.getElementById('modalFee').textContent = `Fee (0%): ${formatNumber(fee)} USDT`;
         }
 
         async function executeTrade() {
@@ -3874,13 +2963,8 @@
             try {
                 const res = await fetch(`${SERVER_URL}/orders/execute/${currentOrder.id}`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        user_id: userId,
-                        amount: amount
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId, amount: amount })
                 });
 
                 const data = await res.json();
@@ -3889,7 +2973,7 @@
                     closeTradeModal();
                     loadOrders();
                     loadBalance();
-                    alert(`✅ Сделка выполнена!\nПолучено: ${formatInt(amount)} SWAG\nКомиссия: ${formatNumber(data.fee)} USDT`);
+                    alert(`✅ Сделка выполнена!\nПолучено: ${formatInt(amount)} SWAG`);
                 } else if (data.error) {
                     alert('❌ ' + data.error);
                 }
@@ -3905,12 +2989,8 @@
             try {
                 const res = await fetch(`${SERVER_URL}/orders/cancel/${orderId}`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        user_id: userId
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId })
                 });
 
                 const data = await res.json();
@@ -3928,49 +3008,13 @@
         }
 
         // ======================================
-        // ==== ФУНКЦИЯ СИНХРОНИЗАЦИИ БАЛАНСА ===
-        // ======================================
-        async function updateServerBalance(currency, newAmount) {
-            try {
-                const getRes = await fetch(`${SERVER_URL}/balance/${userId}`);
-                const serverData = await getRes.json();
-                
-                const currentServerBalance = serverData[currency];
-                const difference = newAmount - currentServerBalance;
-                
-                if (Math.abs(difference) > 0.01) {
-                    const res = await fetch(`${SERVER_URL}/balance/add/${userId}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            currency: currency, 
-                            amount: difference 
-                        })
-                    });
-                    
-                    const data = await res.json();
-                    console.log(`✅ Баланс синхронизирован: ${currency} = ${formatNumber(data[currency])}`);
-                    return data;
-                }
-            } catch (e) {
-                console.error('❌ Ошибка синхронизации баланса:', e);
-            }
-        }
-
-        // ======================================
         // ==== MINES ===========================
         // ======================================
-
         function openMines() {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
             document.getElementById('profilePage').classList.remove('active-page');
             document.getElementById('gamesMenuPage').classList.remove('active-page');
-            document.getElementById('minesPage').classList.remove('active-page');
-            document.getElementById('blackjackPage').classList.remove('active-page');
-            document.getElementById('slotsPage').classList.remove('active-page');
-            document.getElementById('pokerPage').classList.remove('active-page');
-            
             document.getElementById('minesPage').classList.add('active-page');
             
             document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
@@ -3989,7 +3033,7 @@
             document.getElementById('minesCount').disabled = false;
             document.getElementById('minesBet').disabled = false;
             
-            updateMultiplier();
+            updateMinesMultiplier();
             renderMinesGrid();
         }
 
@@ -4008,23 +3052,21 @@
                 }
                 
                 if (minesGame.active && !minesGame.revealed.includes(i)) {
-                    cell.onclick = () => revealCell(i);
-                } else {
-                    cell.onclick = null;
+                    cell.onclick = () => revealMinesCell(i);
                 }
                 
                 grid.appendChild(cell);
             }
         }
 
-        function getMultiplier(minesCount, revealedCount) {
+        function getMinesMultiplier(minesCount, revealedCount) {
             const multipliers = minesMultipliers[minesCount];
             if (!multipliers || revealedCount === 0) return 1;
             if (revealedCount > multipliers.length) return multipliers[multipliers.length - 1];
             return multipliers[revealedCount - 1];
         }
 
-        function revealCell(index) {
+        function revealMinesCell(index) {
             if (!minesGame.active) return;
             if (minesGame.revealed.includes(index)) return;
             
@@ -4045,13 +3087,9 @@
                 
                 const newBalance = balances.swag - minesGame.bet;
                 updateServerBalance('swag', newBalance).then(data => {
-                    if (data) {
-                        balances = data;
-                    } else {
-                        balances.swag = newBalance;
-                    }
+                    if (data) balances = data;
+                    else balances.swag = newBalance;
                     updateBalanceDisplay();
-                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                     document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
                 });
                 
@@ -4069,15 +3107,15 @@
                     cells[index].textContent = '💎';
                 }
                 
-                minesGame.multiplier = getMultiplier(minesGame.minesCount, minesGame.revealed.length);
+                minesGame.multiplier = getMinesMultiplier(minesGame.minesCount, minesGame.revealed.length);
                 
-                updateMultiplier();
+                updateMinesMultiplier();
                 
                 document.getElementById('cashoutMinesBtn').disabled = false;
             }
         }
 
-        function updateMultiplier() {
+        function updateMinesMultiplier() {
             const multiplierEl = document.getElementById('currentMultiplier');
             const potentialEl = document.getElementById('potentialWin');
             
@@ -4109,9 +3147,7 @@
             const minePositions = [];
             while (minePositions.length < minesCount) {
                 const pos = Math.floor(Math.random() * 25);
-                if (!minePositions.includes(pos)) {
-                    minePositions.push(pos);
-                }
+                if (!minePositions.includes(pos)) minePositions.push(pos);
             }
             
             minesGame.active = true;
@@ -4128,7 +3164,7 @@
             document.getElementById('minesResult').style.display = 'none';
             
             renderMinesGrid();
-            updateMultiplier();
+            updateMinesMultiplier();
         }
 
         function cashoutMines() {
@@ -4144,13 +3180,9 @@
             
             const newBalance = balances.swag - minesGame.bet + winAmount;
             updateServerBalance('swag', newBalance).then(data => {
-                if (data) {
-                    balances = data;
-                } else {
-                    balances.swag = newBalance;
-                }
+                if (data) balances = data;
+                else balances.swag = newBalance;
                 updateBalanceDisplay();
-                document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                 document.getElementById('minesBalance').textContent = formatNumber(balances.swag);
             });
             
@@ -4160,34 +3192,22 @@
             document.getElementById('minesBet').disabled = false;
         }
 
-        // ======================================
-        // ==== ФУНКЦИЯ ДЛЯ КНОПОК МИН ==========
-        // ======================================
         function setMinesCount(count) {
             document.getElementById('minesCount').value = count;
-            
             document.querySelectorAll('.mine-badge').forEach(btn => {
                 btn.classList.remove('active');
-                if (parseInt(btn.textContent) === count) {
-                    btn.classList.add('active');
-                }
+                if (parseInt(btn.textContent) === count) btn.classList.add('active');
             });
         }
-
         // ======================================
         // ==== БЛЭКДЖЕК ========================
         // ======================================
-
         function openBlackjack() {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
             document.getElementById('profilePage').classList.remove('active-page');
             document.getElementById('gamesMenuPage').classList.remove('active-page');
             document.getElementById('minesPage').classList.remove('active-page');
-            document.getElementById('blackjackPage').classList.remove('active-page');
-            document.getElementById('slotsPage').classList.remove('active-page');
-            document.getElementById('pokerPage').classList.remove('active-page');
-            
             document.getElementById('blackjackPage').classList.add('active-page');
             
             document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
@@ -4212,30 +3232,21 @@
             updateBlackjackScores();
         }
 
-        function createDeck() {
-            const suits = ['♠', '♥', '♦', '♣'];
-            const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+        function createBlackjackDeck() {
             const deck = [];
-            
             for (let suit of suits) {
                 for (let value of values) {
-                    deck.push({
-                        value: value,
-                        suit: suit,
-                        numericValue: getNumericValue(value)
-                    });
+                    deck.push({ value, suit, numericValue: getBlackjackValue(value) });
                 }
             }
-            
             for (let i = deck.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [deck[i], deck[j]] = [deck[j], deck[i]];
             }
-            
             return deck;
         }
 
-        function getNumericValue(value) {
+        function getBlackjackValue(value) {
             if (value === 'A') return 11;
             if (['K', 'Q', 'J'].includes(value)) return 10;
             return parseInt(value);
@@ -4245,24 +3256,18 @@
             return (suit === '♥' || suit === '♦') ? 'red' : 'black';
         }
 
-        function calculateScore(cards) {
+        function calculateBlackjackScore(cards) {
             let score = 0;
             let aces = 0;
             
             for (let card of cards) {
-                if (card.value === 'A') {
-                    aces++;
-                } else {
-                    score += card.numericValue;
-                }
+                if (card.value === 'A') aces++;
+                else score += card.numericValue;
             }
             
             for (let i = 0; i < aces; i++) {
-                if (score + 11 <= 21) {
-                    score += 11;
-                } else {
-                    score += 1;
-                }
+                if (score + 11 <= 21) score += 11;
+                else score += 1;
             }
             
             return score;
@@ -4296,17 +3301,17 @@
 
         function updateBlackjackScores() {
             if (blackjackGame.playerCards.length > 0) {
-                blackjackGame.playerScore = calculateScore(blackjackGame.playerCards);
+                blackjackGame.playerScore = calculateBlackjackScore(blackjackGame.playerCards);
                 document.getElementById('playerScore').textContent = `Очки: ${blackjackGame.playerScore}`;
             }
             
             if (blackjackGame.dealerCards.length > 0) {
                 if (blackjackGame.active && !blackjackGame.gameOver) {
                     const firstCard = blackjackGame.dealerCards[0];
-                    const firstCardScore = getNumericValue(firstCard.value);
+                    const firstCardScore = getBlackjackValue(firstCard.value);
                     document.getElementById('dealerScore').textContent = `Очки: ${firstCardScore} + ?`;
                 } else {
-                    blackjackGame.dealerScore = calculateScore(blackjackGame.dealerCards);
+                    blackjackGame.dealerScore = calculateBlackjackScore(blackjackGame.dealerCards);
                     document.getElementById('dealerScore').textContent = `Очки: ${blackjackGame.dealerScore}`;
                 }
             }
@@ -4328,12 +3333,12 @@
             blackjackGame.active = true;
             blackjackGame.bet = bet;
             blackjackGame.gameOver = false;
-            blackjackGame.deck = createDeck();
+            blackjackGame.deck = createBlackjackDeck();
             
             blackjackGame.playerCards = [blackjackGame.deck.pop(), blackjackGame.deck.pop()];
             blackjackGame.dealerCards = [blackjackGame.deck.pop(), blackjackGame.deck.pop()];
             
-            blackjackGame.playerScore = calculateScore(blackjackGame.playerCards);
+            blackjackGame.playerScore = calculateBlackjackScore(blackjackGame.playerCards);
             
             document.getElementById('startBlackjackBtn').disabled = true;
             document.getElementById('hitBtn').disabled = false;
@@ -4344,25 +3349,20 @@
             renderBlackjackCards();
             updateBlackjackScores();
             
-            if (blackjackGame.playerScore === 21) {
-                standBlackjack();
-            }
+            if (blackjackGame.playerScore === 21) standBlackjack();
         }
 
         function hitBlackjack() {
             if (!blackjackGame.active) return;
             
             blackjackGame.playerCards.push(blackjackGame.deck.pop());
-            blackjackGame.playerScore = calculateScore(blackjackGame.playerCards);
+            blackjackGame.playerScore = calculateBlackjackScore(blackjackGame.playerCards);
             
             renderBlackjackCards();
             updateBlackjackScores();
             
-            if (blackjackGame.playerScore > 21) {
-                endBlackjackGame('lose', 'ПЕРЕБОР');
-            } else if (blackjackGame.playerScore === 21) {
-                standBlackjack();
-            }
+            if (blackjackGame.playerScore > 21) endBlackjackGame('lose', 'ПЕРЕБОР');
+            else if (blackjackGame.playerScore === 21) standBlackjack();
             
             document.getElementById('doubleBtn').disabled = true;
         }
@@ -4377,11 +3377,11 @@
             document.getElementById('standBtn').disabled = true;
             document.getElementById('doubleBtn').disabled = true;
             
-            blackjackGame.dealerScore = calculateScore(blackjackGame.dealerCards);
+            blackjackGame.dealerScore = calculateBlackjackScore(blackjackGame.dealerCards);
             
             while (blackjackGame.dealerScore < 17) {
                 blackjackGame.dealerCards.push(blackjackGame.deck.pop());
-                blackjackGame.dealerScore = calculateScore(blackjackGame.dealerCards);
+                blackjackGame.dealerScore = calculateBlackjackScore(blackjackGame.dealerCards);
             }
             
             renderBlackjackCards();
@@ -4390,15 +3390,10 @@
             const playerScore = blackjackGame.playerScore;
             const dealerScore = blackjackGame.dealerScore;
             
-            if (dealerScore > 21) {
-                endBlackjackGame('win', 'ДИЛЕР ПЕРЕБРАЛ');
-            } else if (playerScore > dealerScore) {
-                endBlackjackGame('win', 'ВЫ ВЫИГРАЛИ');
-            } else if (playerScore < dealerScore) {
-                endBlackjackGame('lose', 'ДИЛЕР ВЫИГРАЛ');
-            } else {
-                endBlackjackGame('push', 'НИЧЬЯ');
-            }
+            if (dealerScore > 21) endBlackjackGame('win', 'ДИЛЕР ПЕРЕБРАЛ');
+            else if (playerScore > dealerScore) endBlackjackGame('win', 'ВЫ ВЫИГРАЛИ');
+            else if (playerScore < dealerScore) endBlackjackGame('lose', 'ДИЛЕР ВЫИГРАЛ');
+            else endBlackjackGame('push', 'НИЧЬЯ');
         }
 
         function doubleBlackjack() {
@@ -4414,16 +3409,13 @@
             blackjackGame.bet = newBet;
             
             blackjackGame.playerCards.push(blackjackGame.deck.pop());
-            blackjackGame.playerScore = calculateScore(blackjackGame.playerCards);
+            blackjackGame.playerScore = calculateBlackjackScore(blackjackGame.playerCards);
             
             renderBlackjackCards();
             updateBlackjackScores();
             
-            if (blackjackGame.playerScore > 21) {
-                endBlackjackGame('lose', 'ПЕРЕБОР');
-            } else {
-                standBlackjack();
-            }
+            if (blackjackGame.playerScore > 21) endBlackjackGame('lose', 'ПЕРЕБОР');
+            else standBlackjack();
         }
 
         function endBlackjackGame(result, message) {
@@ -4439,21 +3431,13 @@
                 winAmount = blackjackGame.bet * multiplier;
                 
                 const netWin = winAmount - blackjackGame.bet;
-                resultText = `✅ ${message} +${formatInt(netWin)} SWAG`;
-                
-                if (isBlackjack) {
-                    resultText = `🃏 БЛЭКДЖЕК! +${formatInt(netWin)} SWAG`;
-                }
+                resultText = isBlackjack ? `🃏 БЛЭКДЖЕК! +${formatInt(netWin)} SWAG` : `✅ ${message} +${formatInt(netWin)} SWAG`;
                 
                 const newBalance = balances.swag - blackjackGame.bet + winAmount;
                 updateServerBalance('swag', newBalance).then(data => {
-                    if (data) {
-                        balances = data;
-                    } else {
-                        balances.swag = newBalance;
-                    }
+                    if (data) balances = data;
+                    else balances.swag = newBalance;
                     updateBalanceDisplay();
-                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                     document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
                 });
                 
@@ -4463,13 +3447,9 @@
                 
                 const newBalance = balances.swag - blackjackGame.bet;
                 updateServerBalance('swag', newBalance).then(data => {
-                    if (data) {
-                        balances = data;
-                    } else {
-                        balances.swag = newBalance;
-                    }
+                    if (data) balances = data;
+                    else balances.swag = newBalance;
                     updateBalanceDisplay();
-                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                     document.getElementById('blackjackBalance').textContent = formatNumber(balances.swag);
                 });
                 
@@ -4480,18 +3460,8 @@
             
             const resultDiv = document.getElementById('blackjackResult');
             resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `<div class="${result === 'win' ? 'result-win' : result === 'lose' ? 'result-lose' : 'result-push'}">${resultText}</div>`;
             
-            if (result === 'win') {
-                resultDiv.innerHTML = `<div class="result-win">${resultText}</div>`;
-            } else if (result === 'lose') {
-                resultDiv.innerHTML = `<div class="result-lose">${resultText}</div>`;
-            } else {
-                resultDiv.innerHTML = `<div class="result-push">${resultText}</div>`;
-            }
-            
-            document.getElementById('hitBtn').disabled = true;
-            document.getElementById('standBtn').disabled = true;
-            document.getElementById('doubleBtn').disabled = true;
             document.getElementById('startBlackjackBtn').disabled = false;
             document.getElementById('blackjackBet').disabled = false;
             
@@ -4500,9 +3470,8 @@
         }
 
         // ======================================
-        // ==== СЛОТЫ ===========================
+        // ==== СЛОТЫ (SWEET BONANZA) ==========
         // ======================================
-
         function openSlots() {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
@@ -4510,33 +3479,161 @@
             document.getElementById('gamesMenuPage').classList.remove('active-page');
             document.getElementById('minesPage').classList.remove('active-page');
             document.getElementById('blackjackPage').classList.remove('active-page');
-            document.getElementById('slotsPage').classList.remove('active-page');
-            document.getElementById('pokerPage').classList.remove('active-page');
-            
             document.getElementById('slotsPage').classList.add('active-page');
             
             document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
-            resetSlots();
+            initSweetGrid();
         }
 
-        function resetSlots() {
-            slotsGame.active = false;
-            document.getElementById('spinSlotsBtn').disabled = false;
-            document.getElementById('slotsResult').style.display = 'none';
-            updateReelsDisplay();
+        function initSweetGrid() {
+            sweetGame.grid = [];
+            for (let row = 0; row < 5; row++) {
+                sweetGame.grid[row] = [];
+                for (let col = 0; col < 6; col++) {
+                    sweetGame.grid[row][col] = '🍬';
+                }
+            }
+            renderSweetGrid();
         }
 
-        function setLines(count) {
-            slotsGame.lines = count;
-            document.querySelectorAll('.line-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent == count) {
-                    btn.classList.add('active');
+        function renderSweetGrid() {
+            const grid = document.getElementById('sweetGrid');
+            grid.innerHTML = '';
+            
+            for (let row = 0; row < 5; row++) {
+                for (let col = 0; col < 6; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'sweet-cell';
+                    cell.setAttribute('data-row', row);
+                    cell.setAttribute('data-col', col);
+                    cell.textContent = sweetGame.grid[row][col];
+                    
+                    if (sweetGame.grid[row][col] === '⭐') {
+                        cell.style.color = 'gold';
+                        cell.style.textShadow = '0 0 20px gold';
+                    }
+                    
+                    grid.appendChild(cell);
+                }
+            }
+        }
+
+        function generateSweetSymbol() {
+            const rand = Math.random();
+            if (rand < 0.1) return '🍬';
+            if (rand < 0.25) return '🍭';
+            if (rand < 0.4) return '🍎';
+            if (rand < 0.55) return '🍇';
+            if (rand < 0.7) return '🍊';
+            if (rand < 0.85) return '🍋';
+            if (rand < 0.95) return '⭐';
+            return '💎';
+        }
+
+        function spinSweetReels() {
+            for (let row = 0; row < 5; row++) {
+                for (let col = 0; col < 6; col++) {
+                    sweetGame.grid[row][col] = generateSweetSymbol();
+                }
+            }
+        }
+
+        function findSweetWins() {
+            const wins = [];
+            const winCells = new Set();
+            
+            for (let row = 0; row < 5; row++) {
+                for (let col = 0; col < 6; col++) {
+                    const symbol = sweetGame.grid[row][col];
+                    if (symbol === '⭐' || symbol === '💎') continue;
+                    
+                    let count = 1;
+                    let positions = [[row, col]];
+                    
+                    for (let c = col + 1; c < 6; c++) {
+                        if (sweetGame.grid[row][c] === symbol) {
+                            count++;
+                            positions.push([row, c]);
+                        } else break;
+                    }
+                    
+                    for (let c = col - 1; c >= 0; c--) {
+                        if (sweetGame.grid[row][c] === symbol) {
+                            count++;
+                            positions.push([row, c]);
+                        } else break;
+                    }
+                    
+                    if (count >= 8) {
+                        wins.push({
+                            symbol: symbol,
+                            count: count,
+                            positions: positions,
+                            multiplier: symbolMultipliers[symbol]
+                        });
+                        positions.forEach(pos => winCells.add(`${pos[0]},${pos[1]}`));
+                    }
+                }
+            }
+            
+            return { wins, winCells };
+        }
+
+        function findSweetScatters() {
+            let count = 0;
+            const positions = [];
+            for (let row = 0; row < 5; row++) {
+                for (let col = 0; col < 6; col++) {
+                    if (sweetGame.grid[row][col] === '⭐') {
+                        count++;
+                        positions.push([row, col]);
+                    }
+                }
+            }
+            return { count, positions };
+        }
+
+        function findSweetMultipliers() {
+            let count = 0;
+            const positions = [];
+            for (let row = 0; row < 5; row++) {
+                for (let col = 0; col < 6; col++) {
+                    if (sweetGame.grid[row][col] === '💎') {
+                        count++;
+                        positions.push([row, col]);
+                    }
+                }
+            }
+            return { count, positions };
+        }
+
+        async function cascadeSweetWins(winCells) {
+            const cells = document.querySelectorAll('.sweet-cell');
+            winCells.forEach(pos => {
+                const [row, col] = pos.split(',').map(Number);
+                const index = row * 6 + col;
+                if (cells[index]) cells[index].classList.add('win');
+            });
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            winCells.forEach(pos => {
+                const [row, col] = pos.split(',').map(Number);
+                const index = row * 6 + col;
+                if (cells[index]) {
+                    cells[index].classList.remove('win');
+                    sweetGame.grid[row][col] = generateSweetSymbol();
                 }
             });
+            
+            renderSweetGrid();
+            cells.forEach(cell => cell.classList.add('cascade'));
+            
+            await new Promise(resolve => setTimeout(resolve, 300));
+            cells.forEach(cell => cell.classList.remove('cascade'));
         }
 
-        function spinSlots() {
+        async function spinSweetSlots() {
             const bet = parseFloat(document.getElementById('slotsBet').value);
             
             if (bet < 1) {
@@ -4544,158 +3641,98 @@
                 return;
             }
             
-            const totalBet = bet * slotsGame.lines;
-            
-            if (totalBet > balances.swag) {
-                alert(`Недостаточно SWAG! Нужно: ${formatInt(totalBet)}, есть: ${formatInt(balances.swag)}`);
+            if (bet > balances.swag) {
+                alert(`Недостаточно SWAG! Баланс: ${formatInt(balances.swag)}`);
                 return;
             }
             
-            slotsGame.bet = bet;
-            slotsGame.active = true;
+            if (sweetGame.freeSpins === 0) {
+                const newBalance = balances.swag - bet;
+                await updateServerBalance('swag', newBalance);
+                balances.swag = newBalance;
+                updateBalanceDisplay();
+                document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
+            }
             
-            document.getElementById('spinSlotsBtn').disabled = true;
+            sweetGame.bet = bet;
+            sweetGame.totalWin = 0;
+            
+            document.getElementById('spinSweetBtn').disabled = true;
             document.getElementById('slotsResult').style.display = 'none';
             
-            slotsGame.spinning = true;
-            document.querySelectorAll('.reel').forEach(reel => {
-                reel.classList.add('spinning');
-            });
+            let spinsLeft = sweetGame.freeSpins > 0 ? sweetGame.freeSpins : 1;
+            sweetGame.freeSpins = 0;
             
-            setTimeout(() => {
-                generateSpinResult();
+            for (let spin = 0; spin < spinsLeft; spin++) {
+                spinSweetReels();
+                renderSweetGrid();
                 
-                slotsGame.spinning = false;
-                document.querySelectorAll('.reel').forEach(reel => {
-                    reel.classList.remove('spinning');
-                });
+                await new Promise(resolve => setTimeout(resolve, 500));
                 
-                updateReelsDisplay();
+                let cascadeWin = true;
+                let spinWin = 0;
+                let spinMultiplier = sweetGame.freeSpinsMultiplier;
                 
-                checkWin(totalBet);
-                
-                document.getElementById('spinSlotsBtn').disabled = false;
-            }, 1000);
-        }
-
-        function generateSpinResult() {
-            for (let i = 0; i < 3; i++) {
-                slotsGame.reels[i] = [];
-                for (let j = 0; j < 3; j++) {
-                    const randomIndex = Math.floor(Math.random() * slotsGame.symbols.length);
-                    slotsGame.reels[i].push(slotsGame.symbols[randomIndex]);
-                }
-            }
-        }
-
-        function updateReelsDisplay() {
-            for (let i = 0; i < 3; i++) {
-                const reel = document.getElementById(`reel${i+1}`);
-                if (reel) {
-                    const symbols = reel.querySelectorAll('.symbol');
-                    for (let j = 0; j < 3; j++) {
-                        if (symbols[j] && slotsGame.reels[i] && slotsGame.reels[i][j]) {
-                            symbols[j].textContent = slotsGame.reels[i][j];
-                            if (slotsGame.reels[i][j] === '⭐') {
-                                symbols[j].classList.add('wild');
-                            } else {
-                                symbols[j].classList.remove('wild');
-                            }
+                while (cascadeWin) {
+                    const { wins, winCells } = findSweetWins();
+                    const { count: scatterCount } = findSweetScatters();
+                    const { count: multiplierCount } = findSweetMultipliers();
+                    
+                    if (wins.length > 0) {
+                        let winAmount = 0;
+                        wins.forEach(win => {
+                            winAmount += sweetGame.bet * win.multiplier * spinMultiplier;
+                        });
+                        
+                        spinWin += winAmount;
+                        sweetGame.totalWin += winAmount;
+                        
+                        await cascadeSweetWins(winCells);
+                        
+                        if (spin === 0 && scatterCount >= 4) {
+                            sweetGame.freeSpins += 10;
+                            document.getElementById('freeSpinsInfo').style.display = 'flex';
+                            document.getElementById('freeSpinsCount').textContent = sweetGame.freeSpins;
                         }
-                    }
-                }
-            }
-        }
-
-        function checkWin(totalBet) {
-            let winAmount = 0;
-            let winLines = [];
-            
-            const lines = [
-                [[0,0], [0,1], [0,2]],
-                [[1,0], [1,1], [1,2]],
-                [[2,0], [2,1], [2,2]],
-                [[0,0], [1,1], [2,2]],
-                [[0,2], [1,1], [2,0]]
-            ];
-            
-            for (let l = 0; l < slotsGame.lines; l++) {
-                if (l >= lines.length) break;
-                
-                const line = lines[l];
-                const symbols = line.map(pos => slotsGame.reels[pos[0]][pos[1]]);
-                
-                const firstNonWild = symbols.find(s => s !== '⭐');
-                if (firstNonWild) {
-                    const isWin = symbols.every(s => s === firstNonWild || s === '⭐');
-                    if (isWin) {
-                        const multiplier = slotsGame.multipliers[firstNonWild] || 1;
-                        winAmount += slotsGame.bet * multiplier;
-                        winLines.push(l + 1);
-                    }
-                } else {
-                    winAmount += slotsGame.bet * 100;
-                    winLines.push(l + 1);
-                }
-            }
-            
-            document.querySelectorAll('.payline').forEach(line => line.classList.remove('active'));
-            winLines.forEach(lineNum => {
-                const line = document.querySelector(`.payline.line${lineNum}`);
-                if (line) line.classList.add('active');
-            });
-            
-            const netResult = winAmount - totalBet;
-            
-            if (winAmount > 0) {
-                const newBalance = balances.swag - totalBet + winAmount;
-                updateServerBalance('swag', newBalance).then(data => {
-                    if (data) {
-                        balances = data;
+                        
+                        if (sweetGame.freeSpins > 0) {
+                            spinMultiplier += multiplierCount;
+                            sweetGame.freeSpinsMultiplier = spinMultiplier;
+                            document.getElementById('currentMultiplier').textContent = spinMultiplier;
+                        }
                     } else {
-                        balances.swag = newBalance;
+                        cascadeWin = false;
                     }
-                    updateBalanceDisplay();
-                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
-                    document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
-                });
-                
-                const resultDiv = document.getElementById('slotsResult');
-                resultDiv.style.display = 'block';
-                
-                let linesText = '';
-                if (winLines.length > 0) {
-                    linesText = `<div style="font-size: 14px; margin-top: 10px; color: rgba(255,255,255,0.5);">Линии: ${winLines.join(', ')}</div>`;
                 }
                 
-                resultDiv.innerHTML = `
-                    <div class="result-win">✅ ВЫИГРЫШ +${formatInt(winAmount - totalBet)} SWAG</div>
-                    ${linesText}
-                `;
-                
+                if (spinWin > 0) {
+                    const resultDiv = document.getElementById('slotsResult');
+                    resultDiv.style.display = 'block';
+                    resultDiv.innerHTML = `<div class="result-win">✅ +${formatInt(spinWin)} SWAG</div>`;
+                }
+            }
+            
+            if (sweetGame.totalWin > 0) {
+                const newBalance = balances.swag + sweetGame.totalWin;
+                await updateServerBalance('swag', newBalance);
+                balances.swag = newBalance;
+                updateBalanceDisplay();
+                document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
+            }
+            
+            if (sweetGame.freeSpins > 0) {
+                document.getElementById('freeSpinsCount').textContent = sweetGame.freeSpins;
+                document.getElementById('currentMultiplier').textContent = sweetGame.freeSpinsMultiplier;
             } else {
-                const newBalance = balances.swag - totalBet;
-                updateServerBalance('swag', newBalance).then(data => {
-                    if (data) {
-                        balances = data;
-                    } else {
-                        balances.swag = newBalance;
-                    }
-                    updateBalanceDisplay();
-                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
-                    document.getElementById('slotsBalance').textContent = formatNumber(balances.swag);
-                });
-                
-                const resultDiv = document.getElementById('slotsResult');
-                resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `<div class="result-lose">❌ ПРОИГРЫШ -${formatInt(totalBet)} SWAG</div>`;
+                document.getElementById('freeSpinsInfo').style.display = 'none';
+                sweetGame.freeSpinsMultiplier = 1;
             }
-        }
-
-        // ======================================
+            
+            document.getElementById('spinSweetBtn').disabled = false;
+        }   
+          // ======================================
         // ==== ПОКЕР ===========================
         // ======================================
-
         function openPoker() {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
@@ -4704,8 +3741,6 @@
             document.getElementById('minesPage').classList.remove('active-page');
             document.getElementById('blackjackPage').classList.remove('active-page');
             document.getElementById('slotsPage').classList.remove('active-page');
-            document.getElementById('pokerPage').classList.remove('active-page');
-            
             document.getElementById('pokerPage').classList.add('active-page');
             
             document.getElementById('pokerBalance').textContent = formatNumber(balances.swag);
@@ -4744,19 +3779,15 @@
         }
 
         function updatePokerUI() {
-            // Баланс
-            document.getElementById('pokerBalance').textContent = pokerGame.players[0].stack;
-            document.getElementById('myStack').textContent = pokerGame.players[0].stack;
+            document.getElementById('pokerBalance').textContent = formatNumber(pokerGame.players[0].stack);
+            document.getElementById('myStack').textContent = formatNumber(pokerGame.players[0].stack);
 
-            // Ставки
             document.getElementById('bet1').textContent = pokerGame.players[0].bet;
             document.getElementById('bet2').textContent = pokerGame.players[1].bet;
             document.getElementById('bet3').textContent = pokerGame.players[2].bet;
 
-            // Пот
             document.getElementById('pot').textContent = `💰 ПОТ: ${pokerGame.pot}`;
 
-            // Карты игрока
             const myCardsDiv = document.getElementById('myCards');
             myCardsDiv.innerHTML = '';
             if (pokerGame.players[0].cards.length > 0) {
@@ -4768,7 +3799,6 @@
                 });
             }
 
-            // Карты ботов
             for (let i = 1; i <= 2; i++) {
                 const botCardsDiv = document.getElementById(`player${i+1}`).querySelector('.player-cards');
                 botCardsDiv.innerHTML = '';
@@ -4790,7 +3820,6 @@
                 }
             }
 
-            // Общие карты
             const communityDiv = document.getElementById('communityCards');
             communityDiv.innerHTML = '';
             for (let i = 0; i < 5; i++) {
@@ -4807,13 +3836,11 @@
                 }
             }
 
-            // Подсветка текущего игрока
             document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
             if (pokerGame.gameActive) {
                 document.getElementById(`player${pokerGame.currentPlayer+1}`).classList.add('active');
             }
 
-            // Кнопки
             const isMyTurn = pokerGame.gameActive && pokerGame.currentPlayer === 0 && pokerGame.players[0].isActive;
             document.getElementById('foldBtn').disabled = !isMyTurn;
             document.getElementById('checkBtn').disabled = !isMyTurn;
@@ -5042,13 +4069,9 @@
                 
                 const newBalance = winner.stack;
                 updateServerBalance('swag', newBalance).then(data => {
-                    if (data) {
-                        balances = data;
-                    } else {
-                        balances.swag = newBalance;
-                    }
+                    if (data) balances = data;
+                    else balances.swag = newBalance;
                     updateBalanceDisplay();
-                    document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
                     document.getElementById('pokerBalance').textContent = formatNumber(balances.swag);
                 });
             } else {
@@ -5061,19 +4084,17 @@
         }
 
         // ======================================
-        // ==== ИГРЫ ============================
+        // ==== МЕНЮ ИГР =======================
         // ======================================
         function openGamesMenu() {
             document.getElementById('workPage').classList.remove('active-page');
             document.getElementById('statsPage').classList.remove('active-page');
             document.getElementById('profilePage').classList.remove('active-page');
-            document.getElementById('gamesMenuPage').classList.remove('active-page');
+            document.getElementById('gamesMenuPage').classList.add('active-page');
             document.getElementById('minesPage').classList.remove('active-page');
             document.getElementById('blackjackPage').classList.remove('active-page');
             document.getElementById('slotsPage').classList.remove('active-page');
             document.getElementById('pokerPage').classList.remove('active-page');
-            
-            document.getElementById('gamesMenuPage').classList.add('active-page');
             
             document.getElementById('gameBalance').textContent = formatNumber(balances.swag);
         }
@@ -5109,12 +4130,12 @@
             }
         }
 
+        // ======================================
+        // ==== ИНИЦИАЛИЗАЦИЯ ===================
+        // ======================================
         loadBalance();
         setInterval(loadOrders, 30000);
-        renderMinesGrid();
+        initSweetGrid();
     </script>
 </body>
-</html>
-
-
-
+</html>  
