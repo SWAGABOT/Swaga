@@ -2772,6 +2772,12 @@
                 name = name.substring(0, 12) + '...';
             }
             usernameEl.textContent = name;
+            // 👇 ОТПРАВЛЯЕМ USERNAME НА СЕРВЕР
+fetch(`${SERVER_URL}/update_username/${userId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: user.username || user.first_name || '' })
+}).catch(e => console.log('Username update error:', e));
         } else {
             userId = 'guest_' + Date.now();
             usernameEl.textContent = 'bro';
@@ -3222,61 +3228,84 @@
             }
         }
 
-        async function loadLeaderboard() {
+      async function loadLeaderboard() {
+    try {
+        const res = await fetch(`${SERVER_URL}/leaderboard?limit=20`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        
+        const data = await res.json();
+        const leaderboard = data.leaderboard || [];
+        const leaderboardList = document.getElementById('leaderboardList');
+        leaderboardList.innerHTML = '';
+        
+        if (leaderboard.length === 0) {
+            leaderboardList.innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(255,255,255,0.3);">No whales yet</div>';
+            return;
+        }
+        
+        leaderboard.slice(0, 10).forEach((user, index) => {
+            // Получаем аватар из localStorage если есть
+            let userAvatar = '👤';
             try {
-                const res = await fetch(`${SERVER_URL}/leaderboard?limit=20`);
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const userProfile = localStorage.getItem('swaga_profile_' + user.user_id);
+                if (userProfile) {
+                    const profile = JSON.parse(userProfile);
+                    userAvatar = profile.avatar || '👤';
+                }
+            } catch (e) {}
+            
+            // Определяем имя для отображения
+            let displayName = '';
+            
+            if (user.user_id === userId) {
+                // Это текущий пользователь
+                displayName = profileData.name || 'You';
+            } else {
+                // Пробуем получить имя из localStorage (если есть)
+                try {
+                    const userProfile = localStorage.getItem('swaga_profile_' + user.user_id);
+                    if (userProfile) {
+                        const profile = JSON.parse(userProfile);
+                        displayName = profile.name || '';
+                    }
+                } catch (e) {}
                 
-                const data = await res.json();
-                const leaderboard = data.leaderboard || [];
-                const leaderboardList = document.getElementById('leaderboardList');
-                leaderboardList.innerHTML = '';
-                
-                if (leaderboard.length === 0) {
-                    leaderboardList.innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(255,255,255,0.3);">No whales yet</div>';
-                    return;
+                // Если нет в localStorage, используем username с сервера
+                if (!displayName && user.username) {
+                    displayName = user.username;
                 }
                 
-                leaderboard.slice(0, 10).forEach((user, index) => {
-                    let userAvatar = '👤';
-                    try {
-                        const userProfile = localStorage.getItem('swaga_profile_' + user.user_id);
-                        if (userProfile) {
-                            const profile = JSON.parse(userProfile);
-                            userAvatar = profile.avatar || '👤';
-                        }
-                    } catch (e) {}
-                    
-                    const displayName = user.user_id === userId ? 
-                        (profileData.name || 'You') : 
-                        `User ${user.user_id.slice(0, 4)}`;
-                    
-                    const item = document.createElement('div');
-                    item.className = 'leaderboard-item';
-                    
-                    if (user.user_id === userId) {
-                        item.style.background = 'rgba(0, 255, 0, 0.1)';
-                        item.style.border = '1px solid #00FF00';
-                        item.style.borderRadius = '10px';
-                    }
-                    
-                    item.innerHTML = `
-                        <div class="leaderboard-rank">${index + 1}</div>
-                        <div class="leaderboard-avatar">${userAvatar}</div>
-                        <div class="leaderboard-info">
-                            <div class="leaderboard-name">${displayName}</div>
-                            <div class="leaderboard-stats">${formatInt(user.swag)} SWAG</div>
-                        </div>
-                    `;
-                    leaderboardList.appendChild(item);
-                });
-                
-            } catch (e) {
-                console.error('Ошибка загрузки топа:', e);
-                document.getElementById('leaderboardList').innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(255,255,255,0.3);">Error loading leaderboard</div>';
+                // Если ничего нет, показываем User + первые 4 символа ID
+                if (!displayName) {
+                    displayName = `User ${user.user_id.slice(0, 4)}`;
+                }
             }
-        }
-
+            
+            const item = document.createElement('div');
+            item.className = 'leaderboard-item';
+            
+            if (user.user_id === userId) {
+                item.style.background = 'rgba(0, 255, 0, 0.1)';
+                item.style.border = '1px solid #00FF00';
+                item.style.borderRadius = '10px';
+            }
+            
+            item.innerHTML = `
+                <div class="leaderboard-rank">${index + 1}</div>
+                <div class="leaderboard-avatar">${userAvatar}</div>
+                <div class="leaderboard-info">
+                    <div class="leaderboard-name">${displayName}</div>
+                    <div class="leaderboard-stats">${formatInt(user.swag)} SWAG</div>
+                </div>
+            `;
+            leaderboardList.appendChild(item);
+        });
+        
+    } catch (e) {
+        console.error('Ошибка загрузки топа:', e);
+        document.getElementById('leaderboardList').innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(255,255,255,0.3);">Error loading leaderboard</div>';
+    }
+}
         // P2P
         function openP2PPage() {
             document.getElementById('p2pPage').classList.add('show');
@@ -4386,3 +4415,4 @@
     </script>
 </body>
 </html>
+
