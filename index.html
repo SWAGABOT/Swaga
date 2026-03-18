@@ -2124,6 +2124,298 @@
         .page.active-page {
             display: block;
         }
+        /* ======================================
+     ПОКЕР ОНЛАЙН
+     ====================================== */
+     
+/* Лобби */
+.poker-lobby {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #00FF00;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.tables-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.table-item {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.table-item:hover {
+    border-color: #00FF00;
+    transform: translateX(5px);
+    background: rgba(0, 255, 0, 0.1);
+}
+
+.table-item .table-info {
+    flex: 1;
+}
+
+.table-item .table-name {
+    color: #00FF00;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.table-item .table-players {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.table-item .join-btn {
+    background: #00FF00;
+    color: #0A1F0A;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.create-table-btn {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    border: 2px solid #00FF00;
+    border-radius: 15px;
+    color: #00FF00;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.create-table-btn:hover {
+    background: #00FF00;
+    color: #0A1F0A;
+}
+
+/* Стол */
+.poker-table {
+    background: #0A2A0A;
+    border: 3px solid #00FF00;
+    border-radius: 200px 200px 50px 50px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0,255,0,0.3);
+    min-height: 500px;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+.table-id {
+    color: #00FF00;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+}
+
+.pot {
+    color: #FFD700;
+    font-size: 18px;
+    font-weight: 700;
+    text-shadow: 0 0 10px gold;
+}
+
+/* Места игроков */
+.poker-seats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.poker-seat {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #00FF00;
+    border-radius: 15px;
+    padding: 15px;
+    width: 160px;
+    text-align: center;
+    position: relative;
+}
+
+.poker-seat.active {
+    border-color: #FFD700;
+    box-shadow: 0 0 20px gold;
+}
+
+.poker-seat .player-name {
+    font-weight: 700;
+    color: #00FF00;
+    margin-bottom: 5px;
+}
+
+.poker-seat .player-stack {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.poker-seat .player-bet {
+    font-size: 12px;
+    color: #FFD700;
+    margin-bottom: 10px;
+}
+
+.poker-seat .player-cards {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.poker-seat .card {
+    width: 40px;
+    height: 55px;
+    font-size: 14px;
+}
+
+.poker-seat .dealer-button {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: gold;
+    color: black;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Кнопка старта */
+.start-game-btn {
+    width: 100%;
+    padding: 15px;
+    background: #00FF00;
+    color: #0A1F0A;
+    border: none;
+    border-radius: 15px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.start-game-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px #00FF00;
+}
+
+/* Кнопки действий */
+.poker-actions {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.poker-btn {
+    padding: 12px 20px;
+    border: 2px solid #00FF00;
+    background: transparent;
+    color: #00FF00;
+    border-radius: 15px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 1;
+    max-width: 100px;
+}
+
+.poker-btn:hover:not(:disabled) {
+    background: #00FF00;
+    color: #0A1F0A;
+}
+
+.poker-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.poker-btn.fold {
+    border-color: #FF3333;
+    color: #FF3333;
+}
+
+.poker-btn.fold:hover:not(:disabled) {
+    background: #FF3333;
+    color: white;
+}
+
+.poker-btn.raise {
+    border-color: #FFD700;
+    color: #FFD700;
+}
+
+.poker-btn.raise:hover:not(:disabled) {
+    background: #FFD700;
+    color: #0A1F0A;
+}
+
+/* Ввод ставки */
+.bet-control {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.bet-control .bet-input {
+    width: 120px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #00FF00;
+    border-radius: 15px;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+.bet-control .poker-btn {
+    max-width: 60px;
+    padding: 12px;
+}
+
+.bet-control .poker-btn.cancel {
+    border-color: #FF3333;
+    color: #FF3333;
+}
+
+.bet-control .poker-btn.cancel:hover {
+    background: #FF3333;
+    color: white;
+}
     </style>
 </head>
 <body>
@@ -4401,6 +4693,327 @@ fetch(`${SERVER_URL}/update_username/${userId}`, {
         loadBalance();
         setInterval(loadOrders, 30000);
     </script>
+        // ======================================
+// ==== ОНЛАЙН ПОКЕР ====================
+// ======================================
+
+let pokerSocket = null;
+let currentPokerTable = null;
+let pokerPlayerId = null;
+
+function openPoker() {
+    // Скрываем другие страницы
+    document.getElementById('workPage').classList.remove('active-page');
+    document.getElementById('statsPage').classList.remove('active-page');
+    document.getElementById('profilePage').classList.remove('active-page');
+    document.getElementById('gamesMenuPage').classList.remove('active-page');
+    document.getElementById('minesPage').classList.remove('active-page');
+    document.getElementById('blackjackPage').classList.remove('active-page');
+    document.getElementById('slotsPage').classList.remove('active-page');
+    
+    // Показываем покер
+    document.getElementById('pokerPage').classList.add('active-page');
+    
+    // Обновляем баланс
+    document.getElementById('pokerBalance').textContent = formatNumber(balances.swag);
+    
+    // Загружаем список столов
+    loadPokerTables();
+}
+
+function loadPokerTables() {
+    fetch(`https://balance-server-production.up.railway.app/poker/tables`)
+        .then(res => res.json())
+        .then(data => {
+            const tablesList = document.getElementById('tablesList');
+            if (!tablesList) return;
+            
+            tablesList.innerHTML = '';
+            
+            if (!data.tables || data.tables.length === 0) {
+                tablesList.innerHTML = '<div style="text-align: center; padding: 20px; color: rgba(255,255,255,0.3);">Нет активных столов</div>';
+                return;
+            }
+            
+            data.tables.forEach(table => {
+                const item = document.createElement('div');
+                item.className = 'table-item';
+                item.onclick = () => joinPokerTable(table.id);
+                item.innerHTML = `
+                    <div class="table-info">
+                        <div class="table-name">${table.id}</div>
+                        <div class="table-players">${table.players}/${table.max_players} игроков</div>
+                    </div>
+                    <button class="join-btn">ВОЙТИ</button>
+                `;
+                tablesList.appendChild(item);
+            });
+        })
+        .catch(e => console.error('Ошибка загрузки столов:', e));
+}
+
+function createPokerTable() {
+    fetch(`https://balance-server-production.up.railway.app/poker/create_table`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: userId })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.table_id) {
+            joinPokerTable(data.table_id);
+        }
+    })
+    .catch(e => console.error('Ошибка создания стола:', e));
+}
+
+function joinPokerTable(tableId) {
+    // Закрываем предыдущее соединение
+    if (pokerSocket) {
+        pokerSocket.close();
+    }
+    
+    // Подключаемся к WebSocket
+    pokerSocket = new WebSocket(`wss://balance-server-production.up.railway.app/poker/${userId}`);
+    
+    pokerSocket.onopen = () => {
+        console.log('✅ Подключено к покеру');
+        
+        // Отправляем имя игрока
+        pokerSocket.send(JSON.stringify({
+            name: profileData.name || user?.first_name || 'Player'
+        }));
+    };
+    
+    pokerSocket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        handlePokerMessage(data);
+    };
+    
+    pokerSocket.onclose = () => {
+        console.log('❌ Отключено от покера');
+    };
+    
+    // Показываем стол
+    document.getElementById('pokerLobby').style.display = 'none';
+    document.getElementById('pokerTable').style.display = 'block';
+    document.getElementById('currentTableId').textContent = tableId;
+    currentPokerTable = tableId;
+}
+
+function handlePokerMessage(data) {
+    switch (data.type) {
+        case 'table_state':
+            updatePokerTable(data.data);
+            break;
+        case 'game_started':
+            updatePokerTable(data.data);
+            showPokerNotification('🎮 Игра началась!');
+            break;
+        case 'player_joined':
+            updatePokerTable(data.data);
+            break;
+        case 'player_folded':
+        case 'player_checked':
+        case 'player_called':
+        case 'player_raised':
+            updatePokerTable(data.data);
+            break;
+    }
+}
+
+function updatePokerTable(state) {
+    const seats = document.getElementById('pokerSeats');
+    if (!seats) return;
+    
+    seats.innerHTML = '';
+    
+    // Обновляем пот
+    document.getElementById('pot').textContent = `💰 ПОТ: ${state.pot}`;
+    
+    // Обновляем общие карты
+    const communityDiv = document.getElementById('communityCards');
+    if (communityDiv) {
+        communityDiv.innerHTML = '';
+        
+        if (state.community_cards && state.community_cards.length > 0) {
+            state.community_cards.forEach(card => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = `card ${card.includes('♥') || card.includes('♦') ? 'red' : 'black'}`;
+                cardDiv.textContent = card;
+                communityDiv.appendChild(cardDiv);
+            });
+        }
+        
+        // Дозаполняем пустые места
+        const needed = 5 - (state.community_cards?.length || 0);
+        for (let i = 0; i < needed; i++) {
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'card back';
+            communityDiv.appendChild(cardDiv);
+        }
+    }
+    
+    // Отображаем игроков
+    if (state.seats) {
+        state.seats.forEach((player, index) => {
+            if (!player) {
+                // Пустое место
+                const emptySeat = document.createElement('div');
+                emptySeat.className = 'poker-seat';
+                emptySeat.style.opacity = '0.3';
+                emptySeat.innerHTML = `<div style="padding: 20px;">Место ${index + 1}</div>`;
+                seats.appendChild(emptySeat);
+                return;
+            }
+            
+            const seatDiv = document.createElement('div');
+            seatDiv.className = 'poker-seat';
+            
+            if (index === state.current_player_index) {
+                seatDiv.classList.add('active');
+            }
+            
+            // Бутон дилера
+            const dealerBtn = index === state.dealer_index ? '<div class="dealer-button">D</div>' : '';
+            
+            // Карты игрока
+            let cardsHtml = '';
+            if (player.user_id === userId) {
+                // Свои карты показываем
+                if (player.hand && player.hand.length > 0) {
+                    player.hand.forEach(card => {
+                        const isRed = card.includes('♥') || card.includes('♦');
+                        cardsHtml += `<div class="card ${isRed ? 'red' : 'black'}">${card}</div>`;
+                    });
+                }
+            } else {
+                // Чужие карты скрываем, если игра идёт
+                if (state.round !== 'showdown' && state.round !== 'waiting' && state.round !== 'ended') {
+                    for (let i = 0; i < 2; i++) {
+                        cardsHtml += '<div class="card small back"></div>';
+                    }
+                } else {
+                    // Показываем карты на вскрытии
+                    if (player.hand && player.hand.length > 0) {
+                        player.hand.forEach(card => {
+                            const isRed = card.includes('♥') || card.includes('♦');
+                            cardsHtml += `<div class="card ${isRed ? 'red' : 'black'}">${card}</div>`;
+                        });
+                    }
+                }
+            }
+            
+            seatDiv.innerHTML = `
+                ${dealerBtn}
+                <div class="player-name">${player.name || 'Игрок'}</div>
+                <div class="player-stack">${player.stack || 0}</div>
+                ${player.bet > 0 ? `<div class="player-bet">${player.bet}</div>` : ''}
+                <div class="player-cards">${cardsHtml}</div>
+            `;
+            
+            seats.appendChild(seatDiv);
+        });
+    }
+    
+    // Показываем кнопки действий, если ход текущего игрока
+    if (state.players && state.current_player_index !== undefined) {
+        const currentPlayer = state.players[state.current_player_index];
+        if (currentPlayer && currentPlayer.user_id === userId && !currentPlayer.is_folded) {
+            document.getElementById('pokerActions').style.display = 'flex';
+            
+            // Настраиваем кнопки
+            const callAmount = state.current_bet - (currentPlayer.bet || 0);
+            document.getElementById('callBtn').textContent = callAmount > 0 ? `CALL ${callAmount}` : 'CHECK';
+            document.getElementById('checkBtn').style.display = callAmount > 0 ? 'none' : 'block';
+            
+            // Проверяем, может ли игрок поднять
+            const raiseBtn = document.getElementById('raiseBtn');
+            if (raiseBtn) {
+                raiseBtn.disabled = currentPlayer.stack < state.min_raise;
+            }
+        } else {
+            document.getElementById('pokerActions').style.display = 'none';
+        }
+    }
+    
+    // Показываем кнопку старта для создателя
+    if (state.players && state.players.length > 0 && state.players[0]?.user_id === userId && state.round === 'waiting') {
+        document.getElementById('startGameBtn').style.display = 'block';
+    } else {
+        document.getElementById('startGameBtn').style.display = 'none';
+    }
+}
+
+function pokerAction(action) {
+    if (!pokerSocket) return;
+    
+    pokerSocket.send(JSON.stringify({
+        action: action
+    }));
+}
+
+function showRaiseInput() {
+    document.getElementById('betControl').style.display = 'flex';
+    document.getElementById('pokerActions').style.display = 'none';
+}
+
+function hideRaiseInput() {
+    document.getElementById('betControl').style.display = 'none';
+    document.getElementById('pokerActions').style.display = 'flex';
+}
+
+function confirmRaise() {
+    const amount = parseInt(document.getElementById('betAmount').value);
+    if (amount < 20) {
+        alert('Минимальный рейз: 20');
+        return;
+    }
+    
+    pokerSocket.send(JSON.stringify({
+        action: 'raise',
+        amount: amount
+    }));
+    
+    hideRaiseInput();
+}
+
+function startPokerGame() {
+    if (!pokerSocket) return;
+    
+    pokerSocket.send(JSON.stringify({
+        action: 'start_game'
+    }));
+}
+
+function showPokerNotification(msg) {
+    const resultDiv = document.getElementById('pokerResult');
+    if (!resultDiv) return;
+    
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `<div class="result-win">${msg}</div>`;
+    setTimeout(() => {
+        resultDiv.style.display = 'none';
+    }, 3000);
+}
+
+function leavePokerTable() {
+    if (pokerSocket) {
+        pokerSocket.close();
+        pokerSocket = null;
+    }
+    
+    document.getElementById('pokerLobby').style.display = 'block';
+    document.getElementById('pokerTable').style.display = 'none';
+    loadPokerTables();
+}
+
+// Добавляем обработчик закрытия страницы
+window.addEventListener('beforeunload', function() {
+    if (pokerSocket) {
+        pokerSocket.close();
+    }
+});
 </body>
 </html>
 
